@@ -1,0 +1,307 @@
+ 1> What is React
+ ===============================================
+  -> React is javascript Library.
+  -> The main focus is building UI as fast as possible.
+  -> So this is used to single page application, means complete website in single page.
+  
+ 2> Why React is fast
+ =========================================
+   -> React use virtual Dom.
+       a. React Dom -> It is update complete List.
+       b. Virtual Dom -> update only Required list. 
+       
+ 3> Why learn React
+ ==================================================
+  -> It is maintained by facebook, so it will long term player in the market.
+  -> High demand due to fast speed.
+  -> Large community for your support.
+  -> we can use mobile app development with React-Native.
+  
+ 4> History & Version
+ ==================================================
+  -> Maintained by facebook.
+  -> First release on 29 may 2013.
+  -> The current version is 18.0.0
+  -> Apps with React is : NetFlix, Whatsapp web, Instagram.
+  
+ 5> What is npm 
+ =====================================================
+  -> npm stands in node package manager. 
+  -> We can use alternate of npm is yarn.
+  
+  
+ -> In package.json file we can get the current version of react. also this file contains all commands and 
+    all package which we are imported, all this present in package.json file.
+    
+ -> In package-lock.json file, it control the package.json file means it contains all the history of our package also
+    it control the version of this package. 
+ -> In package-lock.json file, it control of our node module.
+ 
+ 6> Which one is most important file in React project
+ ===================================================================
+  -> Most important file is package.json file.
+ 
+ 7> Why we are not push the node_module file in git
+ ==================================================================
+  -> Because node_module size is big it contains all the file, if we are push in git it take lots of time for that.
+     if anathor developer want this file then he can use command 'npm install' , this command take the dependency 
+     from package.json file and install it automatically.
+     
+ 8> How to add new npm package
+ ===================================================================
+   -> Which package we have to install for that we have to copy the package and run the command npm 'Your package name' 
+      it install all the libraries in node_module according this.
+   -> If we want to change some package version or remove any package just we have to modify it in package.json file and 
+      run the command npm install , it automatically change the corresponding libraries version and if any libraries 
+      are not required then it delete those libraries.
+      
+ 9> functional Component
+ ===================================================================
+  -> A piece of code that can be reuse such as function, but more powerful than function .
+  -> Component type : 
+                     - Functional Component
+                     - Class Component
+                     - HOC (High order Component)
+                     - Pure Component
+                     - Controlled Component
+                     - Uncontrolled Component
+  -> We can create a component inside anathor component. 
+  
+ 10> JSX with React
+ =====================================================================
+  -> JavaScript xml .
+  -> JSX give the power we can write HTML code inside js .
+ 
+ 11> State in Functional Component
+ =======================================================================
+  -> State is basically a object which is contain some data.	
+  -> if we are using var/let for store the value, when we are update var/let at that time the variable is not update 
+     in every places.
+  -> But if we are use state at that time when we are update some value in variable it reflected in every places ,
+     means it rerender the component, when we are use state, if any changes come in state it automatically rerender the 
+     component for that update value showing in every place.
+     
+ IQ -> state is public or private ?
+       - state is public .
+       
+ IQ -> can we use useSatate in class component ?
+      
+      - No, because useState is a hooks and it is not applicable for class component.
+ 
+ 
+  12> Props with Functional Component
+  ======================================================================
+  -> Props is like argument, when we are create a component and pass some argument at that time with the help of props 
+     we can pass the argument.
+     
+ IQ -> Can we change the value of Props in receiver component ?
+        - No, We can't change the props value in receiver component , it only change in sender component.
+        
+ 13> Life Cycle method in React
+ ===============================================================================
+  -> Mounting --> ComponentDidMount
+  -> Updating --> ComponentDidUpdate
+  -> UnMounting --> ComponentWillUnmount
+  
+  -> When life cycle method is Run
+     - When Component is load
+     - When Component is update with state and props
+     - When Component is removed.
+     
+ IQ -> if i remove a component then load it once again, then what happen can it's life cycle start from new or it use old life cycle
+      A -> it's life cycle start from new .
+ 
+  -> We can't use life cycle method directly in functional component for that we have to use HOOKs.
+  -> Why we are using constructor in class component ?
+     A-> BCZ, when we load the class component first it ready the  constructor , when we want to do something before ready our
+         HTML code , for that we have to use constructor in class component.
+         
+  14> ComponentDidMount() & ComponentDidUpdate()
+  ==============================================================
+   -> It call when your HTML and Css code is ready after that it call.
+   -> Basically it is use when we are calling API at that time we are use.
+   
+   IQ -> which one first call render() or ComponentDidMount()
+      A-> first call render() after that it call ComponentDidMount().
+      
+   -> When our HTML code is ready after that ComponentDidMount() is execute. ComponentDidUpdate() is run when 
+      any state or props is update.
+   -> ComponentDidMount() is not effect for state and props.
+   -> if any update perform in state or props after that ComponentDidUpdate() is call.
+   
+   IQ -> Can we perform setState inside render() ?
+      A-> No, bcz any update of state and props render() call again, if we use setState inside render()
+          it going to infinite loop.
+          
+          
+  15> shouldComponentUpdate()
+  =======================================================================================
+    -> it call on the conditional basis.
+    -> it stop the specific rendering in a specific condition.
+  
+  16> ComponentWillUnmount()
+  ====================================================================
+   -> When Component is removed from DOM at that time  ComponentWillUnmount() is call.
+   -> It is call just before component removed.
+   -> Basically it is used for cleanup activities.
+   
+   
+  IQ -> ComponentDidUpdate() and shouldComponentUpdate() which one first call ?
+  =============================================================================================
+   A-> shouldComponentUpdate() is call first , when a certain condition is satisfied at that time shouldComponentUpdate() is call .
+       
+  IQ -> If our parent component is functional component and our child component is class component , then can ComponentWillUnmount() is call ?
+  =================================================================================================================================================
+   A-> Yes it is call
+   
+   
+ 17> Hooks in React.js
+ ==============================================================================================
+ -> Life cycle method is used in class component but when we use life cycle method in functional component
+    at that time we use HOOKS.
+ -> Hooks always start with 'use' word.
+ 
+ 
+ 18> What is useEffect in React.js
+ ============================================================================================
+  -> The life cycle method in class Component like ComponentDidMount(),ComponentDidUpdate(),ShouldComponentUpdate(),ComponentWillUnmount() 
+     same like in functional component Hooks use as a life cycle method. 
+  -> useEffect is a Hooks, it is use as a life cycle in functional component.
+  -> useEffect Hook is a combination of ComponentDidMount(),ComponentDidUpdate(),ShouldComponentUpdate(),ComponentWillUnmount().
+  
+  IQ-> Can we use Hooks in class component ?
+  =========================================================================================
+  -> No, We can't use Hooks in class component.
+  
+  IQ-> Can we use any function inside useEffect() ?
+  ==========================================================================================
+   A -> Yes.
+  
+  IQ-> Can we use useEffect() inside any function() ? 
+  ===========================================================================================
+   A-> No, useEffect() cannot be used directly inside any regular function.
+      useEffect() is a React Hook and is designed to be used only in React functional components or
+      other custom hooks that are defined as functions and called within React components.
+  
+  IQ-> In React for looping an element what are using loop Or map() ?
+  ==================================================================================================
+   -> In React for looping we have to use map() instead of loop. 
+   -> BCZ inside return statement loop is not supported so that we have to use map().
+  
+  IQ> What is React Fragment ?
+  ========================================================================================
+  -> React Fragment is a pattern it handle multiple component or multiple element.
+  -> When we use multiple element we are wrap the multiple element in a <div> tag, instead of
+     this we can use Fragment. <> </>
+     
+     
+  19> Lifting state up 
+  ========================================================================
+   -> Sending data from child to parent is called Lifting state up.
+   
+   
+  20> Pure Component
+  ================================================================================
+  -> It is a feature of React.js , it is use only inside class component.
+  -> For functional component there is anathor feature is called useMemo.
+  -> Pure component is used for stop the rerendering the component, Means when a component 
+     rerender again and again at that time it check the state value of before and after , if 
+     it is not change then it stop the rerendering.
+     
+     
+  21> useMemo Hook
+  ======================================================================
+  -> It is same like Pure component, but it is use only functional component.
+  
+  
+  22> Ref in React.js
+  =====================================================================
+  -> Ref directly manipulate the DOM.
+  -> In React official website says to always use Ref rarely, bcz it doing slow to the application.
+  -> It is use to directly change the filed color, get the value from form filed, doing focus in form etc.
+  
+  23> useRef in React.js
+  ==================================================================
+  -> It is basically Hook, it is use only in functional component.
+  -> For handling Dom in functional component we can use useRef.
+  
+  24> forwardRef in React.js
+  ===================================================================
+  -> It is the advance version of Ref.
+  
+  25> Dependency injection in Spring Boot
+  ===================================================================
+  -> Dependency injection is a fundamental design pattern and technique used to achieve loose coupling
+     between components in an application.
+  -> @Autowired, first look for a bean of the required type. if bean found, Spring will inject it.
+  -> There are 3 way of injection 
+       - Field injection
+       - setter injection
+       - Constructor injection
+       
+ 26> What is circular Dependency in Spring Boot 
+ ===========================================================================
+  -> When there are two classes Class A and Class B , in Class A autowired Class b same as Class B autowired Class A,
+     at that time when application start it shows APLLICATION FAILED TO START : The dependencies of some of the bean 
+     in the application context form a cycle .
+     
+  Solution 1 : We should refactor the code and remove this cycle dependency.
+  
+  Solution 2 : Using @Lazy on @Autowired annotation. 
+               Class A autowired in Class B and it annotated with @Lazy and @ Autowired and Class B autowired in Class A.
+               When application start it first create the bean of Class B and when it required bean of Class A , at that 
+               time it create the bean of Class A. it is possible using @Lazy.	
+   
+ 27> Controlled Component
+ ==========================================================================
+ -> In React, When we manage the input field through state, is called Controlled Component.
+ 
+ 28> Uncontrolled Component
+ ==========================================================================
+ -> In React, When we manage the input filed through javaScript or Ref but not through state, is called Uncontrolled Component.
+ 
+ 
+ 29> HOC (High Order Component)
+ ===================================================================
+  -> A Component which is take anathor component as an props and return a component.
+  
+  
+ 30> React Router
+ ====================================================================
+  -> In React, Router is use for navigate the page from one page to anathor page with out reloading 
+     the application.
+  -> But if we using link for this thing then it reload the application again and again.
+  
+ 31> SearchParam
+ ============================================================
+ -> It is use when we get the parameter value from query parameter at that time we have to use SearchParam Hook.
+  
+ 32> useNavigate Hook
+ ===============================================================================
+ -> It is use, when we navigate a page in button click at that time it is use.
+    Ex: let navigate = useNavigate;
+        <button onClick={()=>navigate("/about")}>Go to About Page</button>
+        
+ IQ -> When we perform some navigation in any event or any button click then how to do?
+ =================================================================================================
+  -> At that time we have to use useNavigate() Hook.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+          
+ 
+  
+  
+  
+  
+  
+  

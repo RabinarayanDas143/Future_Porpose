@@ -1,0 +1,381 @@
+
+Employee: 
+empid,empname,salary,dept_id,managerid
+
+Department:
+deptid,deptname
+
+ 1> write a query to fetch all employee details who are working in CS dept
+===================================================================================
+
+SELECT e.empid, e.empname, e.salary, e.dept_id, e.managerid
+FROM Employee e
+JOIN Department d ON e.dept_id = d.deptid
+WHERE d.deptname = 'CS';
+
+ 2> CREATE DATABASE DB_NAME; -- COMMAND FOR CREATE DATABASE
+ 
+ 3> DROP DATABASE DB_NAME; -- FOR DROP DATABASE
+ 
+ 4> USE DB_NAME; -- USE DB FOR EVERY OPERATION BY DEFAULT
+ 
+ 5> COMMAND FOR CREATE TABLE 
+ =============================================================
+    CREATE TABLE TB_NAME (
+    
+      COLUMN_NAME1 DATATYPE CONSTRAINT,
+      COLUMN_NAME2 DATATYPE CONSTRAINT,
+      COLUMN_NAME3 DATATYPE CONSTRAINT
+    );  
+    
+    EX: CREATE TABLE STUDENT (
+    
+      ID INT PRIMARY KEY,
+      NAME VARCHAR(50),
+      AGE INT NOT NULL
+    );
+    
+ 6> INSERT INTO STUDENT VALUES (1,"RABI",27); -- COMMAND FOR INSERTING DATA INTO TABLE
+ 
+ 7> SQL DATATYPES
+ ==================================================
+  DATATYPE          DESCRIPTION            USE
+  ------------------------------------------------------------
+* CHAR  - String(0-255),              CHAR(50)
+* VARCHAR - String(0-255),            vARCHAR(50)  ( Diff. in char and varchar is - In char if the value is not occupies 50 memory space
+                                                     also it hold 50 memory space but in Varchar if it is not occupies 50 memory space
+                                                     then it release the rest of space)
+* BLOB - String(0-65535), it store large value  BLOB(1000)
+* INT - integer(-2 to 648) (2 to 647)           INT
+* TINYINT - integer (-128 to 127)               TYNINT
+* BIGINT - integer                              BIGINT
+* BIT   - store X_BIT value. X range 1-64       BIT(2)
+* FLOAT - decimal number, 23 digit              FLOAT
+* DOUBLE - decimal number, 24-53 digits         DOUBLE
+* BOOLEAN - 0 OR 1                              BOOLEAN
+* DATE   - store date                           DATE
+* YEAR  - year in 4 digit                       YEAR
+
+
+ 8> Signed & Unsigned
+ ==========================================================
+  Signed - IN signed we can use +ve and -ve number , its range is (-128 to 127)
+    EX: TINYINT (-128 TO 127)
+    
+  Unsigned - In Unsigned we can use only +ve number, its range is (0 to 255)
+    EX: TINYINT UNSIGNED(0 TO 255)
+    
+ 9> Types of SQL Commands
+ ==================================================================
+  * DDL (Data Definition Language) : create, alter, rename, truncate, & drop
+  * DQL (Data Query Language) : select
+  * DML (Data Manipulation Language) : insert, update, delete
+  * DCL (Data Control Language) : grant & revoke permission to user
+  * TCL (Transaction Control Language) : start transaction, commit, rollback
+  
+ 10> SHOW DATABASE -- IT SHOW ALL THE DATA DABSE WHCIH ARE AVAILABLE
+     SHOW TABLES -- IT SHOW ALL THE TABLE WHICH ARE AVAILBALE 
+     
+ 11> Keys
+ =====================================================================
+  * Primary key
+  --------------------------
+   -> It is a column in a table that uniquely identifies each row.
+   -> There is only one primary key in a table.
+   -> It should be unique and not null.
+   
+  * Foreign Key
+  -------------------------------
+   -> A Foreign key is a column in a table that refer to the primary key of anathor table.
+   -> There can be multiple foreign key.
+   -> Foreign key have duplicate and null value.
+   
+ 12> Constraints
+ ==================================================================
+  -> NOT NULL 
+  -> UNIQUE
+  -> PRIMARY KEY (NOT NULL + UNIQUE)
+  -> FOREIGN KEY
+  -> DEFAULT
+  -> CHECK - It can limit the values allowed in a column
+  
+  EX: CREATE TABLE CITY (
+        ID INT PRIMARY KEY,
+        CITY VARCHAR(50),
+        AGE INT,
+        CONSTRAINT CHECK (AGE<=18 AND CITY = "DELHI")
+   );
+   
+   OR 
+      EX: CREATE TABLE TB_NAME (
+            ID INT PRIMARY KEY,
+            AGE CHECK(AGE<=18)
+          );
+          
+          
+ 13> Where clause
+ =======================================================
+  To define some conditions.
+   EX: select * from tb_name where age = 18 and city = "Mumbai";
+   
+ 14> Operator
+ ========================================================
+  -> Arithmetic operator : +, -, *, /, %
+  -> Comparison operator : =, !=, >, >=, <, <=
+  -> Logical operator : AND, OR, NOT, IN, BETWEEN, ALL, LIKE, ANY
+  -> Bitwise operator : &, | .
+  
+  EX:
+     AND
+    ----------------
+    SELECT * FROM STUDENT WHERE MARKS > 80 AND CITY = "MUMBAI";
+    
+    OR
+   --------------
+    SELECT * FROM STUDENT WHERE MARKS > 90 OR CITY = "MUMBAI";
+    
+    BETWEEN 
+   -------------
+    SELECT * FROM STUDENT WHERE MARKS BETWEEN 80 AND 90;
+    
+    IN
+   --------------
+    SELECT * FROM STUDENTS WHERE CITY IN ( "DELHI", "MUMBAI" );
+    
+   NOT IN
+  ---------------
+    SELECT * FROM STUDENTS WHERE CITY NOT IN ( "DELHI", "MUMBAI" );
+    
+   LIMIT
+  --------------
+   SELECT * FROM STUDENTS LIMIT 3;
+   
+   ASC (ASCENDING) AND DESC (DESCINDING)
+  ---------------------------------------------
+   SELECT * FROM STUDENTS ORDER BY CITY ASC;
+   SELECT * FROM STUDENTS ORDER BY CITY DESC;
+   
+   
+ 15> AGGREGATE FUNCTION
+ ==========================================================
+  Aggregate function perform a calculation on a set of values and return a single values.
+   * COUNT() 
+   * MAX()
+   * MIN()
+   * SUM()
+   * AVG()
+   
+   EX: SELECT MAX(MARKS) FROM STUDENT;
+   
+ 16 - IQ > FIND THE SECOOND HIGHEST SALARY FROM EMPLOYEE
+ =======================================================================
+   -> SELECT * FROM EMPLOYEE WHERE SALARY =(SELECT MAX(SALARY) FROM EMPLOYEE WHERE SALARY < (SELECT MAX(SALARY) FROM EMPLOYEE));
+   
+   if you want 3rd highest salary
+   ----------------------------------------
+    -> SELECT * FROM EMPLOYEE WHERE SALARY =(SELECT MAX(SALARY) FROM EMPLOYEE WHERE SALARY < (SELECT MAX(SALARY) FROM EMPLOYEE where SALARY <
+       (select max(SALARY) from EMPLOYEE))); 
+       
+   but if you short query for Kth highest salary
+   ---------------------------------------------------------
+    SELECT DISTINCT SALARY FROM EMPLOYEE ORDER BY SALARY DESC LIMIT 1 OFFSET 2;
+    
+    
+ 17> GROUP BY CLAUSE
+ =================================================================
+  -> Group rows that have same values into summary rows.
+  ->  It collect data from multiple records and groups the results by one or more columns.
+  -> Generally we use group by with some aggregation function.
+  
+  EX:  SELECT AGE, COUNT(EMP_NAME) FROM EMPLOYEE GROUP BY AGE;  
+  
+ 18> IQ- WRITE THE QUERY TO FIND THE AVAERAGE SALARY OF EACH CITY IN ASCENDING ORDER
+ ====================================================================================================
+  -> SELECT CITY, AVG(SALARY) FROM EMPLOYEE  GROUP BY CITY ORDER BY CITY ASC;
+  
+ 19> Having clause
+ ==================================================================
+  -> Similar to where clause i.e apply some condition on rows.
+  -> Used when we want to apply any condition after grouping.
+   
+   EX: SELECT  EMP_NAME,COUNT(EMP_NAME) FROM EMPLOYEE GROUP BY EMP_NAME HAVING MAX(SALARY) > 60000 ;
+   
+ 20> General order
+ ========================================================
+  SELECT columns(s)
+  FROM   table_name
+  WHERE  condition
+  BROUP BY column(s)
+  HAVING  condition
+  ORDER BY columns(s) ASC
+  
+ 21> Table related queries
+ =======================================================
+  Update (to update existing rows)
+  
+  UPDATE EMPLOYEE SET EMP_NAME = "RABINARAYAN" WHERE EMP_NAME="RABI";
+  
+  DELETE (to delete existing rows)
+   
+    DELETE FROM EMPLOYEE WHERE SALARY <20000;
+    
+ 22> Cascading for Foreign key (FK)
+ ==============================================================
+  On Delete Cascade
+  -----------------------
+   When we create a FK using this option, it delete the referencing rows in the child table 
+   when the referenced row is deleted in the department table which has a primary key.
+   
+  On Update Cascade
+  ---------------------------
+   When we create a FK using UPDATE CASCADE THE referencing rows are updated in the child table 
+   when the referenced rows is updated in the parent table which has a primary key.
+   
+   EX: 
+    CREATE TABLE DEPARTMENT (
+      ID INT PRIMARY KEY,
+      DEPT_NAME VARCHAR(100),
+      DEPT_ID INT,
+      FOREIGN KEY (DEPT_ID) REFERENCES EMPLOYEE (EMP_ID) 
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+ );
+ 
+ 23> Table Related Queries
+ ============================================================
+  ALTER ( to change the schema)
+  
+  ADD column 
+  ---------------------
+   ALTER TABLE tb_name ADD COLUMN column_name data_type constraints
+   
+  DROP column
+  ----------------------
+   ALTER TABLE tb_name
+   DROP COLUMN column_name;
+   
+  RENAME Table
+  ------------------------
+   ALTER TABLE tb_name
+   RENAME TO new_table_name;
+   
+  CHANGE Column
+  ------------------------
+   ALTER TABLE tb_name
+   CHANGE COLUMN old_name new_name new_datatype new_constraint;
+   
+  MODIFY Column (Modify data type / constraint)
+  -----------------------------------------------------------
+   ALTER TABLE tb_name
+   MODIFY col_name new_datatype new_constraint;
+   
+   
+  ADD Column 
+  -------------------------------
+   ALTER TABLE tb_name ADD COLUMN column_name INT NOT NULL DEFAULT 19;
+   
+  MODIFY Column
+  --------------------------------
+   ALTER TABLE tb_name MODIFY column_name VARCHAR(2);
+   
+  CHANGE Column (rename)
+  ------------------------------------
+   ALTER TABLE tb_name CHANGE old_clname new_clname data_type;
+   
+  DROP Column 
+  -----------------------------------
+   ALTER TABLE tb_name DROP COLUMN cl_name;
+   
+  RENAME Table
+  -------------------------------------
+   ALTER TABLE tb_name RENAME TO new_tbname;
+   
+  TRUNCATE (to delete tables data)
+  ---------------------------------------
+   TRUNCATE TABEL tb_name;
+   
+ 24> Joins in SQL
+ =========================================================
+  Join is used to combine rows from two or more tables, based on a related column between them.
+  
+  Inner Join
+  ---------------------
+  -> Returns records that have matching values in both table.
+   syntax: SELECT columns from tableA INNER JOIN tableB ON tableA.col_name = tableB.col_name;
+   
+  Left Join
+  ---------------------
+   -> Returns all records from the left table and the matched records from the right table.
+   syntax: SELECT columns from tableA LEFT JOIN tableB ON tableA.col_name = tableB.col_name;
+   
+  Right JOIN
+  ----------------------
+   -> Returns all records from the right table, and the matched records from the left table.
+   syntax: SELECT columns from tableA RIGHT JOIN tableB ON tableA.col_name = tableB.col_name;
+   
+  Full join 
+  -----------------------
+   -> Returns all records when there is a match in either left or right table.
+   syntax: SELECT * FROM tableA A LEFT JOIN tableB B ON A.id=B.id
+           UNION
+           SELECT * FROM tableA A RIGHT JOIN tableB B ON A.id=B.id
+           
+  Self Join
+  -----------------------
+   -> It is a regular join but the table is joined with itself.
+    syntax: SELECT columns FROM table as A JOIN table as B ON A.col_name = B.col_name;
+    
+    
+ 25> Union 
+ ============================================================ 
+  It is used to combine the result set of two or more select statements.
+  Gives UNIQUE records.
+  
+  To use it : 
+    * every select should have same no. of columns
+    * columns must have similar data type
+    * columns in every select should be in same order.
+    
+    syntax: SELECT columns FROM tableA
+            UNION
+            SELECT columns FROM tableB
+            
+ 26> Union ALL
+ =================================================================
+  It is used to combine the result set of two or more select statements.
+  Gives all records.
+  
+  syntax: SELECT columns FROM tableA
+            UNION ALL
+            SELECT columns FROM tableB
+            
+ 27> SQL Sub Queries
+ ===================================================================
+  A Subquery or inner query or a Nested query is a query within another SQL query.
+  it invokes 2 select statements.
+  
+  syntax: select columns from tb_name where col_name operator (subquery);
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

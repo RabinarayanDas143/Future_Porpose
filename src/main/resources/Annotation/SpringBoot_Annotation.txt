@@ -1,0 +1,187 @@
+                                                          SpringBoot Annotation
+                                             ==================================================
+
+1. @SpringBootApplication Annotation
+=====================================================
+   This annotation is used to mark the main class of a Spring Boot application.
+   It encapsulates @SpringBootConfiguration, @EnableAutoConfiguration, and @ComponentScan annotations with their default attributes.
+
+
+2. @Controller
+===========================        
+       @Controller is used to annotate your class as a controller.
+
+3. @RestController
+=========================== 
+      @RestController annotation is a combination of @Controller and @Responsebody . it is use to create a RESTful web service .
+      if we applied this annotation in our class then no need to annotate class method to @Responsebody . 
+      
+4. @RequestMapping
+===========================
+     @RequestMapping annotation which is used to map the HTTP request to our controllers method .
+     
+5. @GetMapping 
+===========================
+     @GetMapping annotation is used for mapping HTTP Get request in to specific controllers method .
+     It is a composed annotation that acts as a shortcut for @RequestMapping (method = RequestMethod.GET)
+     
+6. @PostMapping
+=============================
+    @PostMapping annotation is used for mapping HTTP post request to specific controllers method .
+    It is a composed annotation that acts as a shortcut for @RequestMapping (method = RequestMethod.POST).
+    
+7. @PutMapping
+=============================
+    @PutMapping annotation is used for mapping HTTP PUT request to a specific handler method .
+    It is a composed annotation is act as a shortcut for @RequestMapping (method = RequestMethod.PUT).
+    
+8. @DeleteMapping 
+============================
+   @DeleteMapping annotation is used to map the HHTP delete request to a specific handlers method .
+   It is composed annotation to act as a shortcut for @RequestMappting (Method = RequestMethod.DELETE).
+   
+9. @Autowired
+=============================
+   @Autowired annotation in spring framework that enables dependency injection for java classes . It allows spring to automatically inject dependency in the class.
+   eliminating the need for manual configuration .
+   
+10. @Component
+==============================
+   @Component annotation that allow spring to detect our custom beans automatically . In other word spring will scan our application class and detect which class
+    is annotated with @Component . Initiate them  and inject any dependency in to them . 
+    
+11. @Service
+===============================
+    @Service annotation indicate that they are holding the business logic .
+    
+12. @Repository
+================================
+    @Repository annotation is used to indicate that a class is a repository . This class is used for accessing and manipulating data from database.
+    
+13. @Componentscan
+================================
+   @Componentscan is used spring framework for auto detecting and register spring managed components (eg : controller,service,repository etc..) to a specific package.
+   
+14. @Configuraion
+================================
+   @Configuraion is used, when we want to create custom bean as per our logic , for that we have to use a class annotated this
+   class @Configuraion and create a method, inside this method we return class object and annotated this method @Bean.
+   
+15. @Value 
+=================================
+   @Value annotation is used to inject value from external configuration properties / application.properties file in to spring bean .
+   
+16. @Qualifier
+=================================
+    @Qualifier annotation is used to specify which beans we have to use , when multiple beans of the same type exist .
+    
+    Ex: public interface order(){
+            public void oderMethod()
+           }
+           
+        @Component
+        @Qualifier ("onlineOrder")   
+        public class OnlineOder implements order {
+             public void oderMethod(){
+             
+             }
+        }
+        
+        @Component
+        @Qualifier ("offlineOrder")  
+        public class OfflineOrder implements order {
+             public void oderMethod(){
+             
+             }
+        }
+        
+        public class User {
+        
+        @Autowired
+        @Qualifier("offlineOrder")
+        Order order;
+          
+          order.oderMethod(); // it call the OfflineOrder class method
+        }
+    
+17. @Profile
+==================================
+   @Profile annotation is used in spring framework to indicate that a component , configuration file , class or methods should be active or inactive 
+   based on the specified profile.
+   
+18. @EnableAutoConfiguraion
+===================================
+   @EnableAutoConfiguraion annotation is used in spring boot to enable auto configure the application context .
+   
+19. @Entity
+====================================
+   @Entity indicates that they are JPA entities . Use @Table to specify table name , if our class name is different from our table name.
+   
+20. @Primary
+=========================================
+  @Primary is use when our interface implements in two classes, and when we autowired this interface and call the method 
+  it confuse for which class method to call , at that time we have to use @Primary for one class so that always it call 
+  the method from this class.
+  
+  EX:  public interface order(){
+            public void oderMethod()
+           }
+           
+        @Component
+        @Primary  
+        public class OnlineOrder implements order {
+             public void oderMethod(){
+             
+             }
+        }
+        
+        @Component
+        public class OfflineOrder implements order {
+             public void oderMethod(){
+             
+             }
+        }
+        
+        public class User {
+        
+        @Autowired
+        Order order;
+          
+          order.oderMethod(); // it call the OnlineOrder class method
+        }
+   
+  
+ 21> @ConditionalOnProperty
+ ====================================================================================
+ -> Bean is created conditionally (Means Bean can be created or not).
+ -> In this annotation we have to pass some parameter 
+       @ConditionalOnProperty(prefix="",value="",havingValue="",matchifMissing=false)
+       
+       
+ 22> @PropertySource & @PropertySources
+ ====================================================================================
+ -> Spring @PropertySource annotation is used to provide properties file to spring environment.
+ -> Spring @PropertySources annotation is used to provide multiple properties files to spring environment.
+ -> These annotation is used with @Configuration classes.
+ -> Spring @PropertySource annotation is repeatable, means you can have multiple property source on a configuration class.
+ -> We can use @value annotation and Environment class 	to read the property file.
+ 
+ 23> @PathVariable
+ =====================================================================
+  -> @PathVariable is used to extract values from the URI (path) of the request.
+  -> It extract the data and bind in method parameter.
+  -> @PathVariable, when we extract the data at that time we have to maintain the sequence of the data.
+  
+     @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long userId) {}
+    
+ 24> @RequestParam
+ ==========================================================================
+  -> @RequestParam is used to extract the value from URL and assign in method parameter.
+  -> It is use when the data is come in like query. 
+  -> Example URI: /users?name=John
+   
+     @GetMapping
+    public ResponseEntity<List<User>> getUsersByName(@RequestParam("name") String userName) {} 
+      
+     

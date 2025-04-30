@@ -1,0 +1,1029 @@
+ 1> What is the role of React in software development ?
+ ==========================================================================
+ -> React is a js library , it is use to simplefy the UI creation of complex application.
+ 
+ 2> What is an open source js library ?
+ ==========================================================================
+ -> React is an open source js library .
+ -> It is used for building UI .
+ -> It simplifies the creation of Single Page Application (SPA) by using reusable component.
+ 
+ 3> What is SPA ?
+ =================================================================================
+ -> A Single Page Application is a web application that have only one page.
+ -> Whenever user do some action in web site , then in response content is dynamically update
+    without refresh or reload the new page.
+    
+ 4> What are the advantages of React ?
+ ====================================================================================
+ -> Simple to build Single Page Application (by using component).
+ -> React is cross platform and open source.
+ -> It is light weight and very first  (Virtual DOM).
+ -> Large community and EcoSystem.
+ -> Easy to testing. 	
+ 
+ 5> What are disadvantages of React ?
+ ======================================================================================
+ -> React is not good choice for very small application.
+ 
+ 6> What is the Difference between React & Angular
+ ===================================================================================
+                       React                                                  Angular
+     --------------------------------------------------          ------------------------------------------------------------------------
+   -> React & Angular both are use to create single page UI Application using component.
+   -> React is a JS library.                                  -> Angular is a complete framework.
+   -> React is a virtual DOM, which make it faster.           -> Angular used a real DOM.
+   -> React is smaller in size and lightweight and            -> Angular is a bigger because it is a complete framework.
+     therefore faster sometime.
+   -> React depends on external library for many complex      -> Since Angular is a complete framework, there it provide built-in support.
+      feature.
+   -> React is simple to learn and more popular than Angular. -> Angular is slightly difficult to learn as it is typeScript, OOPS concept.
+   
+ 7> What is DOM ?
+ ========================================================================================
+  -> The DOM (Document Object Model) represents the web pages as a tree like structure which allow javaScrit to dynamically access and
+     manipulate the content of web page.
+     
+ 8> What is the Difference between DOM and virtual DOM ?
+ =======================================================================================
+  -> React uses a virtual DOM to efficiently update the UI without rerender the entire page, which helps to improve and make the
+     application more responsive.
+     
+ 9> What are React Component ?
+ ========================================================================================
+ -> In React, a Component is a reuse building block that use for creating User interface.
+ 
+ 10> What is npm ? what are the role of node module ?
+ =======================================================================================
+ -> NPM is used to manage the dependencies for your React project.
+ -> NPM is used to create node module that contains all the dependencies of the project.
+ 
+ 11> What is the Role of src folder ?
+ =====================================================================================
+  -> src folder is used to store all the source code of application .
+  
+ 12> What is the Role of index.html page in React ?
+ ======================================================================================
+  -> index.html is the entry point of your react application.
+  
+ 13> What is the role of App.js file in React ?
+ ===============================================================================
+  -> App.js is the top level/root level component in react application and it is responsible for rendering all 
+     of other component.
+     
+ 14> What is the role of export default ?
+ ===============================================================================
+  -> It is used for import this component in other component.
+  
+ 15> What is JSX ?
+ ==============================================================================
+  -> JSX (JavaScript XML) is a syntax extension used by React to write HTML like a code.
+  -> It give the power to write HTML and Js code saimultaneously.
+  
+ 16> What are the advantages of JSX ?
+ ================================================================================
+  -> Improve code readability and writability.
+  -> Error checking in advance .
+  -> Support javaScript expression.
+  -> Improve performance.
+  -> Code resuability.   
+  
+ 17> What is Transpiler ?
+ =====================================================================================
+  -> A transpiler is a tool that convert source code from one programming  language to anathor.
+  
+ 18> What is the role of Fragment in React ?
+ =======================================================================================
+  -> In React, a fragment is a way to group a list of children without adding extra nodes to the DOM.
+  
+ 19> What is props in React ?
+ ======================================================================================
+  -> props is a way to pass data from parent component to child component.
+  
+ 20> What is spread operator ?
+ ============================================================================================
+  -> spread operator (...) is used to expand or spread an array of object.
+  
+ 21> What are the type of conditional rendering in JSX ?
+ =========================================================================================
+  -> There are 4 type of conditional rendering
+      - if/else statement
+      - Ternary operator
+      - && operator
+      - Switch case statement
+      
+      
+===========================================================================================================================
+                                   TOP 100 React Js Interview Question
+===========================================================================================================================
+
+ 1> What is React ? What is the role of each in software development? V.IMP
+ ==================================================================================
+  -> React is a open source JavaScript library .
+  -> It is used to create User Interface.
+  -> It helps to create Single Page Application by using reusable component.
+ 
+ 2> What are the key features of React ? V.IMP
+ ===================================================================================
+  -> 7 key features
+      - virtual DOM
+      - Component Based Architecture 
+      - Reusability Component
+      - JSX
+      - Declarative Syntax
+      - Community and EcoSystem
+      - React Hook
+ 
+ 3> What is DOM ? What is the diff. betweeen HTML and DOM ?
+ =======================================================================================
+  -> DOM (DOcument Object Model) represent the web page like a tree structure, which allows javaScript 
+     to dynamically access and manipulate the content of web page.
+     
+ 4> What is virtual DOM ? Difference between DOM and Virtual DOM ? V.IMP
+ =========================================================================================
+  -> React uses virtual DOM to efficiently update the UI without re-rendering the entire page, which help to improve the 
+     performance of the application.
+     
+                   DOM                                                       Virtual DOM
+     ----------------------------------------------------         -------------------------------------------------------------
+    -> DOM is a actual representation of web page.               -> Virtual DOM is a light weight copy of the DOM .
+    -> Re-render the entire page when updates occur .            -> Re-render only changed parts efficiently.
+    -> can be slower, for frequent changes.                      -> Optimized for faster re-rendering.
+    -> suitable for static websites and simple application.      -> Better for dynamic websites and complex single page application.
+ 
+ 5> What are React Components ? What are the main element of it ? V.IMP
+ ===========================================================================================
+  -> In React, a Component is a reusable building block for creating user interface.
+  -> It is same like function but it is powerful from function.
+  
+ 6> What is SPA (Single Page Application)
+ ===========================================================================================
+  -> A Single Page Application (SPA) is a web application that have only one single page.
+  -> When we changes something in web page at that time only content will be updated without refreshing or reload the new page.
+ 
+ 7> What are the 5 advantages of React ?
+ ===========================================================================================
+  -> It provides SPA.
+  -> It provides Virtual DOM.
+  -> It is open source .
+  -> Large community and ecosystem.
+  -> Testing is easy.
+  
+ 8> What is the Role of JSX in React ? V.IMP
+ =============================================================================================
+  -> JSX stands for javaScript XML.
+  -> JSX used by React to write HTML like code, it helps to write saimultaneously HTML code with JS code.
+  -> JSX is converted to JavaScritp code via tool like Babel, bcz browser understand javaScript not JSX.
+  
+ 9> What is the Difference between Declarative & Imperative syntax ?
+ ==========================================================================================
+  -> Declarative syntax focus on describing the desired     -> Imperative syntax involves step by step process to achieve a
+     result without specifying the step by step process.       particular goal.
+  -> JSX in React is used to write declarative syntax.      -> JS has an imperative syntax.
+ 
+ 10> What is Arrow function expression in JSX ?
+ =======================================================================================
+  -> Arrow function is a function there is no name of that function.
+  -> It is a concise way to defining function.
+  
+ 11> How React App load and display the components in browser ? V.IMP
+ =======================================================================================
+  -> First Request come in                index.html
+                                    (Single Page which load index.js by React libraries)
+                                              |
+                                              |
+                                              |
+                                            index.js
+                                     (Replace root element of index.html file by App component)
+                                              |
+                                              |
+                                              |
+                                            App.js
+                                     ( Root component which is the container of all child component)
+                                              |
+                                              |
+                                              |
+                                          ChildComponent.js
+                                     ( Custom child component placed over app component)
+                                     
+                                     
+  12> How React provides Reusability and Composition ?
+  ======================================================================================================
+  -> React provides Reusability and Composition through its component based architecture.
+  -> Reusability : Once you create a component, you can re-use it in different parts of your application.
+  -> Composition : Composition is creating new and big component by combining existing small components. 
+                   its advantages is , change to small component will not impact to other components.
+                   
+ 13> What are state, stateless, stateful and state management terms ?
+ ========================================================================================================
+  -> "state" refers to the current data of the component.
+  -> stateful or state management means, when a user perform some action on UI , then react appplication should able to update
+     or re-render that data or state on the UI.
+  -> stateless means when a user perform some action on UI , then react application is not update or re-render that data on UI.
+  
+ 14> What are Props in JSX ? V.IMP
+ ================================================================================================
+  -> props(properties) are a way to pass data from parent component to a child component.
+  
+ 15> What is NPM ? What is the role of node_module folder? V.IMP
+ ===============================================================================================
+  -> NPM (Node Package Manager) is used to load the the node module folder, that contains the dependencies for your project,
+     including the React libraries itself.
+     
+ 16> What is the role of public folder in React ?
+ ===============================================================================================
+  -> Public folder contains static assets that are served directly to the user, such as images, fonts and the index.html file.
+  
+ 17> What is the role of src folder in React ?
+ =================================================================================================
+  -> src folder is used to store all the source code of the application which is responsible for the dynamic changes in your 
+     web application.
+     
+ 18> What is the role of index.html page in React?
+ ============================================================================================
+  -> index.html file is the main HTML file(SPA) in React application.
+  -> Here the div with id="root" will be replaced by the component inside index.js file.
+  
+ 19> What is the role of index.js file and ReactDOM in React ? V.IMP
+ =============================================================================================
+  -> ReactDOM is a javaScript library that renders components to the DOM or browser.
+  -> The index.js file is the javaScript file that replaces the root element of the index.html file with the newly render component.
+  
+ 20> What is the role of App.js file in React ? V.IMP
+ ==================================================================================
+  -> App.js file contain the root component of React Application.
+  -> App component is like a container for other components.
+  -> App.js is defines a structure, layout and routing in the application.
+  
+ 21> Can we have function with out a return statements ?
+ ==================================================================================
+  -> Yes, a function without return statement is possible .
+  -> In that case, your component will not render anything in UI.
+  -> The common use case for logging purpose. 
+  
+ 22> What is the role of export default inside every component ?
+ ===============================================================================
+  -> Export statement is used to make a component available for import using "import" statement in other file.
+  
+ 23> What is Babel
+ ==================================================================================
+  -> Babel in React is used to convert JSX syntax to javScript which browser can understand .
+  
+ 24> What is the role of Fragments in JSX ? V.IMP
+ =============================================================================
+ -> In React, a Fragment is a way to group multiple children's elements.
+ -> Using a Fragment prevent the addition of unnecessary nodes to the DOM.
+ 
+ 25> How to you iterate over a list in JSX ? What is the map() method ?
+ =====================================================================================
+  -> map() is used to iterate over an array and modify it element using callback function.
+  
+ 26> What is Transpiler ? What is the difference between Compiler & Transpiler ?
+ ===============================================================================================
+  -> A Transpiler is a Tool that convert source code form one high level programming language (JSX) to another high-level
+     programming language (JavaScript).
+      EX : Babel
+  -> A compiler is a tool that convert high-level programming language (JAVA) to lower level language (Machine code or Byte code)
+  
+ 27> What are type of React Component ? What are functional components ? V.IMP
+ ========================================================================================================
+  -> There are two type of Components 
+      - Class Component
+      - Functional Component
+  -> Functional Component are declared as a javaScript function.
+  -> They are stateless component, but with the help of hooks, they can manage state also.
+  
+ 28> What is Prop Drilling in React > V.IMP
+ =================================================================================================
+  -> Prop Drilling is the process of passing down props through multiple layers components.
+     (Passing data from child component to child components).
+      
+      Parent Component -----> Child Component -------> Grand Child Component
+                      (Data)                  (Data)                      (Data)
+                      
+ 29> Why to avoiding Prop Drilling ? in How many way can avoid prop Drilling ? V.IMP
+ =======================================================================================================
+  -> Why to avoid prop drilling
+     - Maintenance : prop drilling can make code harder to maintain as changes in data flow, require update accross multiple components.
+     - Complexity : It increase code complexity and reduce code readability.
+     - Debugging : Debugging becomes challenging when prop need to be traced through numerous Components.
+  -> 5 Way to avoid Prop Drilling 
+      - Using Context API
+      - Using Redux
+      - Using Component Composition
+      - Using CallBack Function
+      - Using Custom Hooks.
+      
+ 30> What is class component in React ? V.IMP
+ =======================================================================================
+  -> Class component are defined using javaScript classes.
+  -> They are stateful components by using the life cycle method.
+  -> The render method in class component are responsible for returning JSX.
+  
+ 31> How to pass data between class component in React ?
+ ===================================================================================
+  -> this.props can be used in child component to access properties/ data passes from parent component.
+  
+ 32> What is the role of this keyword in class component ?
+ ===================================================================================
+  -> this keyword is used to refer to the instance of the class.
+  
+ 33> What are the Diff. between functional Component and Class Component
+ ======================================================================================
+                        Functional Component                                   Class Component
+     ------------------------------------------------------              ------------------------------------------------------
+  -> Syntax : Define as a JS function.                                -> Define as a JS Class.
+  -> State : Originally stateless but can now maintain                -> Can manage local state with this.state
+             state using Hook .
+  -> LifeCycle method : No                                            -> Yes
+  -> Readability : More readable & concise.                           -> Verbose (complex)
+  -> this keyword : No                                                -> Yes
+  -> Do not have render() method .                                    -> Have render method.
+  
+ 34> What is Routing and Router in React ? V.imp
+ ========================================================================================
+  -> Routing : Routing allows you to create a Single Page Application with navigation, without the need for a full page refresh.
+  -> Router : React Router is a library for handling routing and enables navigation and rendering of different component based on the URL.
+  
+ 35> What is the roles of Routes and Route component in React Routing ? V.imp
+ ==============================================================================================
+  -> The Routes component is used as the root container for declaring your collection of routes.
+  -> The Router component is used to define a Route and specify the component that should render when the route matches.
+  
+ 36> What are Route Parameters in React Routing >
+ ===============================================================================================
+  -> Route Parameter in React Router are a way to pass dynamic value to the component as part of the URL path.
+  
+ 37> What is the Role of exact prop in React Routing ?
+ ==================================================================================
+  -> exact prop is used with the Route component to match exactly to the provided path.
+  
+ 38> What are React Hooks ? What are the top React Hooks? V.IMP
+ =======================================================================================
+  -> React Hooks are inbuilt function provided by React that allow functional component to use state and lifeCycle features.
+  -> Before Hooks, Class Components lifeCycle method were used to maintain the state in React.
+  -> To use React Hook first we have to import it from React library.
+  -> Top React Hooks are : useState, useEffect, useContext, useReducer, useCallBack, useMemo, useRef, useLayoutEffects.
+  
+ 39> What is the Role of useState() hook and how it work? V.IMP
+ =========================================================================================
+  -> The useState hook enables functional component to manage state.
+  -> Working : useState() function accept the initial state value as the parameter and return an array with two element.
+  -> The first element is the current state value .
+  -> The Second element is the function that is used to update the the state.
+  
+ 40> What is the Role of useEffect(). How it work and what is its use ? V.IMP
+ ==============================================================================================
+  -> The useEffect() hook in React is used to perform side effect in functional component.
+  -> Example : data fetching from API
+  -> useEffect() is called after the component render. 
+  -> useEffect() function will be accept two parameter : Effect Function, Dependency Array.
+  
+  useEffect(() => {
+        if (id) {
+            EmployeeService.getEmployeeById(id)  // Effect Function
+                .then((response) => {
+                    setName(response.data.name);
+                    setEmail(response.data.email);
+                    setContact(response.data.contact);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    }, [id]); //Dependency Array
+  
+ 41> What is the meaning of the empty array [] in the useEffect() ?
+ =====================================================================================
+  -> An empty array [] indicates that the effect function should only run once.
+  
+   Example: useEffect(() => {
+               const getAllEmployee = () => {
+               EmployeeService.getAllEmployee().then((response) => {
+               setEmployee(response.data);
+                   }).catch(error => {
+                      console.log(error);
+                     })
+                  }
+           }, [])
+           
+           
+ 42> What is the role of useContext() hook ? V.IMP
+ =================================================================================
+  -> useContext in React provides a way to pass data from parent component to child component without using props.
+  
+ 43> What is createContext() method? What are Provider and Consumer properties ?
+ ==============================================================================================
+  -> createContext() function return an object with provider and consumer properties.
+  -> The provider properties is responsible for providing the context value to all its child component.
+  -> useContetxt() method or consumer property can be used to consume the context value in child components.
+  
+ 44> When to use useContext() hook instead of prop in real application ?
+ ==============================================================================================
+  -> Use useContext() instead of props when you want to avoid prop drilling and access context values directly.
+    Ex: - Theme switching (dark/Light)
+        - Localization (Language selection)
+        - Centralize Configuration setting
+        - User preference 
+        - Notification System.
+        
+ 45> What are component life Cycle method ? V.IMP
+ ========================================================================================
+  -> Component life Cycle methods are special methods that get called various stages of component's life.
+  
+                                                 Component Life Cycle
+            ---------------------------------------------------------------------------------------------------------   
+         Mounting Phase                                Updating Phase                                    Unmounting Phase
+     ---------------------------------          ----------------------------------                  -------------------------------
+          - constructor()                       - shouldComponentUpdate()                          - componentWillUnmount()
+          - render()                            - render()
+          - componentDidMount()                 - componentDidUpdate()
+          
+ 46> What are constructor in class components ? When to use them ?
+ ==========================================================================================
+  -> constructor is a special method that is called when an instance of class is created .
+  -> Constructor is used to initializing the Component's state or performing any setup that is needed before the component is render.
+  
+ 47> What is the role of super keyword() in constructor ?
+ =============================================================================================
+  -> super keyword is used in constructor of a class component to call the constructor of parent class.
+  
+ 48> What is the role of render() method in Component life cycle ?
+ =============================================================================================
+  -> Render() method return the react elements that will rendered the DOM.
+  
+ 49> How the State can be maintained in a class component ? V.IMP
+ =============================================================================================
+  -> Two step process to maintain the state :
+     - this.setState() method is used to update the state.
+     - this.state property is used to render the update state in DOM.
+     
+ 50> What is the role of ComponentDidMount() method in Component life Cycle ?
+ =============================================================================================
+  -> ComponentDidMount() life cycle method in React is the part of mounting phrase and it is called after a component 
+     has been rendered to the DOM.
+  -> Mostly used fo side Effect : For API Calling .
+  
+ 51> What are Controlled Component in React ? V.IMP
+ =====================================================================================
+  -> A Controlled Component is a Component whose form element are controlled by state of the application.
+  
+ 52> Difference between Controlled Component and Uncontrolled Component
+ ===================================================================================
+                    Controlled Component                                      Uncontrolled Component
+   ----------------------------------------------------------          ----------------------------------------------------------
+   -> Values are controlled in React state.                            -> Values are not controlled by React state.
+   -> Event handlers update React state.                               -> No explicit state update; value can access directly from the React DOM.
+   -> Dont't depend on useRef().                                       -> Commonly uses useRef() to access form element values.
+   -> Re-render on state change.                                       -> Less re-rendering since values are not directly tied to react state.
+   -> A recommended and standard practice for form handling            -> Useful in certain scenarios but less commonly consider a best practice.
+      in React.
+  
+ 53> What are the characteristics of Controlled Component ?
+ ===============================================================================
+  -> State Control : The value of the form element are stored in the component's state.
+  -> Event Handling : Changes to the form element trigger on event (e.g : onChange() , onClick())
+  -> State update : The event handler updates the component's state with the new value of the form element.
+  -> Re-rendering : The component re-renders with the updated state and the form element reflects the new value.
+  
+ 54> How to handle forms in React ?
+ ==============================================================================
+  -> The preferred and recommended approach for handling forms in React by using Controlled Component.
+  
+ 55> How can you handle multiple input fields in a controlled component ?
+ =====================================================================================
+  => Maintain separate variable for every field and update them individually using the onChange event.
+  
+ 56> How do you handle form validation in a Controlled component ?
+ ======================================================================================
+  -> By using conditional rendering based on the state and validate input values before updating the state.
+  
+ 57> What is Code Splitting in React ? V.IMP
+ ==============================================================================
+  -> Code splitting is a technique to split the javaScript bundle in to smaller chunk which are loaded on demand.
+  
+       Bundle project                                                            Each chunk loaded on demand
+                |                                                             |                               ========
+        .CSS    | All come in one                                   .CSS      | ----------------------------  |      |
+        .js     |    request                                        .Js       | --------------------------->  | USER |
+        .png    |-------------------> User                          .png      | ----------------------------> |      |
+        .sass   |                                                   .sass     | --------------------------->  =========
+                |                                                             |
+            With out code splitting                                     With  Code Splitting implemented
+            
+ 58> What is the role of Lazy and suspense method in React ? V.IMP
+ =================================================================================
+  -> React.lazy is a function that allow you to load a component lazily.
+  -> It enables code splitting by allowing you to load a component dynamically, means when it needed only.
+  -> The Suspense component is used to display a fallback UI while the lazily loaded component is being fetched.
+  
+ 59> What are the pros and cons of code Splitting ?
+ =================================================================================
+  5 pros of code splitting :
+  
+  -> Faster initial load time
+  -> Optimized Bandwidth usage
+  -> Improved caching
+  -> Parallel loading
+  -> Easier maintenance.
+  
+  5 Cons of Code Splitting :
+  
+  -> Complexity
+  -> Tooling Dependencies
+  -> Potential for Runtime Error 
+  -> Increased Number of Request
+  -> Learning curve
+  
+ 60> What is a High-Order Component in React ? V.IMP
+ ==================================================================================
+  -> A High-Order Component is a component which take another component as an argument and add some extra features,
+     then return this component.
+     
+ 61> What is GraphhQL ?
+ ====================================================================================
+  -> GraphQl is a query language for API and a runtime for executing those query with your existing data.
+  -> GraphQL and React are often used together. React components can use GraphQL queries to fetch the data required for rendering.
+  
+ 62> What are the 2 top ways to achieve state management ? When to use what in React ?
+ ===============================================================================================
+  -> 1. useState Hook :
+   ------------------------------
+     - When to use : Simple component-level state.
+     - Reason : Ideal of application having small components and isolated state because it is light weight and built into React only.
+     
+  -> 2. Context API :
+  ---------------------------------
+    - When to use : Prop drilling avoidance for sharing global data.
+    - Reason : These is good for sharing data multiple components, but the complexity level not much be very should high, like medium.
+    
+  -> 3. Redux : 
+  ---------------------------------
+    - When to use : Large scale application with complex state.
+    - Reason : Centralized store and action provide a predictable state management pattern, aiding in debugging and scalability.
+     
+  63> How can you implement Authentication in a React Application. ? V.IMP
+  ===============================================================================================
+  -> 1. POST : { UserName, Password }
+  -> 2. Authentication and create JWT Token 
+  -> 3. Return Response { JWT Token }
+  -> 4. Store JWT Token at local storage 
+  -> 5. Request Data { JWT Token : Header }
+  -> 6. Validate Token Signature
+  -> 7. Send Data
+  -> 8. Display Data on browser.
+  
+  
+ 64> What is the use of React Profiler ?
+ ==========================================================================================
+  -> React profiler is a set of tool in React that allows developers to profile (analyze) the performance of a React application.
+  
+ 65> What is difference between fetch and axios for API calls in React ?
+ ===========================================================================================
+  ->                  Fetch                                                         axios
+     ----------------------------------------------------           --------------------------------------------------------
+     -> fetch is a built-in-javaScript function, so it doesn't     -> Axios is a third party library, that simplifies the process of making 
+        require any additional libraries.                              HTTP request.
+     -> fetch returns promises, making it easy to work asynchronous   -> Axios allows you to use interceptors, which can be good for task like 
+        code using sync/await syntax.                                    request/response, logging, authentication, and error handling.
+     -> if you want to keep HTTP Request simple, fetch is good        -> if you want to intercept http request/response or improve error handling 
+        choice.                                                          then axios has more features to do it.
+     
+ 66> Important Hooks :
+ ====================================================================
+  -> useState - It is use to manage the state in functional component.
+  -> useEffect - It is used for side effect in functional component . (API calling)
+  -> useContext - Accesses the context in multiple components.
+  -> useReducer - The useReducer hook is a powerful feature in React that provides an alternative to useState for managing state in a functional
+                   component, especially when dealing with complex state logic or multiple sub-values.
+  -> useMemo - UseMemo is use when we dealing with multiple state and we call a specific method for a state, then when we use anathor state
+               at that time this other method is call , to avoid this type issue we call use useMemo and inside this we call our specific method and
+               pass state as a dependency for that method .
+               Exapmle : function App() {
+                                let [count, setCount] = useState(0);
+                                let [item, setItem] = useState(10);
+                                let mutipleCount = useMemo(function mutipleCount() {
+                                  console.log("mutipleCount call");
+                                   return count * 5;
+                                   }, [count])
+                                return (
+                                    <div className='App'>
+                                    <h1>UseMemo Hook in React</h1>
+                                    <h2>Count : {count}</h2>
+                                    <h2>item : {item}</h2>
+                                    <h2>{mutipleCount}</h2>
+                                    <button onClick={() => setCount(count + 1)}>Update Count</button>
+                                    <button onClick={() => setItem(item + 1)}>Update item</button>
+                                    </div>
+                                 )
+                              }
+               
+  -> useCallBack : useCallBack and useMemo Hooks are same . The main difference is that useMemo returns a memorized value and useCallBack returns a 
+                   memorized function.
+                 - Basically useMemo is dealing with a state but useCallBack is dealing with a function.
+                 Example : function App() {
+                             let[add,setaddd] = useState(0);
+                             let learning = useCallback(()=>{
+
+                            },[])
+                                  return (
+                                     <div className='App'>
+                                     <h1>useCallBack Hook in React</h1>
+                                     <h2>{add}</h2> 
+                                     <Children learning={learning}/>
+                                     <button onClick={()=>setaddd(add+1)}>Update</button>
+                                     </div>
+                                  )
+                               }
+                               
+                             function Children({learning}){
+                               console.log("hiiii");
+                                      return(
+                                             <div>
+                                             <h1>hiii</h1>
+                                             </div>
+                                           )
+                                        }
+                                   export default Children
+                 
+  -> useRef : It is used to manipulate DOM directly in Htlm . Focus, color, value etc handel with useRef.
+            Esample : function App() {
+                        let inputRef = useRef(null);
+                        function handelInput(){
+                              //console.log("function calll");
+                             //inputRef.current.value=1000;
+                             //inputRef.current.focus();
+                             inputRef.current.style.color='red'
+                           }
+                          return (
+                           <div className='App'>
+                           <h1>useRef Hook in React</h1>
+                           <input type='text' ref={inputRef}/>
+                           <button onClick={handelInput}>HandelInputBox</button>
+                           </div>
+                         )
+                      }
+  
+ 67> Higher Order Component (HOC)
+ ====================================================================
+  -> What is HOC ?
+      -: It is stands in High Order Component. Basically it is used, it takes a component as an argument and changes something in this 
+         component then return this revised component as an output.
+  -> Why we use it ? -: It is used to takes a component as an props then changes something in this props and return this revised component.
+  -> When we have to use it ? -: When we have use same component multiple times and use some changes in every component at that time it is use.
+  -> How we use it ? -: 
+  
+                     function App() {
+                               return (
+                                <div className='App'>
+                                <h1>HOC in React</h1>
+                                <HOCRed cmp={Counter}/>
+                                <HOCBlue cmp={Counter}/>
+                                </div>
+                              )
+                           }
+                    function HOCRed(props){
+                        return <h2 style={{backgroundColor:'red',width:100}}><props.cmp/></h2>
+                      }
+                    function HOCBlue(props){
+                         return <h2 style={{backgroundColor:'blue',width:100}}><props.cmp/></h2>
+                     }
+                  function Counter(){
+                       let[count,setCount] = useState(0);
+                                  return(
+                                          <div>
+                                          <h3>{count}</h3>
+                                          <button onClick={()=>setCount(count+1)}>Update</button>
+                                           </div>
+                                        )
+                                     }
+
+                   export default App;
+  
+ 68> Life cycle method of Class Component ?
+ ====================================================================
+   -> Class components in React have several lifecycle methods that allow you to hook into different stages of a component's lifecycle. These methods can be divided into four main phases:
+
+        Initialization
+        Mounting
+        Updating
+        Unmounting
+        
+        - constructor(props)
+             Called when the component is instantiated.
+             Used to initialize state and bind event handlers.
+        
+        - componentDidMount()
+                Called immediately after the component is inserted into the DOM.
+                Used to perform side effects such as fetching data or initializing subscriptions.
+        
+        - shouldComponentUpdate(nextProps, nextState)
+                Called before re-rendering when new props or state are received.
+                Used to let React know if the component's output is not affected by the current change in state or props.
+                Returns a boolean (true or false).
+                
+        - componentDidUpdate(prevProps, prevState, snapshot)
+                  Called immediately after updating occurs.
+                  Used to operate on the DOM when the component has been updated.
+                  
+        - componentWillUnmount()
+                 Called immediately before a component is destroyed.
+                 Used to clean up subscriptions, cancel network requests, or remove event listeners.
+                 
+        
+ 69> State Management (All about Data )
+ ==================================================================
+  -> State/Props 
+     -: state is a built-in object that stores data.
+     -: It can rerender instantly when any changes occour in DOM.
+     -: Props is used as an argument .
+     -: Passed data from parent to child components.
+     -: Used for passing data and functions between components.
+     
+  -> Props Drilling
+     -: It is the concept is that when we pass data from parent component to several child component through props.
+     -: It is not good for use because if any issue occour in any component it is impact in other component.
+     Example : 
+                import React from 'react';
+                import GrandParent from './GrandParent';
+
+               function App() {
+                          return (
+                           <div>
+                           <GrandParent />
+                           </div>
+                          );
+                       }
+                 export default App;
+                 
+                 
+                import React from 'react';
+                import Parent from './Parent';
+
+                function GrandParent() {
+                 const message = "Hello from GrandParent";
+
+                  return (
+                          <div>
+                          <h1>GrandParent Component</h1>
+                          <Parent message={message} />
+                          </div>
+                        );
+                      }
+                   export default GrandParent;
+                   
+                   
+                 import React from 'react';
+                 import Child from './Child';
+
+                 function Parent({ message }) {
+                         return (
+                                 <div>
+                                 <h1>Parent Component</h1>
+                                 <Child message={message} />
+                                 </div>
+                                );
+                             }
+                      export default Parent;
+                      
+                      
+                  import React from 'react';
+
+                  function Child({ message }) {
+                             return (
+                                  <div>
+                                  <h1>Child Component</h1>
+                                  <p>{message}</p>
+                                 </div>
+                                );
+                             }
+                     export default Child;
+                  
+                 
+               
+                
+  -> Context API : The Context API allows you to create a context that can be accessed by any component in the component tree without 
+                   explicitly passing props down at every level.
+                 : To avoid prop drilling issues we can use Context API
+                 : For that we have to use create, provider, consumer
+                 
+                 
+                   import { createContext } from 'react';
+                   import './App.css'; 
+                   import { Child3 } from './Child3';
+                   let data = createContext();
+                   function App() { 
+                          let name ="Rabi";
+                                return (
+                                 <div className='App'>
+                                 <data.Provider value={name}>
+                                  <Child3/>
+                                 </data.Provider>
+                                 </div>
+                              )
+                           }
+ 
+                   export default App;
+                   export {data}
+                   
+                   
+                   
+                   import { useContext } from "react"
+                   import { data } from "./App"
+                   export function Child3(){
+                          let name = useContext(data);
+                                     return(
+                                           <div>
+                                           <data.Consumer>
+                                                {
+                                                  ()=>{
+                                                       return (
+                                                          <h1>My Name is :{name}</h1>
+                                                       )
+                                                    }
+                                                }
+                                          </data.Consumer>
+                                          </div>
+                                       )
+                                   }
+                 
+  
+ 70> Redux
+ ================================================================
+  -> What is Redux ?
+  -> Why we use it ?
+  -> When we use it ?
+  -> How we use it?
+  
+ 71> Custom Hooks 
+ ===================================================================
+ -> When we use it ?
+    -: A Custom Hook is a javaScript function whose name start with "use".
+    -: We can use other hooks in custom hook as well.
+    -: To remove the duplicate logic in components and we can extract that logic to custom Hook.
+ -> Code
+     -: 
+          import useCounter from './useCounter';
+            function App() { 
+              let [count,Increment,Decrement] = useCounter();
+                      return (
+                       <div className='App'>
+                       <div>{count}</div>
+                       <button onClick={Increment}>Increment</button>
+                       <button onClick={Decrement}>Decrement</button>
+                       </div>
+                      )
+                    }
+              export default App;
+              
+              
+          import React, { useState } from 'react'
+
+          export default function useCounter() {
+             let [count,setCount]= useState(0)
+             function Increment(){
+                  setCount(count+1);
+                }
+             function Decrement(){
+                  setCount(count-1);
+                }
+            return [count,Increment,Decrement]
+          }
+ 
+ 72> Lazy Loading ? V.IMP
+ ================================================================
+  -> Lazy loading is a design pattern to used to optimize the performance of application .
+  -> It load the components on demand.
+  -> Code splitting : code splitting means it separate the javaScript bundle to different parts.
+  -> Chunking
+  -> Suspense 
+       Example : 
+                   import { lazy, Suspense } from 'react';
+                   import './App.css'; 
+                   let Home = lazy(()=>import ('./Home'))
+                   function App() { 
+   
+                           return (
+                                 <div className= 'App'>
+                                 <h1>App Comonent</h1>
+                                 <Suspense fallback={<div>Please Wait....</div>}>
+                                    <Home/>
+                                 </Suspense>
+                                 </div>
+                                )
+                             }
+                       export default App;
+                       
+                       
+                   import React from 'react'
+
+                  export default function Home() {
+                        return (
+                              <div>
+                              <h1>Home Component</h1>
+                              </div>
+                              )
+                           }
+ 
+ 73> Virtual DOM ?
+ ===============================================================
+  ->Reconciliation Algorithm: Efficiently updates the UI based on state changes.
+  -> React Fiber: A reimplementation of React's core algorithm.
+  -> Renders: The process of updating the virtual DOM.
+  -> Diff algorithm: Compares the previous and current state to determine changes.
+  -> How does render work?: Updating the UI based on virtual DOM changes.
+  
+ 74> SSR Vs CSR 
+ =====================================================================
+  -> Server-Side Rendering (SSR) and Client-Side Rendering (CSR) are two different approaches to rendering content in web applications.
+  -> HTML,CSS are comes under SSR.
+  -> React.js are comes under CSR.
+ 
+ 75> Routing (RBAC - Role Based Access Control)
+ ======================================================================
+ -> React Router
+ -> Protected Routes
+ -> Query Params
+ -> Dynamic Routing
+ -> RBAC in React involves managing user roles and controlling access to various parts of the application based on those roles.
+ -> By using a higher-order component (HOC) or a custom hook, you can encapsulate role-checking logic and reuse it across your application,
+    ensuring that only authorized users can access specific components or routes.
+ 
+ 76> React Testing
+ ======================================================================
+  -> React testing involves verifying that your React components behave as expected.
+  -> There are several tools and approaches available for testing React applications.
+      Types of Testing in React
+      --------------------------------
+      - Unit Testing
+      - Integration Testing
+      - End-to-End (E2E) Testing
+  
+ 77> Async Tasks
+ =====================================================================
+ -> In React, asynchronous tasks refer to operations that take some time to complete, such as fetching data from an API, reading from a file,
+    or performing computations that do not finish immediately. 
+    Common Asynchronous Tasks in React:
+    --------------------------------------
+     -> API calls
+     -> Events
+     -> Promises
+  
+ 78> Reusability / Modularity / Testability 
+ ========================================================================
+   1. Reusability
+   -----------------------
+     -> Reusability in React refers to the creating components or logic that can be reused in different parts of an application.
+   
+   2. Modularity
+   -----------------------
+     -> Modularity involves breaking down an application into smaller components or modules.  
+     -> This practice leads to better-organized code, makes development more manageable, and allows individual components to be developed,
+        tested, and maintained independently.
+        
+   3. Testability
+   ------------------------
+    -> Testability refers to how easily you can write tests for your components and application logic.
+    -> High testability means that components are isolated, have clear input/output, and do not have hidden side effects.
+ 
+ 79> Perfomance
+ ========================================================================
+ -> Lazy Loading : Lazy loading is a performance optimization technique in React that defers the loading of certain components or resources until they are needed.
+ -> Assest (Images) : In React, assets refer to static files that are part of your application, such as images, fonts, icons, videos, audio files,
+                      stylesheets, and any other static resources.
+ -> Js - Css : In React, JavaScript and CSS can be used together in various ways to style components and manage the look and feel of your application.
+ -> Write Optimized Code : Optimizing React code involves improving both performance and maintainability.
+        1. Functional components and Hooks offer simplicity and efficiency.
+        2. Memoization helps prevent unnecessary re-renders.
+        3. Lazy loading and code splitting reduce initial load times.
+ -> Bundles : In React, "bundles" refer to the packages of code that are generated during the build process.
+              These bundles are essentially JavaScript files that contain the React application and all its dependencies. 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+                                               
+                                              
+                                              
+ 
+ 
+ 
+ 

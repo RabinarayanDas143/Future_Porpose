@@ -1,0 +1,184 @@
+1. Difference between save and persist method
+============================================================
+ ->  The return type of Session.save() method is java.io.seriaziable , it return some value as seriaziable object.
+   while the return type of Session.persist() method is void.
+   
+ -> Session.save() method is used inside or outside the transction boundries, but Session.persist() method is
+    used only inside the transction boundries.
+    
+    
+2. Difference between save and saveOrUpdate method
+================================================================
+ -> save() method is used for  insert the record, but saveOrUpdate method is perform for both insert and update , this 
+    method is first check the data is present or not then it perform update operation.
+    
+ -> save() method return some value as as seriaziable object but saveOrUpdate method does not return anything.
+ 
+3. Difference between get and load method
+=================================================================
+ -> Session.load() always return a proxy (fake) object with out hitting the database. if no row found it thows an ObjectNotFoundException.
+    but Session.get() always hit the database and give the real object, if no data found it return null.
+ -> load() is better because it support lazy loading.
+ -> since load() method throws exception when data is not found ,we should use it only when know data is present or not.
+ -> we use get() method when we sure the data is present in data base.
+ 
+ 
+4. First level cache
+================================================================
+ -> First level cache which help the users to get fast running the web application. when we hit the query it first check the cache if the data 
+    is present for this query then it give the result either it hit the data base, it working for only one SessionFactory object.
+ -> First level cache is enabled by default and you can not disable it.
+ -> First level cache is associated with only one session object and other session object can't see it.	
+ -> The session cache can be clear using clear() method.
+ 
+5. Second Level cache
+=================================================================
+ -> second level cache is same like first level cache but difference is the first level cache is associated with only one session object but 
+    second level cache is associate with every session object .
+ -> it does not enable by default, we have to enable it.
+ 
+ 6. Difference between JPA and Hibernate
+ ================================================================
+     JPA
+  -----------
+  -> ORM = Object Relational Mapping tool is help to map the java object to database table
+  -> The java Persistence API provide some guideline for reading and managing data from your java object to data base table.
+  -> Traditionally there have been multiple ORM like : Hibernate ,TopLink , OpenJpa
+  
+    Hibenate
+ ---------------
+  -> Hibernate is an object relational mapping tool, that implements JPA.
+  -> In short JPA is the interface while Hibernate is implement JPA
+  
+ 7> What is hibernate?
+ ==================================================================
+ -> Hibernate is an open-source and lightweight ORM tool that is used to store, manipulate, and retrieve data from the database.
+  
+ 8> What is ORM?
+ =================================================================
+  -> ORM is an object relational mapping. It is used to mapped the java object to database table.
+  -> It simplifies data creation, data manipulation, and data access.
+  
+ 9> Explain hibernate architecture?
+ ====================================================================
+  -> Hibernate architecture is a collection of many interfaces such as Configuration, SessionFactory, Session, Transaction, etc.
+  -> It internally implements ORM.
+  
+ 10> Mention some of the advantages of using ORM over JDBC.
+ =============================================================================
+  -> ORM has the following advantages over JDBC:
+           - Application development is fast.
+           - Management of transaction.
+           - Generates key automatically.
+           - Details of SQL queries are hidden.
+           
+ 11> Is SessionFactory a thread-safe object?
+ ==============================================================================
+  -> Yes, SessionFactory is a thread-safe object, many threads cannot access it simultaneously.	
+  
+ 12> What is Session?
+ =====================================================================
+  -> It maintains a connection between the hibernate application and database.
+  -> It provides methods to store, update, delete or fetch data from the database such as persist(), update(), delete(), load(), get() etc.
+  
+ 13> Is Session a thread-safe object?
+ ==========================================================================
+  -> No, Session is not a thread-safe object, many threads can access it simultaneously. In other words, you can share it between threads.
+  
+ 14> What are the states of the object in hibernate?
+ ==========================================================================
+  -> There are 3 states of the object (instance) in hibernate.
+      - Transient: The object is in a transient state if it is just created but not associated with a session.
+      - Persistent: The object is in a persistent state if a session is open, and you just saved the instance in the database or retrieved the instance from the database.
+      - Detached: The object is in a detached state if a session is closed. After detached state, the object comes to persistent state if you call lock() or update() method.
+  
+ 15> How many types of association mapping are possible in hibernate?
+ ===================================================================================
+  -> There can be 4 types of association mapping in hibernate.
+       - One to One
+       - One to Many
+       - Many to One
+       - Many to Many
+  
+ 16>  What is lazy loading in hibernate?
+ =================================================================================
+  -> Lazy loading in hibernate improves the performance. It loads the child objects on demand.
+  -> Basically when we need the data and hit the database at that time it load the data.
+  
+ 17> Difference between persist and merge in hibernate ?
+ ================================================================================
+  -> persist(entity) should be used with totally new entities, to add them to DB (if entity already exists in DB there will be EntityExistsException throw).
+  -> Similar to save method, persist also INSERT records into the database, but return type of persist is void while return type of save is Serializable Object.
+  -> Hibernate merge can be used to update existing values.
+  -> Use MERGE to do INSERT and UPDATE operations on a table in a single statement.
+  
+ 18> Difference between JDBC & HIBERNATE 
+ ================================================================================
+                     Jdbc                                                Hibernate
+  -------------------------------------------------         ----------------------------------------------------
+  -> In Jdbc to manually write code to map object to        -> In hibernate it automatically map the java object to data base table.
+     data base table.
+  -> In jdbc for inserting the data we have to write        -> In hibernate for insert the data in data base we dont have to write the query
+     the query.                                                it provides some method.
+  -> In jdbc code for exception handling we have to use     -> Whereas Hibernate manages the exceptions itself by marking them as unchecked.
+     try-catch block.
+  -> It is a database connectivity tool.                    -> It is a Java framework.
+  -> Lazy Loading is not supported.                         -> Lazy Loading is supported.
+  -> It has low performance than Hibernate.                 -> It has high performance.
+  
+ 19> What are the core interfaces of Hibernate framework?
+ ====================================================================================
+  - Configuration interface
+  - Transaction interface
+  - Query and Criteria interfaces
+  - Session interface
+  - SessionFactory interface
+  
+ 20> What is SessionFactory in Hibernate ?
+ ======================================================================================
+  -> A SessionFactory represents an "instance" of Hibernate.
+  -> It maintains the relation between entities with database tables.
+  
+ 21> what can you tell about hibernate configuration file ?
+ =======================================================================================
+  -> In configuration file we are specify the properties and mapping , that we have to use creating a SessionFactory .
+  
+ 22> How do you create an immutable class in hibernate ?
+ =======================================================================================
+  -> The @Immutable annotation is used to specify that the annotated entity, attribute or collection is immutable.
+  -> @Immutable placed on a collection makes the collection immutable, meaning additions and deletions to and from the collection are not allowed.
+     A HibernateException is thrown in this case.
+     
+ 23> Can you explain the concept behind hibernate inheritance Mapping ?
+ =========================================================================================
+ -> We can map the inheritance hierarchy classes with the table of the database. There are three inheritance mapping strategies defined in the hibernate:
+    - Table Per Hierarchy : In table per hierarchy mapping, single table is required to map the whole hierarchy, an extra column
+                            is added to identify the class. But nullable values are stored in the table .
+    - Table Per Concrete class : In case of table per concrete class, tables are created as per class. But duplicate column is added in subclass tables.
+    - Table Per Subclass : In this strategy, tables are created as per class but related by foreign key. So there are no duplicate columns.
+ 
+ 24> Is hibernate prone to SQL injection attack ?
+ =========================================================================================
+ -> Hibernate does not grant immunity to SQL Injection.
+ -> Criminals may use it to gain unauthorized access to your sensitive data: customer information, personal data, trade secrets, intellectual property, and more.
+ 
+ 25> Explain hibernate mapping file ?
+ ========================================================================================
+ -> The mapping file. Hibernate uses the mapping metadata to determine how to load and store objects of the persistent class.
+ 
+ 26> What are the most commonly used annotation available to support hibernate mapping.
+ ==========================================================================================
+ 
+ 
+ 27> Explain update Vs merge in JPA
+ ==============================================================================
+  -> 
+  
+  
+  
+  
+  
+  
+  
+  
+  

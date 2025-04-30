@@ -1,0 +1,791 @@
+                                  SPRING BOOT
+                     ========================================
+
+1.alternate use of @Postconstruct is initializingBean interface, this interface give method afterpropertiesSet() this 
+method is execute just after constructor created .
+
+2. Alternate use of @PreDestroy is DisposableBean interface , this interface give Destroy() , this method is execute 
+   before object destroyed.
+   
+ 3> What is SpringBoot
+ ==========================================================================
+  -> SpringBoot is a java framework that makes it easier to create and run java application.
+  -> It simplifies the configuration and setup process, allowing developers to focus more on writing code 
+     for their application.
+  -> SpringBoot, is a module of spring framework, facilitates Rapid Application Development (RAD) capabilities.
+  -> SpringBoot solve many developers problem :
+       a. Configuration
+       b. Dependency management
+       c. Embedded Server
+       
+ 4> Why SpringBoot over Spring ?
+ ===========================================================================
+  -> It's easy to use - Remove boilerplate code.
+  -> Production Ready application - Metrix, Health Check, production ready application.
+  -> Rapid development - auto-configuration enable developers to quick develop apps.
+  -> provide dependency management.
+  -> Auto-configuration.
+  -> Embedded server.
+  
+ 5> Working of SpringBoot
+ ============================================================================
+  -> SpringBoot starts by scanning the starter dependencies in pom.xml .
+     Then download and auto-configure the module as you include in pom.xml .
+  -> For example we have to create web application then we have to put spring-boot-starter-web dependency in pom.xml .
+     when we start the project spring boot downloads all the dependency required for web and configure the thing 
+     like spring mvc.
+     
+ 6> How Spring Boot starts ?
+ ===========================================================================
+   -> Starts by calling main() method of you main class.
+   -> The run() method of SpringApplication is called. This method starts the spring application by 
+      creating an application context and initializing it.
+   -> Once the application context is initialized, the run() method starts the applications 
+      embedded web server.
+      
+ 7> Top SpringBoot annotation
+ ===========================================================================
+  -> @SpringBootApplication : It is the combination of three annotation, @Configuration, @EnableAutoConfiguration and @ComponentScan.
+     it is typically placed on the main class of the application.
+  -> @Component : It is used to mark a class as a spring bean that will be managed by the spring container.
+  -> @Autowired : This annotation is used to automatically inject dependencies in to a Spring-managed bean.
+  -> @Service : This annotation is used to indicate that a class represents a service component in the application. 
+                It is typically used to annotate classes that contain business logic.
+  -> @Controller : When we have map any URL to our class method at that time we are are using this class as a controller.
+  -> @RestController : It is a specialized version of the @Controller annotation that includes the @ResponseBody annotation by default.
+  -> @RequestMapping : Used to map specific URL to method . Used on class as well as method level.
+  -> @Repository : mark a class as DAO. mostly used on class that has database persistent logic.
+  
+ 8> What is SpringBoot Starters 
+ ==========================================================================
+  -> Starters are a collection of pre-configured dependencies that make it easier to develop particular kind of application.
+  -> These starters includes all dependencies, version control, and configuration needed to make certain features of a SpringBoot application functional.
+  
+ 9> What are the dependencies of SpringBoot ?
+ ============================================================================
+  -> Spring-boot-starter-parent
+  -> Spring-boot-starter-plugin
+  -> Spring-boot-starter-test
+  -> Spring-boot-starter-security
+  -> Spring-boot-starter-actuator
+  -> Spring-boot-starter-web
+  
+ 10> What is SpringBoot CLI and what are its benefits ?
+ ===========================================================================
+  -> Command line tool to create, run and manage Spring Boot applications.
+  
+ 11> What is thymeleaf ?
+ =============================================================================
+  -> It is a java based server side templating engine used in java web application to render dynamic web page.
+  
+ 12> What is IOC container ?
+ =============================================================================
+  -> Inversion of control of creating object using new keyword to container or framework.
+  
+ 13> Explain the Spring Bean life cycle
+ ==============================================================================
+  -> life cycle means 
+     ------------------------------
+     - How object is born
+     - How it behaves 
+     - How it dies
+     
+  -> Spring bean life cycle is maintained by IOC container
+    -------------------------------------------------------------
+     - Container get started 
+     - Container creates the object of bean as per request.
+     - Dependencies is created.
+     - Dependencies is injected.
+     - Destroyed when container closed.
+     
+     Container start ---> Bean create ---> Dependency injected ---> Bean used ----> Bean Destroy when Container close.
+     
+  -> @PostConstruct -- when we want execute instance some code after creation of bean at that time we have to use @PostConstruct.
+  -> @PreDestroy -- when we want to execute some code before bean destroy at that time we have to use @PreDestroy.
+  -> for implementing life cycle we have to use 
+       -- Using Annotation
+       -- Using XML
+       
+       
+  14> What is bean Factory
+  ================================================================
+   -> This is a root interface of Spring container.
+   -> It is the actual container that instantiates, configures and manages a number of bean.
+   -> BeanFactory - it is available in org.springFramework.beans.factory package.
+   
+   
+ 14> What is the difference between BeanFactory and ApplicationContext in Spring 
+ =======================================================================================
+  -> BeanFactory represents spring container. It represents all the features of IOC container. 
+  -> ApplicationContext is the sub interface of BeanFactory, it represents all the features of BeanFactory also 
+     it provides some extra features.
+     
+     
+ 15> Difference between the Constructor and setter injection in Spring
+ ========================================================================================
+  -> In Constructor injection is important to remember the type and order of constructor and parameter.
+  -> Constructor injection is for mandatory Dependencies and setter is optional.
+  
+  
+ 16> Difference between @Autowired and @inject annotation in Spring
+ ==========================================================================================
+  -> The @inject annotation also serves the same purpose as @Autowird.
+  -> The main difference between them is that @inject is Standard annotation for dependency injection and 
+     @Autowired is spring specific.
+     
+     
+ 17> Difference between @Bean and @Component annotation in Spring
+ =============================================================================================
+   -> @Component is prefer for component scanning and automatic wiring .
+   -> @Bean annotation return an object that spring should register as bean in application context. 
+      The body of the methods bears the logic responsible for creating the instance.
+      
+      
+ 18> What is autowiring in Spring ?
+ ===========================================================================================
+  -> Injecting the beans automatically . We don't need to write explicit injection logic.
+  
+  
+ 18> What are the different bean scope in spring ?
+ ====================================================================================
+   -> Singleton - The bean instance will be only once and same instance will be returned by the IOC container. 
+                  It is the default scope.
+   -> Prototype - The bean instance will be created each time when requested.
+   -> Request - The bean instance will be created per HTTP request.
+   -> Session - The bean instance will be created per HTTP session.
+   -> GlobalSession - The bean instance will be created per HTTP Global session. It can be used in portlet context only.
+   -> for using scope for any class follow the below example :
+         @Component
+         @Scope("singleton") // you can change here which type you want
+         public class MyController {
+	         @Autowired
+	         User user;
+
+	        public MyController() {
+		    System.out.println("MyController method is call");
+	     }	  
+     }
+   
+ 19> How SpringBoot application start 
+ ============================================================================================
+  -> When Application Started then IOC container started then it construct the bean with the help of 
+     annotatin or XML configuration . After bean creation it inject the Dependency in to constructed Bean ,
+     then if we want to execute a method after bean creation then we have annotated this method @PostConstruct.
+     After that we have to use bean . Before destroying the bean if want to execute any method then we have to 
+     annotated this method @PreDestroy, after complete all the work bean is Destroyed.
+     
+                               
+     Application Start ----> IOC Container start ----> Construct Bean ----> Inject Dependency into Constructed Bean
+                             (Configuration loaded)                                     |
+                                                                                        |
+                                                                                        |
+                                                                                        |
+                                                                                        |   
+                                                                                        |
+                    Bean Destroyed <---- @PreDestroy <------ Use the Bean <----- @PostConstruct  
+                    
+                    
+  20> Can you explain the caching mechanism available in Spring boot ?
+  ==========================================================================================
+  -> Caching is like a memory box where we can store the frequently used data.
+  -> It make our application faster and more efficient.
+  -> There is a Spring cache Abstraction in Spring Boot and it is like a smart memory layer for our application.
+  
+  
+  21> How Would you implement caching in a Spring Boot Application.
+  ========================================================================================
+  -> To implement caching in our application, first add a caching dependency, like spring-boot-starter-cache .
+  -> Then enable caching in the application by adding @EnableCaching annotation to the main class.
+  -> for doing cacheable operation for those method we want to store in cache, using @Cacheable annotation on this method.
+  
+  
+  22> Your Spring Boot application is face perfomance issues under high load. What are the steps you would to take identify 
+      and address the perfomance ?
+  ==============================================================================================================================
+  -> For identifying the pefomance issues using monitoring tool like Spring Boot Actuator or Splunk.
+  -> Analyze the application logs and spots any pattern or error, especially under high load.
+  -> After finding the issues , optimize the database, implementing caching or use scaling option.
+  
+  
+  23> How do you segregate your environment specific properties in Spring Boot
+  =================================================================================================
+  -> Spring profiles provides a way to segregate your application configuration, so that it ease to use
+     in different environment with out changing any configuration.
+     
+     Example : When to configure database , we have to use different database connection like UAT environment, Production environment.
+               When deploy our application at that time we have to change the connection every time, but when we are using 
+               profiler at that time we don't have to change the database connection every time , it automatically 
+               change the database connection in every environment. 
+  ->  Spring Boot --- By Default --- provides just one property file .(application.properties)
+  -> We have to create more property file and add the "profile" name as the suffix and configure Spring Boot to pick the 
+     appropriate properties based on the profile. for Ex:
+                  application-dev.properties
+                  application-test.properties
+                  application-prod.properties
+  -> The application.properies will remain as a master properties file.
+  
+  
+  24> Spring Bean and it's life cycle
+  ==================================================================================================
+  -> In a simple term, Bean is a java object which is managed by Spring container. (also known as IOC container)
+  -> IOC container contains all the beans which get created and also manage them.
+       
+                                              How to create a Bean ?
+                                                        |
+                                                        |
+                        ============================================================================
+                       |                                                                            |
+                       |                                                                            |
+                    @Component                                                                   @Bean 
+                      annotation                                                                   annotation
+                      
+  -> @Component annotation : 
+          - When we use @Component annotation, then IOC will try to automatically create the bean of class using new keyword and
+            contain it in IOC container also manage it's life cycle.
+          - @Controller, @Service, @Repository etc are internally use @Component.
+  -> When we are create parameterize constructor and use @Component at that time Spring IOC doesn't create the bean of this class at that time 
+     we have to use @Bean.
+  
+  
+  25> How Spring Boot find these Beans ?
+  ========================================================================================
+  -> Using @ComponentScan annotation, it will scan the specified package and sub-package for classes annotated with @Component, @Service etc.
+  -> From user defining bean via @Bean annotation in @Configuration class.
+  
+  
+  26> At what time, Beans get Created
+  =============================================================================
+  
+                                                  At what time, these Beans get created
+                 =======================================================================================================
+               Eagerness                                                                                        Lazy
+        ----------------------------------------------                           ------------------------------------------------------------------
+       -> Some beans get created when application start.                        -> Some Beans get created Lazily, means when they actually needed.
+       -> Ex: Beans with Singleton scope are Eagerly initialized.               -> Ex: Beans with scope like Prototype, Request, Http, session.
+                                                                                       Or Which beans are annotated with @Lazy.
+       
+  
+ 27> In Controller basically when we get value we it in JSON format , but how to get it in XML format
+ ===============================================================================================================
+  -> When you want to data in controller in XML format we use :
+        @GetMapping(value = "/employee", produces = MediaType.APPLICATION_XML_VALUE) // it is use for give return in response
+        @GetMapping(value = "/employee", consume = MediaType.APPLICATION_XML_VALUE) // it is use for take the from users.
+  
+ 30> Tell me 5 Spring Exceptions that you came accross .
+ ==================================================================================
+  -> BeanCreation Exception - NoSuchBeanDefination Exception.
+  -> NoUniqueBeanDefinationException
+  -> BeanCreationException - UnsatisfiedDependencyException : When two class dependent on each other, means two 
+                                        class autowired each other at that time this exception occour.
+                                        solution : we have to annotated one class instanance with @Lazy, so 
+                                                   one class bean is created on demand.
+ -> BeanInstantiationException - When we create a class , inside this class we create a constructor and inside constuctor 
+                                 we throw exception. When we run the application at that time Spring IOC is not able to create 
+                                 the Bean of that class.
+ -> ApplicationContextException - This exception occour when we miss the main class annotated with @SpringBootApplication.
+  
+ 31> What is default data jpa provider in spring boot ?
+ ==============================================================================
+  -> The default data jpa provider in spring boot is Hibernate.
+  -> Spring-data-jpa for JpaRepository which is provided by Hibernate by default.
+  -> Spring-data-Redis for RedisTemplate
+  -> Spring-data-mongodb for mongodbRepository .
+  
+ 32> CrudRepository / JpaRepository / PagingAndSortingRepository
+ ================================================================================
+  -> CrudRepository is provides the features of create, read, update, delete .
+  -> PagingAndSortingRepository is provides the features of pagination, sorting , and other features.
+  -> JpaRepository also extends PagingAndSortingRepository and CrudRepository , it provides some extra fetures like 
+                   saveAllAndFlush(), saveAndFlush(), flush(), deleteAllInBatch() etc.
+                   
+ 33> Spring Data source 
+ =======================================================================
+  -> Spring DataSource generally refers to the management of database connections within the Spring Framework.
+  -> This is particularly important for applications that interact with databases.
+  
+ 34> if we implements JpaRepository or CrudRepository in our interface, then is it necessary to annotated our interface with @Repository
+ =================================================================================================================================================  
+  -> It is not necessary to annotated @Repository, because if we extends JpaRepository or CrudRepository then Spring boot 
+     automatically detected this interface is used to communicate with data base through @EnableAutoconfiguration .
+  -> So no need to use @Repository.
+  
+ 35> @NoRepositoryBean use
+ =============================================================================
+  Example : 
+        // It is Common repository / Abstract repository for all child repository
+        
+             import org.springframework.data.repository.NoRepositoryBean;
+             import org.springframework.data.repository.CrudRepository;
+
+             @NoRepositoryBean
+             public interface BaseRepository<T, ID> extends CrudRepository<T, ID> {
+                // Common methods that all repositories will inherit
+                   void someSharedMethod();
+               }
+             
+       // One child repository is trying to access all of the existing method which is present in parent repository
+          
+          import org.springframework.stereotype.Repository;
+
+          @Repository
+          public interface UserRepository extends BaseRepository<User, Long> {
+                   // Additional methods specific to User repository
+                      User findByUsername(String username);
+                }
+   -> BaseRepository is a common repository interface marked with @NoRepositoryBean so that Spring does not create a bean for it.
+   -> UserRepository extends BaseRepository, inheriting its methods. Spring will create a bean for UserRepository but not for BaseRepository.
+   -> Code Reusability: Allows you to define common repository methods in a base interface that can be reused by multiple repositories.
+   -> Use @NoRepositoryBean when you have a base repository interface that is not meant to be instantiated on its own but only to be extended by other repository interfaces.
+   -> It is especially useful in large projects where you have multiple repositories with shared behavior.
+   
+   
+  36> What is a java config file ? tell me about its limitation .
+  ===============================================================================================
+      
+      @Configuration
+      @EnableTransctionManagement
+      public class ComplexAppConfig {
+
+      @Bean
+      public DataSource dataSource() {
+        return new DriverManagerDataSource(
+                "jdbc:mysql://localhost:3306/productnew",
+                "root",
+                "password"
+             );
+     }
+
+     @Bean
+     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+     }
+     
+     @Bean 
+     public TransctionManager transctionManager (DataSource dataSource) {
+        return new DataSourceTransctionManager(dataSource);
+     }
+     
+     @Bean
+     public MyRepository myRepository(JdbcTemplate jdbcTemplate) {
+        return new MyRepositoryImpl(jdbcTemplate);
+     }
+     
+     @Bean
+     public MyService myService(MyRepository myRepository) {
+        return new MyServiceImpl(myRepository);
+     }
+     
+      @Bean
+      public MyController myController(MyService myService) {
+        return new MyController(myService);
+      }
+     
+  }
+  
+ -> In our xml class we are use many bean tag (<Bean><Bean/>) for define our bean, but using @Bean it is not needed.
+ -> We can use @Conditional with @Bean , so we use some condition for bean cretion time.
+ -> We can use any xml configuration in the config file.
+  
+   In Limitation 
+ -> Spring Beans/ Spring Config class can't be final .
+ 
+ 
+ 37> @Component Vs @Bean. What is the difference between creating a bean with the above annotations ?
+ ========================================================================================================================
+  -> Both are maintain the life cycle of spring bean.
+  -> Baiscally @Controller, @Service, @Repostiory are internally use @Component, when we create bean using through
+     our bean is create unconditionally but we use create bean through @Bean we can use some condition using @Conditional annotation
+     and we control our bean.
+  -> @ConditionalOnMissingBean(...) , if that class is present the create the bean, if that is missing the create the bean.
+  
+ 38> What is BeanFactoryPostProcessor ?
+ =================================================================================================
+          
+  
+ 39> What do you mean by TransctionPropagation 
+ ======================================================================================
+  -> Basically in TransctionManagement when we doing some transaction from our application to our database,
+     if any runtime exception are occoured at that time it rollback automatically, but transaction will not 
+     rollback if it is a normal exception which is not runtime.
+  -> for enable the Transaction management we have to annotated @Transctional as class level as well as method level.
+  -> TransctionPropagation means we have to carry forward the Active Transaction or reuse the active transaction.
+  -> Default propagation level is REQUIED
+  
+       // service layer method
+          
+          @Transaction(propagation = Propagation.REQUIED) // Transaction start here
+          public void saveProduct(){
+             dao.saveProduct(new Product(101,"phone"));
+          }
+          
+      // Dao Layer
+          
+         @Transaction(propagation = Propagation.REQUIED_NEW) // Although the method which called this method
+         public void saveProduct(Product product){              has an active transaction, still this method 
+             // save product                                    will be executed under a new separate transaction.
+          }
+  
+   1. REQUIRED
+      -> Default propagation type.
+      -> If there is an existing transaction, the method will join it.
+      -> If there is no existing transaction, a new transaction will be created.
+  
+      @Transactional(propagation = Propagation.REQUIRED)
+      public void someMethod() {
+           // method logic
+      }
+      
+   2. REQUIRES_NEW
+      -> Always creates a new transaction.
+      -> If there is an existing transaction, it will be suspended during the execution of the method.
+      
+      @Transactional(propagation = Propagation.REQUIRES_NEW)
+      public void someMethod() {
+            // method logic
+      }
+      
+   3. SUPPORTS
+      -> If there is an existing transaction, the method will join it.
+      -> If there is no existing transaction, the method will execute without a transaction.
+      
+      @Transactional(propagation = Propagation.SUPPORTS)
+      public void someMethod() {
+             // method logic
+       }
+       
+  4. NOT_SUPPORTED
+     -> The method will always execute without a transaction.
+     -> If there is an existing transaction, it will be suspended during the method execution.
+     
+     @Transactional(propagation = Propagation.NOT_SUPPORTED)
+     public void someMethod() {
+          // method logic
+      }
+      
+  5. NEVER
+     -> The method will always execute without a transaction.
+     -> If there is an existing transaction, an exception will be thrown
+     
+     @Transactional(propagation = Propagation.NEVER)
+     public void someMethod() {
+            // method logic
+      }
+      
+  6. MANDATORY
+     -> The method must be executed within an existing transaction.
+     -> If there is no existing transaction, an exception will be thrown
+    
+     @Transactional(propagation = Propagation.MANDATORY)
+     public void someMethod() {
+          // method logic
+     }
+     
+  7. NESTED
+     -> If there is an existing transaction, the method will execute within a nested transaction.
+     -> If there is no existing transaction, it will behave like REQUIRED.
+     -> A nested transaction can be rolled back independently of the outer transaction.
+     
+     @Transactional(propagation = Propagation.NESTED)
+     public void someMethod() {
+           // method logic
+     }
+     
+ 40> In Spring boot if there is two properties file like application.properties and application.yml
+     when we fetch the data from this file which file spring give priority ?
+ ============================================================================================================
+    Ex: application.properties
+       ------------------------------
+         student.name = "Rabi";
+         
+       application.yaml
+       ------------------------------
+         student.name = "Das";
+      
+      @value("${student.name}")   
+      private String name;
+      
+      it fetch name from application.properties file "Rabi" . BCZ it spring give priority  to application.properties file.
+      
+      
+ 41> How DispatcherServlet in SpringBoot gets auto-configured ?
+ =========================================================================================
+   -> IN SpringBoot main class we are using annotation  @SpringBootApplication , these annotation is combination of 
+      @Configuration,@EnableAutoConfiguration, @ComponentScan .  The @EnableAutoconfiguration annotation is internally 
+      configure DispatcherServlet in her class path, so it automatically configure dispatcher servlet.
+      
+ 42> Difference between @Controlleradvise Vs @RestControllerAdvise
+ ========================================================================================
+  -> @RestControllerAdvise is a combination of @ControllerAdvise + @ResponseBody , it give response to the browser. 
+  -> It is also use in RESTful web service.
+  -> @ControllerAdvice is used to handle exceptions across the entire application in a global manner.
+  -> @ControllerAdvice is more suited for traditional MVC web applications.
+  
+ 43> What is Spring Boot?
+ ==============================================================
+  -> Spring Boot is an open-source Java-based framework used to create stand-alone, production-ready Spring applications with minimal configuration.
+  -> It simplifies the setup and development of new Spring applications by providing default configurations and features
+      like embedded servers (Tomcat, Jetty, etc.), auto-configuration
+      
+ 45> What are the main features of Spring Boot?
+ =======================================================================
+  -> Auto-Configuration: Automatically configures Spring application based on the project’s dependencies.
+  -> Spring Boot Starters: A set of dependency descriptors to include necessary libraries.
+  -> Embedded Servers: Provides built-in servers like Tomcat or Jetty, so you don't need to deploy WAR files.
+  -> Spring Boot CLI: A command-line tool for quickly prototyping Spring applications.
+  -> Actuator: Provides production-ready features like monitoring and managing applications through endpoints.
+  -> Standalone Applications: Allows the creation of Java applications that can run with java -jar.
+  
+ 46> What is the difference between Spring and Spring Boot?
+ =====================================================================================
+  -> Spring: A comprehensive framework for building Java applications. It requires extensive configuration and is used for creating a wide range
+             of applications (web, microservices, batch, etc.).
+  -> Spring Boot: It is a enhanced version of Spring that simplifies application development by offering pre-configured setups and defaults,
+                 reducing the need for boilerplate code. It allows developers to start coding with minimal setup and is ideal for microservices.
+                 
+ 47> What is a Spring Boot Starter?
+ ================================================================= 
+  -> Spring Boot Starters is a predefined dependency that collection of required libraries for specific functionalities
+  -> spring-boot-starter-web: Includes dependencies for building web applications (e.g., Spring MVC, Tomcat).
+  -> spring-boot-starter-data-jpa: Includes dependencies for JPA and Spring Data.
+  -> spring-boot-starter-security: Includes dependencies for Spring Security.
+  
+ 48> What is @SpringBootApplication annotation?
+ ======================================================================
+  ->  @SpringBootApplication is a convenience annotation that combines three crucial annotations:
+    - @Configuration: Marks the class as a source of bean definitions
+    - @EnableAutoConfiguration: Enables Spring Boot's auto-configuration mechanism, which automatically configures beans based on the classpath settings.	
+    - @ComponentScan: Enables component scanning, so Spring can find and register beans within the package of the annotated class and its sub-packages.
+    
+ 49> How do you create a Spring Boot application?
+ =======================================================================
+  -> Using Spring Initializr: Go to the Spring Initializr website, select your project settings (dependencies, Java version, etc.), 
+      and generate the project. Import it into your IDE and start coding.
+  -> Using Spring Boot CLI: Install Spring Boot CLI and create a new project by running commands like spring init --dependencies=web myproject.
+  -> Manually: Create a new Maven or Gradle project, add Spring Boot dependencies, and annotate the main class with @SpringBootApplication.
+  
+ 50> What is Spring Boot Auto-Configuration?
+ ======================================================================
+  -> Spring Boot's auto-configuration feature automatically configures your Spring application based on the dependencies present in the classpath.
+     For example, if spring-boot-starter-web is in the classpath, it automatically configures Spring MVC, a dispatcher servlet, and
+     a default embedded server (Tomcat). This reduces the need for manual configuration, allowing you to focus on your application's business logic.
+     
+ 51> What is the role of the application.properties file in Spring Boot?
+ ======================================================================================
+  -> The application.properties (or application.yml) file is used to define application-level configurations in a Spring Boot project.
+  -> You can configure settings like:
+      - Server properties: server.port=8081
+      - Database configurations: spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+      - Logging levels: logging.level.org.springframework=DEBUG
+      - Custom properties: You can also define your own properties, e.g., myapp.custom.property=value.
+      
+ 52> What is Spring Boot Actuator?
+ ==================================================================================
+   -> Spring Boot Actuator provides a set of production-ready features to monitor and manage your application.
+   ->  It exposes various endpoints, such as:
+         - /actuator/health: Displays the health status of the application.
+         - /actuator/metrics: Provides metrics data like memory usage, CPU usage, and other application statistics
+         - /actuator/env: Displays environment properties. Actuator endpoints can be customized and secured, and it integrates
+                          well with monitoring tools like Prometheus and Grafana.
+                          
+ 53> What is an embedded server in Spring Boot?
+ ================================================================================== 
+   -> An embedded server is built into your application.
+   -> So it run as a stand alone java application, without deploying war file in any server.
+   -> Spring Boot supports embedded servers like Tomcat, Jetty, and Undertow.
+   
+   
+ 54> What is Spring Boot DevTools?
+ =======================================================================
+ -> Spring Boot DevTools is a module that enhances the development experience by providing features like automatic restart,
+    live reload. It helps speed up the development process by reducing the need for manual application restarts after code changes.
+    
+    
+ 55> How does Spring Boot handle security?
+ =========================================================================
+  -> Spring Boot provides security out-of-the-box through Spring Security. 
+  -> By adding spring-boot-starter-security to your project, you automatically enable basic authentication.
+  -> You can customize security configurations using @EnableWebSecurity and configure specific authentication
+     and authorization rules through the WebSecurityConfigurerAdapter.
+     
+ 56> What is the purpose of @RestController in Spring Boot?
+ =============================================================================
+  -> @RestController is a convenience annotation that combines @Controller and @ResponseBody.
+  -> It marks a class as a controller where every method returns a domain object instead of a view.
+  -> The response is automatically converted to JSON or XML, depending on the client request.
+  
+ 57> What is the difference between @Controller and @RestController?
+ =========================================================================================
+  -> @Controller: Used to define a controller class that handles web requests and typically returns a view (e.g., HTML).
+  -> @RestController: Used to define a controller class that handles RESTful web services. It returns data directly (like JSON)
+     instead of views, eliminating the need for @ResponseBody on each method.
+  
+ 58> What is a @Bean in Spring Boot?
+ ===========================================================================
+  -> @Bean is an annotation used to declare a bean within a Spring configuration class.
+  -> Beans are objects that are managed by the Spring container. Declaring a method with @Bean ensures that the method's 
+     return value is registered as a bean in the Spring application context.
+     
+ 59> How do you define a custom exception in Spring Boot?
+ ==============================================================================
+  -> Create a custom exception class, e.g., public class ResourceNotFoundException extends RuntimeException {}.
+  -> Optionally, create a global exception handler using @ControllerAdvice and handle custom exceptions using @ExceptionHandler.
+     
+ 60> How do you handle application configuration in Spring Boot? 
+ ================================================================================
+  ->  Configuration in Spring Boot is managed through properties files (application.properties or application.yml), environment variables,
+      and command-line arguments. You can also use profiles (e.g., application-dev.properties) for environment-specific configurations.
+  ->  Configuration properties can be injected into beans using @Value or @ConfigurationProperties.
+  
+ 61> What is @ConfigurationProperties in Spring Boot?
+ ==============================================================================
+  -> @ConfigurationProperties is used to bind external configurations from properties or YAML files to a Java object.
+  -> @ConfigurationProperties(prefix="app.datasource").
+  
+ 62> What is a Spring Boot Profile?
+ =================================================================================
+  -> Profiles in Spring Boot allow you to create different configurations for different environments, such as development, testing, and production. 
+  -> You can define environment-specific properties in separate files like application-dev.properties, application-test.properties, etc.
+  -> You can activate a profile by setting the spring.profiles.active = dev
+  
+ 63> How do you handle exceptions in Spring Boot?
+ ==============================================================================
+  -> Global Exception Handling: Use @ControllerAdvice and @ExceptionHandler annotations to create a global exception handler
+     that can catch and handle exceptions across the entire application. 
+  -> ResponseEntityExceptionHandler: Extend this class to create a centralized exception handling mechanism with specific HTTP status codes and response bodies.
+  
+  
+ 64> ACID Property
+ ========================================================================
+  A (Atomicity) :
+  -----------------------------------
+   -> Ensure all operations with in a transaction are completed successfully. If any operation fails, the entire transaction will get rollback.
+   
+  C (Consistency)
+  -----------------------------
+   -> Ensure that DB state before and after the transaction should be consistent only.
+   
+  I (Isolation)
+  --------------------------------
+   -> Ensure that, even if multiple transaction are running in parallel, they do not interfere with each other.
+   
+  D (Durability)
+  -------------------------------
+   -> Ensure that committed transaction will never lost when system failure or crash.
+   
+   
+ 65> Custom Interceptors
+ ==============================================================================
+  -> For creating custom interceptors we have to create a class like MyCustomInterceptors and implements HandlerInterceptors 
+  -> These interface have 3 methods 
+     - PreHandle() - It execute before, request come to the controller.
+     - postHandler() - It execute after, request come to the controller.
+     - afterCompletion() - It execute after postHandler(), it working like finally block .
+     
+ 66> How can you create a custom annotation in spring boot.
+ ==================================================================================
+  -> Using @interface you can create your own custom annotation.
+  
+      EX: public @interface MyCustomAnnotation {
+      
+              public class User{
+                  
+                  @MyCustomAnnotation
+                  public void updateUser(){
+                      // logic
+                  }
+              }
+      
+      }  
+      
+      
+ 67> How can you define your custom annotation is for class level or method level
+ =============================================================================================
+  -> @Target annotation, tells where we can apply the the particulars annotation on method or class level.
+  
+        @Target(ElementType.METHOD)
+        public @interface MyCustomAnnotation {
+        
+        } 
+        
+        @Target({ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.FIELD})
+        public @interface MyCustomAnnotation {
+        
+        } 
+     
+  -> @Retention :
+  ----------------------------
+   - This annotation tells, how the particular annotation will be stored in java.
+     
+        RetetionPolicy.SOURCE:
+          Annotation will be discarded by compiler itself and its not been recorded in .class file
+          
+        RetentionPolicy.CLASS :
+          Annotation will be recorded in .class file but ignored by JVM during run time.
+  
+       RetentionPolicy.RUNTIME :
+          Annotation will be recorded in .class file and also available during run time.
+          
+ 68> Filter Vs Interceptor
+ ==============================================================================
+  Filter :
+  -------------------------
+   -> It intercept the HTTP Request and Response, before they reach to the servlet.
+   
+  Interceptor :
+  -------------------------
+   -> Its specific to spring framework, and intercept HTTP Request and Response, before they reach to the controller and after servlet.
+   
+             |----------|
+    Request  |          |     (Filter chain)        (Servlet)
+   --------->| Tomcat   |-----> Filter --------> Dispatcher Servlet ----------> Interceptor -------> Controller
+   <---------|          |
+   Response  |----------|
+     
+  
+  What is servlet :
+  -----------------------
+  -> Servlet is nothing but a java class, Which accept the incoming request, process it and returns the response.
+  
+  Filter :
+  ------------------------
+   -> It is used when we want to intercept HTTP Request and Response and add logic of the underlying servlet.
+   -> We can have many filters and have ordering between them too.
+   
+  Interceptor :
+  ------------------------
+   -> It is used when we want to intercept HTTP Request and Response and logic specific to a particular servlet.
+   -> We can have many interceptors and have ordering between them too.
+      
+      
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+                                                                               
+   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

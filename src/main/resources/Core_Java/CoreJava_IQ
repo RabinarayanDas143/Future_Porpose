@@ -1,0 +1,768 @@
+ 1> Difference between final,finally,finalize
+   ===========================================================
+   
+   A-> final
+   ---------------
+   ->final is a modifier applicable for class,method,variable . 
+   
+   B-> finally
+   ---------------
+   -> finally is a block always associated with try catch to maintain cleanup code.
+      try{
+        // risky code
+      }catch(X e){
+        // Handling code
+      }
+      finally{
+       // clean up code
+      }
+      
+   C-> finalize()
+   -------------------
+   -> finalize() is a method which is always invoked by GC (Garbage collector) just before destroying an object to 
+      perform cleanup activities.
+      
+      
+ 2> Difference between String and StringBuffer
+ ================================================================
+ 
+           String                                                                              StringBuffer
+   --------------------------------------------------                          ---------------------------------------------------
+   A. Once we create a String object we can't perform any changes          A. Once we create a StringBuffer object we can perform any type of 
+      in the existing object. if we trying perform any changes with            changes in existing object
+      those changes a new object will be created.                          B. StringBuffer is mutable, we can change it after creation.
+   B. String is immutable once it created it not change.
+   
+ 3> Difference between == operator and .equals() method
+ =====================================================================
+  -> we use == operator for reference/address comparison, where as .equals() method content comparison.
+  -> .equals() method is present in object class.
+  -> String class,all wrapper class and all collection classes .equals() method overridden for content comparison.
+  
+  
+  4> What are the various modifiers available in java -12
+  ====================================================================
+  -> public, protected, Default, private, final, abstract, static, synchronized, Native, strictfp, transient, volatile
+  
+  class A{     |                         class A {              |
+               |                           static interface B { | for that we have to declare static 
+     class B{  | It's Ok No problem               }             | for inner interface
+               |                          }                     |
+     }         |                                                |
+  }            |
+  
+  
+  interface A {                   |                                            interface A {                   |
+                                  |                                                                            |
+    public static interface B {   |for that we have to declare                     public static class B {     |for that we have to declare 
+                                  |public static for inner interface                                           |public static for inner class
+    }                             |                                                     }                      |
+                                  |                                            }                               |
+  }                               |                                                                            |
+  
+  
+  
+  5> Difference between StringBuffer and StringBuilde
+  ========================================================================
+                   StringBuffer                                            StringBuilder
+      --------------------------------------------             -------------------------------------------------
+      -> StringBuffer is synchronized.                       -> StringBuilder is not synchronized.
+      -> It is thread safe.                                  -> It is not thread safe.
+      -> Perfomance is slow.                                 -> Perfomance is fast.
+      -> Introduced in 1.0v .                                -> Introduced in 1.5v .
+      
+      
+  6> Interface Vs  Abstract  Vs Concrete class
+  ==========================================================================
+  -> If we have only requirement but not any implementation at that time we should go for interface.
+  -> If we have partially implementation at that time we can go for Abstract class.
+  -> If we have complete implementation and ready to provide service at that time we can go for Concrete class.
+      
+      
+  7> Access specifiers Vs Access modifiers
+  =============================================================================
+  -> In old language like C, C++ public, private, protected, default are consider as Access specifiers but 
+     in java there is no Access specifiers all are by dafault considered as modifiers only.
+  -> public, protected, default, private, final, static, abstract, synchronized, native, strictfp, transient, volatile.
+  
+  
+  8> Difference between interface and abstract class  
+  ==============================================================================
+                      interface                                                            Abstract
+      -------------------------------------------------------                 -------------------------------------------------
+  ->if we know only the requirement but dont't know the implementation      -> if we know the partial implementation then we can go for abstract class.
+    then we can go for interface.
+  ->Inside interface every method is always public and abstract , so that   -> Every method present in Abstract class need not be public and abstract.
+    interface consider as 100% pure abstract class.
+  ->We can't declare interface method with the following modifiers          -> There is no restriction on abstract class method .
+    private, protected, final,static, synchronized, native,strictfp .
+  ->Every variable present in interface is always public, static, final.    -> There is no restriction on abstract class variable . 
+  -> We can't declare interface variable with the following modifiers       -> There is no restriction on abstract class variable modifiers.
+     private, protected, transient, volatile.
+  ->when we declare variable, its compulsory to initialize value otherwise  -> for abstract class variable it is not required to initialize value at declaration 
+    we get compile time error.                                                  time.
+  ->Inside interface we can't declare instance and static blocks, otherwise -> Inside abstract class we can declare instance and static blocks.
+    we will get compile time error.
+  ->Inside interface we can't declare constructor because every variable of  -> Inside abstract we can declare constructor.
+    interface is final and it is initialize at declaration time.
+    
+    
+  9> Explain about System.out.println()
+  =================================================================================
+     class System {
+     
+         static PrintStream out;
+     }
+    System.out.println("Hello");
+   
+  -> System is a class present in java.lang package.
+  -> 'out' is a static variable of in System class, which is type PrintStream class.
+  -> println() is a method present in PrintStream class.
+  
+ 
+ 10> Explain about public static void main(String[] args)
+ =====================================================================================
+ -> Whether class contain main() method or not and whether main() method is declared according to requirement or not these things won't check by 
+    compiler . At run time, jvm is responsible to check these things.
+ -> At runtime if jvm is unable to find main() method then we will get runtime exception saying NoSuchmethodError:main .
+ 
+   public          -> To call by JVM from any where .
+   static          -> without existing object also JVM has to call this method and main method no way to related any method.
+   void            -> main() won't return anything to JVM .
+   main            -> THis name which is configured inside JVM .
+   (String[] args) -> command line argument.
+   
+   
+ 11> Difference between MethodOverloading Vs MethodOverriding
+ =========================================================================================
+                  MethodOverloading                                                    MethodOverriding
+      -------------------------------------------------------              -----------------------------------------------------------
+   -> Two method are same name but different argument and it        -> Two method are same name same argument but perform in different class 
+      perform in same class called MethodOverloading.                   is called MethodOverriding.
+   -> Return type is may be same or may be different .              -> Return type is must be same.
+   -> private, static, final method can be overloaded.              -> private, static, final method can't be override.
+   -> for exception throws there is no restriction.                 -> for exception throws if parent class throws checked exception then child class 
+                                                                       throw same checked exception or its child exception.
+  -> It is also called as compile time polymorphism or              -> It is also called as run time polymorphism or dynamic polymorphism or late binding.
+     static polymorphism or early binding.                          -> If parent class throws unchecked exception then child class throws only unchecked Exception.
+     
+     
+ 12> Various possible combination of try catch finally
+ ========================================================================================
+  -> whenever we are writing try block compulsory we should write catch block or finally .
+  -> Whenever we are writing catch block compulsory we should write try block.
+  -> Whenever we are writing finally block compulsory we should write try block.
+  -> In try catch finally, order is important.
+  -> try with multiple catch blocks is valid but the order is important, compulsory we should take from child to parent.
+     by mistake if we are trying to take from parent to child then we will get compile time error.
+  -> if we are defining two catch blocks for the same exception we will get compile time error.
+  -> we can define try-catch-finally with in the try, with in the catch, with in the finally blocks. Hence nesting of 
+     try-catch-finally is valid.
+  -> for try-catch-finally curly braces are mandatory.
+  
+ 13> Difference between Exception and Error
+ ==========================================================================================
+  -> Exception is unwanted or unexpected event i.e occour during the execution of program.
+  -> Error is a serious problem, that should not try to catch our application. It is occour in run time.
+  -> Throwable class acts as root for java exception hierarchy.
+  -> Most of the time errors are not caused by our program these are due to lack of system resources.
+  -> errors are not recoverable.
+  
+  
+  14> Difference between Checked exception and Unchecked Exception
+  =========================================================================================
+   -> The exception which are checked by compiler at compile time is called checked exception
+      Ex : FileNotFoundException, ClassNotFoundException, IOException, SQLException, ParseException.
+   -> The exception which are not checked by compiler at compile time is called unchecked exception.
+      Ex : ArithmaticExcfeption, NullPointerException, ArrayIndexOutOfBoundsException, ClassCastException, IllegalArgumentException, NumberFormatException.
+   -> Whether exception is checked or unchecked, compulsory it will occur only at run time. There is no chance
+      of occuring any exception at compile time.
+      
+      
+  15> Explain the FailFast iterator and FailSafe iterator with example
+  =========================================================================================
+               FailFast iterator                                               FailSafe iterator
+    --------------------------------------------------              -----------------------------------------------------
+    -> It is immediately stop the iteration if any changes         -> It don't stop the iteration if any changes occured.
+       occured.
+    -> Doesn't allow modification of a collection while iterating  -> Allow modification of a collection while iterating over it.
+       it. if we try to modify, they will throw
+       concurrentModifiction Exception.
+    -> They use original collection to traverse over the element   -> They use copy of the collection to traverse over the element
+       of the collection.                                             of the collection.
+    -> Ex : ArrayList, HashMap                                      -> Ex: CopyOnWriteArrayList, ConcurrentHashMap
+       
+  
+  16> What is the difference between Factory pattern and abstract Factory pattern
+  =========================================================================================
+                 Factory pattern                                                         abstract Factory pattern
+    ------------------------------------------------------------               ----------------------------------------------------------------
+    -> In Factory pattern we are creating object, but it create object         -> abstract Factory pattern is a pattern of pattern.
+       at that time when a specific condition is satisfied.                    -> it is use to create same type of object ,that are dependent in each other.
+    -> It is use when we want to create object in conditional basis.
+  
+  
+  17> What is the marker interface 
+  ======================================================================================
+    -> Marker interface is the interface it doesn't have any method declaration .
+    -> It provide some specific permission to the object for perform some specific task.
+    
+    
+  18> When Finally block doesn't get executed
+  ==================================================================================
+    -> when we write System.exit(0); inside try block at that time finally block doesn't execute.
+    
+  
+  19> How does garbage collection work in java
+  ========================================================================================
+   -> Garbage means unreferenced objects.
+   -> Garbage collection is a process of destroy the unused objects.
+   -> It is perform automatically, it called by JVM.
+   -> Garbage collector of JVM collect only those object that are created by new keyword.
+      So if you have created any object without using new, you can use finalize() method to perform cleanup processing.
+  
+  20> Difference between ClassNotFound VS NoClassDefError
+  ==============================================================================
+                 ClassNotFound Exception                                                   NoClassDefFoundError
+    ---------------------------------------------------------            ---------------------------------------------------- 
+    ->  When we provide class name dynamically in program and it              ->When we hardcode a class name in our program and when it's .class
+        didn't find it's .class file in run time at that time we                file didn't find in run time at that time we get
+        get ClassNotFound Exception.                                             NoClassDefFoundError Exception.
+    -> It is Checked Exception.                                               -> It is a unchecked Exception. 
+    -> ClassNotFoundException is an exception that occurs when                -> NoClassDefFoundError is an error and occurs when a class was present during  
+       a class is dynamically loaded and not found.                               compilation but missing during runtime
+         
+  
+  21> How to break Singleton
+  ===========================================================================
+   -> For break the Singleton Design pattern we can use Reflection API , using clone method or use Serialization and Deserialization 
+   
+   
+  22> How does subString() method work inside String class
+  ======================================================================================
+   -> The substring() function is implemented in the String class in Java.
+   -> It copy the required character and create a new String object.
+  
+  23> What is a classloader
+  =======================================================================================
+   -> Classloader is a subsystem of JVM, it load the .class file at project run time.
+   -> We have 3 type of classloader
+        - BootStrap ClassLoader - it load the rt.jar
+        - Extension ClassLoader - it load the ext.jar
+        - Application ClassLoader - it load application class file
+  
+  
+  24> what is the difference for creating object of String using new keyword and using String literal
+  ===========================================================================================================================
+   -> When we are creating String object using new keyword, every time it create a new String object in heap memory and also
+      it create a String literal in String constant pool. 
+   -> When we create a String object using String literal it create a String object in String Constant Pool and 
+      when we create anathor object and store same value, it refer to the same location, it doesn't create new object.
+  
+  25> What is the differenc between Executor.submit() and Executor.execute()
+  ==========================================================================================================================
+    -> Executor.execute() it execute the task which are assign to Runnable interface.
+    -> Executor.execute() it doesn't return anything .
+    -> Executor.submit() it execute the task which are assign to callable interface.
+    -> Executor.submit() it return some value to the user and its return type is Future.
+    -> Future is a interface.
+    
+    
+  26> What do you understand by java Memory model
+  ==================================================================================================
+  
+  27> How to make a class immutable ? Why it is needed ?
+  ==========================================================================================
+   -> Declare the class as final so it can’t be extended.
+   -> Make all of the fields private so that direct access is not allowed.
+   -> Don’t provide setter methods for variables.
+   -> Make all mutable fields final so that a field’s value can be assigned only once.
+   -> Initialize all fields using a constructor.
+   -> It needed at that time when we want to do not change our object value once it declare.
+   
+  
+  28> Can you use HashMap in multi-threaded envarioment ? What can be the problem ?
+  =================================================================================================
+   -> No, We can't use HashMap in multi-threaded envarioment, bcz HashMap is not synchronized and is not thread-safe. 
+   -> if we are using it and perform some concurrent modification it throws an error : ConcurrentModification Exception.
+   
+  
+  29> Can you write critical section code for the Singleton?
+  ==============================================================================================
+   -> Yes, we can write critical section code for the Singleton.
+   -> Ex: When we establish a database connection and call the connection object multiple time
+          it give the same object, it doesn't create new connection object.
+  
+  30> What is Singleton? is it better to make the whole method synchronized or only the critical section synchronized ?
+  =============================================================================================================================
+   -> Singleton means it create only one object of a class.
+   -> In java when we use Singleton concept it create only one object of a class, if i call multiple times
+      of that class object it give same object.
+   -> if you make the method synchronized then a thread lock this method , it can't allow other thread to access this method.
+   -> So, it is better to put only citical code in synchronized block.
+   
+   
+  31> How do you avoid deadlock in java ?
+  =================================================================================
+  -> Avoid Unnecessary Locks: We should use locks only for those members on which it is required.
+     Unnecessary use of locks leads to a deadlock situation.
+  -> Avoid Nested Locks: Another way to avoid deadlock is to avoid giving a lock to multiple threads
+     if we have already provided a lock to one thread. Since we must avoid allocating a lock to multiple threads.
+  
+  
+  32> How can you avoid serialization in the child class if the base class is implementing the serialization interface ?
+  ==============================================================================================================================
+   -> You can override the writeObject() and readObject() methods in the subclass and throw NotSerializableException.
+      This approach allows you to control the serialization process explicitly.
+      
+      
+  33> What is the ConcurrentHashMap in java and how do you implement it ?
+  ===============================================================================================
+   -> ConcurrentHashMap is a Map implementation class that allow us to modify the Map while iteration. 
+   -> The ConcurrentHashMap operations are thread-safe. ConcurrentHashMap doesn't allow null for keys and values.
+  
+  
+  34> What is Java 
+  =====================================================================================
+   -> Java is a object oriented programming language that is developed by james Gosling at Sun Microsystem in 1995.
+   -> It is simple to use , secure, multithreded and platform independent.
+  
+  35> What are the main features of Java
+  ==============================================================================
+   -> The main features of java is 
+      - Simple and Easy to Learn. Java is easy to learn and simple to use as a programming language. ...
+      - Object-Oriented Programming. ...
+      - Platform Independence. ...
+      - Automatic Memory Management. ...
+      - Security. ...
+      - Multithreading. ...
+      - High Performance.
+      
+      
+  36> What is JVM
+  ==================================================================================
+   -> JVM stands in Java virtual mechine, it is used for automatic memory management, convert the bytecode to mechine code.
+   -> The JVM acts as an interpreter between the Java programming language and the underlying hardware. 
+   -> It provides a runtime environment for Java applications to run on different platforms and operating systems.
+   
+   
+  37> What is JRE and JDK
+  =====================================================================================
+    JRE :
+   -> JRE stands in Java Runtime Environment , it provide a runtime environment to run java application.
+   -> It contains set of libraries + other files that JVM uses at runtime. 
+    
+    JDK:
+   -> JDK stands in JAVA Development Kit.
+   -> It provides a development environment to developed java application, It contains JRE + development tools.
+   
+   
+   38> What are the Java access specifiers
+   =======================================================================================
+   -> In java there is no access specifiers all are java modifiers.
+   -> in Java, Access modifiers help to restrict the scope of a class, constructor, variable, method, or data member.
+   
+  39> what is primitive and non primitive data type
+  ============================================================================================
+   Primitive Data Types:
+  --------------------------------  
+   -> Primitive data types are the most basic data types in Java. They are predefined by the language and named by a keyword.
+   -> These data types hold their values directly in memory.
+   -> Primitive data types are immutable, meaning their values cannot be changed after they are assigned.
+   
+   Non-Primitive (Reference) Data Types:
+   -------------------------------------------
+   -> Non-primitive data types (also known as reference data types) are more complex than primitive data types.
+   -> They do not store the value directly in memory; instead, they store a reference (or address) to an object in memory. 
+   
+  40> what is type casting
+  ===============================================================================
+  -> Type casting in Java refers to the process of converting from one data type to another.
+  -> There are two main types of type casting in Java: implicit (automatic) type casting and explicit (manual) type casting. 
+  
+  1. Implicit (Automatic) Type Casting:
+     -> Implicit type casting occurs when the conversion happens automatically by the Java compiler.
+     -> This usually happens when converting a smaller data type to a larger data type, which is also known as widening.
+     -> Since this type of casting is safe and doesn’t result in data loss, Java does it automatically.
+           int num = 100;
+           long bigNum = num;  // Implicit casting from int to long
+           
+  2. Explicit (Manual) Type Casting:
+     -> Explicit type casting is done manually by the programmer.
+     -> It involves converting a larger data type to a smaller data type, also known as narrowing.
+     -> Since narrowing conversions can lead to data loss or overflow, they require explicit instruction from the programmer using a cast operator.
+           double num = 100.99;
+           int intNum = (int) num;  // Explicit casting from double to int
+                                   // intNum will be 100, fractional part is lost
+                                   
+ 41> can you declare final variable without declare it
+ ===========================================================================
+   -> You can declare a final variable without initializing it immediately, creating a blank final variable.
+   -> However, you must ensure it is initialized before it is used, typically in a constructor for instance variables or a static block for static variables.
+      If you fail to do this, the code will not compile.
+      
+      
+ 42> In interface don't have constructor bcz every variable are final it must intialize when it declare 
+     then how You can declare a final variable without initializing it immediately, creating a blank final variable.
+ ==================================================================================================================================
+  -> In interfaces, all variables are public static final and must be initialized at the point of declaration.
+  -> You cannot have a blank final variable in an interface, as there is no mechanism to delay initialization.
+  -> Blank final variables are possible in classes but not in interfaces.
+                                   
+ 43> What is Wrapper class
+ ============================================================
+  -> Wrapper class is a encapsulation of primitive data type .
+  -> It is use only in collection .
+  -> It converts primitive data type to corresponding java object.
+  -> It provides the autoboxing and unboxing features.  
+  
+ 45> What is short circuiting operation in java8 ?
+ =================================================================
+  -> Short circuiting operation is that it immidiately terminate the looping operation OR generate operation when
+     the given limit it is reach.
+     
+      Ex : Stream.iterate(1, i->i+1).limit(10) // here limit() is the short circuiting operation
+      
+ 46> What is State full in java8 ?
+ =========================================================
+  -> State full means it first gather the input then perform the operation after that it produce the output.
+  -> In statefull methods it internally use some temp memory or else something to store the value.
+       Ex : Stream.iterate(1, i->i+1).limit(10).sorted(); // sorted() is statefull
+  -> But in Stateless it take a input and perform some operation then it immideately produce the output
+       Ex : Stream.iterate(1, i->i+1).limit(10).filter(i->i%2==0) // filter() is stateless
+       
+ 47> What is the working of takWhile() in java8 ?
+ =========================================================
+  -> takeWhile() method is same working as a filter method but difference is that filter() method is
+     working as a stateless short citcuting but takeWhile() is working as a statefull short circuting.
+      Ex of takeWhile() : stream().takeWhile(n -> n < 5)  // Take elements while they are less than 5
+                                      .collect(Collectors.toList());
+                                      
+ 48> What is static keyword ?
+ ============================================================
+  -> In Java, the static keyword is a modifier that can be applied to variables, methods, blocks, and nested classes. 
+  -> Static variables and methods belong to the class and not to individual instances.
+  -> Static methods cannot access non-static instance variables or methods directly.
+  -> Static blocks are executed once when the class is loaded.
+  -> Static nested classes can access the outer class's static members.
+  
+ 49> What is instance variable ?
+ ==============================================================
+  -> An instance variable in Java is a type of variable that is declared within a class but outside any method, constructor, or block. 
+  -> Each instance (object) of the class has its own copy of the instance variable, meaning the values of these variables can differ from one object to another.
+  
+ 50> can static method access instance variable 
+ =============================================================
+  -> No, a static method cannot directly access instance variables in Java.
+  -> A static method can only access instance variables indirectly, by creating an instance of the class. 
+  
+ 51> Explain the difference between Stream and ParallelStream. When would you use each?
+ =========================================================================================================
+  -> Stream processes elements sequentially, while ParallelStream divides the data into multiple parts and processes them in parallel.
+  -> Use ParallelStream when you need faster processing on large datasets.
+    
+ 52> What is the difference between intermediate and terminal operations in a stream?
+ ===========================================================================================================
+  ->  Intermediate operations (e.g., filter, map) return a stream and are lazy, meaning they don’t process until a terminal operation is invoked.
+  -> Terminal operations (e.g., collect, forEach) produce a result or side effect and mark the end of the stream.
+  
+ 53> How does the filter() method work in Java Streams? Can you provide an example?
+ ===============================================================================================================
+  -> filter() is an intermediate operation that returns a stream containing elements that match a given predicate.
+     Example: stream.filter(x -> x > 10) filters out numbers less than or equal to 10.
+    
+ 54> What is the purpose of the map() function in streams? How does it differ from flatMap()?
+ ================================================================================================================       
+  ->  map() transforms each element of the stream, while flatMap() flattens nested streams or collections into a single stream.
+  -> Example: map() is used for element transformation, whereas flatMap() is used to handle nested lists. 
+  
+  Example : 
+     List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+     List<Integer> nameLengths = names.stream()
+                                 .map(String::length)
+                                 .collect(Collectors.toList());
+      System.out.println(nameLengths);  // Output: [5, 3, 7]
+      
+      
+    List<List<String>> nestedList = Arrays.asList(
+    Arrays.asList("Alice", "Bob"),
+    Arrays.asList("Charlie", "David")
+      );
+           List<String> flatList = nestedList.stream()
+                                  .flatMap(List::stream)
+                                  .collect(Collectors.toList());
+           System.out.println(flatList);  // Output: [Alice, Bob, Charlie, David]
+    
+  55> Can you explain the working of the reduce() method in streams with an example?
+  ===============================================================================================================
+   -> The reduce() method in Java Streams is used to combine elements of a stream into a single result.     
+   
+      List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+        // Using reduce to sum the numbers
+          int sum = numbers.stream()
+                 .reduce(0, (a, b) -> a + b);
+
+          System.out.println("Sum: " + sum);  // Output: Sum: 15
+          
+       // Here’s an example of using reduce() to find the longest string in a list.
+       List<String> words = Arrays.asList("apple", "banana", "pear", "pineapple");
+
+        String longestWord = words.stream()
+                          .reduce("", (word1, word2) -> word1.length() > word2.length() ? word1 : word2);
+
+        System.out.println("Longest word: " + longestWord);  // Output: Longest word: pineapple
+        
+       // Find Max Number 
+       
+       Optional<Integer> max = numbers.stream().reduce((a, b) -> a > b ? a : b);
+
+       max.ifPresent(System.out::println);  // Output: 5
+       
+  56> What are collectors in Java Streams? Explain Collectors.toList() and Collectors.toMap().
+  ===========================================================================================================
+   -> Collectors are utilities for gathering elements of a stream into a collection or another form. 
+      Collectors.toList() collects elements into a List, while Collectors.toMap() collects elements into a Map.
+      
+      List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+       // Collecting stream elements into a List
+        List<String> collectedNames = names.stream()
+                                           .filter(name -> name.length() > 3)
+                                           .collect(Collectors.toList());
+
+        System.out.println(collectedNames);  // Output: [Alice, Charlie]
+        
+        
+      List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+      // Collecting stream elements into a Map
+        Map<String, Integer> nameLengthMap = names.stream()
+                                                  .collect(Collectors.toMap(name -> name, name -> name.length()));
+        
+        System.out.println(nameLengthMap);  
+        // Output: {Alice=5, Bob=3, Charlie=7}
+        
+        
+  57> Explain the forEach() method in streams. How is it different from a traditional loop?
+  ==================================================================================================================
+   -> forEach() is a terminal operation that processes each element in the stream.
+   -> forEach() uses a Consumer, which is designed to take in values and perform actions on them.
+   -> The Consumer interface has a single method, accept(), which takes an argument and performs some operation on it.
+   
+ 58> What is lazy evaluation in streams? How does it affect performance?
+ ===================================================================================================
+  -> Lazy evaluation means intermediate operations.
+  -> Intermediate operations (like filter(), map(), etc.) are lazy because they don’t perform any work until a terminal operation (like collect(), forEach(), etc.) is invoked.       
+       
+  
+ 59> How do you handle exceptions in streams?
+ =============================================================================================
+  -> stream operations cannot directly throw checked exceptions, you can wrap a checked exception inside a runtime exception,
+     such as UncheckedIOException or IllegalStateException.  
+     
+     List<String> data = Arrays.asList("123", "abc", "456");
+
+     data.stream()
+    .map(str -> {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("Invalid input: " + str, e);
+        }
+    })
+    .forEach(System.out::println);
+       
+       
+ 60> What is the purpose of peek() in streams? When should it be used?
+ ================================================================================================
+  -> peek() is mainly used for debugging purposes, allowing you to see the elements as they pass through the pipeline. It’s an intermediate operation.
+  
+  List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "David");
+
+        names.stream()
+            .filter(name -> name.length() > 3) // Filter names longer than 3 characters
+            .peek(name -> System.out.println("Filtered name: " + name)) // Inspect names
+            .map(String::toUpperCase) // Convert to uppercase
+            .forEach(System.out::println); // Print final result
+    
+ 61> Can you convert a Stream back to a Collection? How?
+ =====================================================================================================
+  -> Yes, by using collect(Collectors.toList()), collect(Collectors.toSet()), or similar methods.
+  
+ 62> What is the difference between anyMatch(), allMatch(), and noneMatch() in streams?
+ =======================================================================================================
+  ->  anyMatch() checks if any element matches a condition, allMatch() checks if all elements match, and noneMatch() checks if none of the elements match.
+  
+     List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+
+     boolean hasLongName = names.stream().anyMatch(name -> name.length() > 5);
+     System.out.println(hasLongName); // Output: true
+     
+     boolean allLongNames = names.stream().allMatch(name -> name.length() > 2);
+     System.out.println(allLongNames); // Output: true
+     
+     boolean noShortNames = names.stream().noneMatch(name -> name.length() < 3);
+     System.out.println(noShortNames); // Output: false
+     
+     
+ 63> Explain limit() and skip() methods in streams. How are they useful?
+ ======================================================================================================
+  -> limit() restricts the number of elements in a stream, and skip() skips a given number of elements. Useful for pagination and sampling.
+  
+ 64> How can you concatenate two streams in Java 8?
+ =====================================================================================================
+  -> Use Stream.concat(stream1, stream2) to merge two streams into one.
+  
+ 65> What are parallel streams? How do you create one?
+ =====================================================================================================
+  -> Parallel streams allow parallel processing of data. Create one using parallelStream() or stream.parallel().
+  
+     List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+     Stream<String> parallelStream = names.parallelStream();
+     
+     List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+     Stream<String> parallelStream = names.stream().parallel();
+     
+     
+ 66> Explain short-circuiting operations in streams. Give an example.
+ ====================================================================================================
+    -> Short-circuiting operations (e.g., findFirst(), anyMatch()) stop processing as soon as a condition is met.
+       Example: findFirst() halts after finding the first element.
+       
+ 67> What is the role of the distinct() method in streams?
+ ====================================================================================
+  -> distinct() filters out duplicate elements from the stream, ensuring all elements are unique.
+  
+ 68> Exception Handling Rule for Method Overriding
+ ===============================================================================================
+  -> If parent class throws checked exception then child class throws same checked exception or it's child exception or can't throws any exception or unchecked exception.
+     but it can't throws it's parent exception.
+     
+     Ex: 
+          class Parent{
+	          public void print() throws FileNotFoundException{
+	        	System.out.println("Parent print method called....");
+	        }
+          }
+          class Child extends Parent{
+	               public void print() throws RuntimeException{
+	             	System.out.println("Child print method called....");
+	             }
+              }
+         // Above code working fine.
+         
+         
+       class Parent{
+	        public void print() throws FileNotFoundException{
+		         System.out.println("Parent print method called....");
+	         }
+         }
+          class Child extends Parent{
+	             public void print() throws Exception{
+		           System.out.println("Child print method called....");
+	           }
+            }
+            
+         // Above code give compile time error.
+         
+   -> If parent class throws Unchecked exception then child class throws same unchecked or its child exception, but it can't throws 
+      checked exception.
+      
+       Ex: 
+           class Parent{
+	            public void print() throws RuntimeException{
+		           System.out.println("Parent print method called....");
+	            }
+            }
+          class Child extends Parent{
+	             public void print() throws NullPointerException{
+		            System.out.println("Child print method called....");
+	             }
+              }
+              
+            // Above code working fine...
+            
+           
+           class Parent{
+	            public void print() throws RuntimeException{
+		           System.out.println("Parent print method called....");
+	            }
+            }
+          class Child extends Parent{
+	           public void print() throws FileNotFoundException{
+		           System.out.println("Child print method called....");
+	          }
+           }
+           
+           // Above code give compile time error.
+           
+           
+         try {
+			int result = 10 / 0;
+			System.out.println("Result....");
+		} catch (ArithmeticException e) {
+			System.out.println("ArithmeticException exception block...");
+		} catch (Exception e) {
+			System.out.println("Exception class block...");
+		}
+		
+   -> In above case it execute ArithmeticException catch block.
+   
+       try {
+			int result = 10/0;
+			System.out.println("Result....");
+		} catch (ArithmeticException e) {
+			System.out.println("ArithmeticException exception block...");
+		} catch (ArithmeticException e) {
+			System.out.println("Exception class block...");
+		}
+		
+  -> In above case it give compile time error bcz two catch block use same exception.
+  
+        try {
+			int result = 10/0;
+			System.out.println("Result....");
+		} catch (Exception e) {
+			System.out.println("ArithmeticException exception block...");
+		} catch (ArithmeticException e) {
+			System.out.println("Exception class block...");
+		}
+		
+  -> In above case it give compile time error bcz first catch block use parent exception class then sub catch block use child exception class.
+     
+       
+
+     
+     
+      
+    
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+      
+   
+ 
+  
+  
+  
+  
+  
+  
+ 
+      

@@ -27,9 +27,9 @@ public class BubbleSort9 {
 		int[] array = { 5, 4, 3, 2, 1, 9, 8, 7, 6, 10 };
 		BubbleSort9 obj = getInstatnce();
 		int[] arraysortinforLoop = obj.arraySortInForloop(array);
-		//System.out.println(Arrays.toString(arraysortinforLoop));
+		System.out.println(Arrays.toString(arraysortinforLoop));
 		int[] arraySortinDoWhileLoop = obj.arraySortinDoWhileLoop(array);
-		System.out.println(Arrays.toString(arraySortinDoWhileLoop));
+		//System.out.println(Arrays.toString(arraySortinDoWhileLoop));
 	}
 
 	private int[] arraySortinDoWhileLoop(int[] array) {

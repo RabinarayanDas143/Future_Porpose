@@ -4,7 +4,7 @@ public class FindKthLargestNumberFromArray9 {
 
 	public static void main(String[] args) {
 		int[] array = { 5, 4, 3, 2, 1, 9, 8, 7, 6, 10 };
-		int Kth = 3;
+		int Kth = 2;
 		int result = getKthLargestNumber(array, Kth);
 		System.out.println(result);
 	}

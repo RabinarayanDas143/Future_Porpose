@@ -1,0 +1,139 @@
+ java 8 features are 
+ ===========================
+ 1. Lambda Expression.
+ 2. FunctionalInterface and predefined Functional Interface.
+ 3. Method Reference and Types of Method Reference.
+ 4. Optional Class to avoid Nullpointer Exception.
+ 5. Default and Static Method in Interface.
+ 6. Stream API - filter, Map, sorting, finding, collecting.
+ 
+ LAMBDA EXPRESSION
+ =====================================
+ 1. Lambda expression were introduced in java8
+ 2. Lambda expression is an anonymous function. It's a function without name and does not belong to any class.
+ 3. Lambda expression is mainly used to implement functional interface.
+ 
+ Function Inteface
+ --------------------------
+ - It is introduced in java8.
+ - An interface that contain only one abstract method is known as functional interface.
+ - Functional interface can have any number of default, static methods but can contain only one abstract method.
+ 
+ Lambda Vs Method
+ ----------------------------
+ - Method is always belong to class or object in java where as Lambda does not belong to any class or object.
+ - Method has the main part
+   . Name
+   . Parameter
+   . Body
+   . Return Type
+   
+ - Lambda expression in java has these main parts: 
+   . No Name - As lambda is an anonymous function so no need to have a name.
+   . Parameter list 
+   . Body - This is the main part of the function.
+   . No Return Type - You don't need mention the return type in the lambda expression. The java8+ compiler is infer the return type by checking the code.
+   
+         int lambda = (int a + int b)->(a+b);
+         
+         Syntax : ()      - >         {}
+                 Lambda  Arrow       Lambda Body
+                 input   (Denoting
+               Parameter   Lambda)    
+               
+ Some Functional Interface
+ ==============================================
+ 1. Interface Function <T,R> - Take 1 input give 1 output
+ ---------------------------------------------------------
+    T - the type of the input to the function.
+    R - the type of the output to the function.
+    These functional interface have a functional method is apply().   
+         
+  EX: Function<String,Integer> fun = (String s)->s.length();
+          fun.apply("Rabinarayan");    
+          
+ 2. Interface Consumer<T> - Take only input did not produce output
+ ------------------------------------------------------------------
+   T - the type of the input to the operation.
+   These is a functional interface whose functional method is accept(); 
+   
+   EX: Consumer<String> consumer = (String s) -> System.out.println(s);
+          consumer.appect("Rabinarayan Das");
+          
+ 3. Interface Supplier<T> - Did not take anything only give output.
+ ------------------------------------------------------------------
+  T - the type of result supplied by supplier.  
+  This is a functional interface whose functional method is get();
+  
+   EX: Supplier<LocalDateTime> supplier = ()->LocalDateTime.now();
+         System.out.println(supplier.get());
+         
+         
+ Method Reference
+ ==================================================
+ - Java provides a new feature called method reference in java 8.
+ - Method reference is used to refer method of the functional interface. It is a compact and easy form 
+   of a lambda expression.
+ - Each time when you are using lambda expression to just referring a method, you can replace your lambda expression 
+   with a method reference.
+ - There are 4 type of Method references 
+   1. Method reference to static method : its syntax is Class::StaticMethodName.
+   
+      EX: Function<Integer,Double> fun = (input) -> Math.sqrt(input); // Lambda expression
+             System.out.println(fun.apply(4));
+             
+          Function<Integer,Double> fun = Math::sqrt; // Method Reference.
+             System.out.println(fun.apply(4));
+             
+          BiFunction<Integer, Integer, Integer> bifun = MethodReferenceDemo::addition;
+          System.out.println(bifun.apply(10, 20));       class name           static method name
+      
+   2. Reference to an instance method of a particular object : the syntax is Object::instanceMethodName.
+   
+      EX: Printable printableMethodRef = methodReferenceDemo::display;
+          Interface                      Class obj             Class method
+                    printableMethodRef.print("Hello world");
+                    
+   3. Reference to an instance method of an arbitrary object of specific type: the syntax is Class::instanceMethodName
+   
+      EX: Function<String, String> fun = String::toLowerCase;
+          System.out.println(fun.apply("Rabinarayan Das"));
+          
+   4. Reference to a constructor : its syntax is ClassName::New
+   
+              	List<String> fruitList = new ArrayList<>(); 
+              	fruitList.add("Apple");
+              	fruitList.add("Banana");
+              	fruitList.add("Mango");
+              	fruitList.add("watermelon");
+      EX: Function<List<String>, Set<String>> setFun = (i)-> new HashSet<>(i);  // Lambda expression
+          System.out.println(setFun.apply(fruitList));
+          
+          Function<List<String>, Set<String>> setFun = HashSet::new;
+          System.out.println(setFun.apply(fruitList));
+          
+          
+ Optional Class
+ =========================================================
+ - Java8 has introduced a new optional utility class in java.uti package. This class can help in 
+   avoiding null checks and NullPointerException exception.
+ - You can view Optional as a single-value container that either contains a value or doesn't(it is then said to be "empty").
+ - Optional class is a final class, we can't extend it.
+ - It provides 3 static methods to create the instance of this class
+   . empty(); - It return the empty object of the class.
+   . of(); - if the value present then it return the value, if the value not present then it throw the NullPointerException.
+   . ofNullable(); - if the value present then it return the value, if the value is not present then it return the empty object.
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         

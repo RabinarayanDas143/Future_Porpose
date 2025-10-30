@@ -125,7 +125,13 @@
    . ofNullable(); - if the value present then it return the value, if the value is not present then it return the empty object.
          
          
-         
+ What is Stream :
+=====================================================
+- Stream represents a sequence of object from a source, which support aggregate operation. 
+- Java provides a new additional package in java 8 called java.util.stream .
+- This package consist of classes, interface and an enum to allow to functional 
+  style operation on the element. You can use stream by importing java.util.stream package in your program.
+
          
          
          

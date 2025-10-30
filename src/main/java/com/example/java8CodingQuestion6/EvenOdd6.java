@@ -14,5 +14,4 @@ public class EvenOdd6 {
 		System.out.println("EvenArray :" + Arrays.toString(evenArray));
 		System.out.println("OddArray :" + Arrays.toString(oddArray));
 	}
-
 }

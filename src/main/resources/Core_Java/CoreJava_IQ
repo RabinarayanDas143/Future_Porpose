@@ -729,17 +729,56 @@
 		
   -> In above case it give compile time error bcz first catch block use parent exception class then sub catch block use child exception class.
      
-       
-
-     
-     
-      
+ 69> Explain internal work of JVM
+ ==========================================================================
+ -> First we have compile the .java file.
+ -> Then compiler convert .java file to .class file, means source code to byte code.
+ -> Then JVM take these byte code.
+ -> Total JVM is patition to 3 parts. 
+    - Class Loader
+    - Memory Area
+    - Execution Engine
     
+                                                    CLASS LOADER
+                                               -----------------------     
+                       LOADING                         LINKING            INITIALIZATION
+                       -Bootstrap class loader     - Verification
+                       -Execution class loader     - preparation
+                       -Application class loader   - Resolution
+     
+                                              Memory Area
+                                           ---------------------
+   ******         *************     ************        *************         *************
+ Method Area      Head Memory       Stack Area           PC register          Native method area
+   
+                                          EXECUTION ENGINE
+                                      -----------------------------    
+                      Interpreter        JIT Compiler        profiler   
+                                       
    
    
+   - BootStrap ClassLoader - it load the rt.jar
+   - Extension ClassLoader - it load the ext.jar
+   - Application ClassLoader - it load application class file
    
+   -> In verification it verify the byte code, means all the byte code is correct or not. so it make the code secure.
+   -> In preparation  it allocate memory for class level variables like static variables inside method area and intialize the default value (not the assign value).
+   -> In Resolution it replace the symbolic name to the original name.
+   -> In Initialization it assign the original value in static variable. Also it execute all the static block from top to button.
    
+   -> Inside method area allocate memory for all the class. It store the class level data.
+   -> Inside Heap memory it store the object. It allocate memory for object.
+   -> Inside Stack area it store all the local variables and current running methods.
+   -> Inside PC register it store all the next execution information.
+   -> Inside Native method area it store all the Native method what are the use in our application.
    
+   -> Method Area and Heap Memory both are not thread safe but Stack Area, PC register, Native method area are thread safe.
+   
+   -> In Interpreter it execute all the code line by line means it read one line the compile it the execute it.
+   -> JIT (Just in Time) compiler, it perform the execution so fast. Means if one method is already executed then
+      it create the byte code for this method, when second time this method is call at that time it directly execute 
+      this byte code.
+   -> profiler is used to finding the duplicate code in compilation time. 
    
    
    

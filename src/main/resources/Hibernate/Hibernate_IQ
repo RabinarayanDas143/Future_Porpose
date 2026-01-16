@@ -160,20 +160,65 @@
  24> Is hibernate prone to SQL injection attack ?
  =========================================================================================
  -> Hibernate does not grant immunity to SQL Injection.
+ -> Hibernate itself is SAFE from SQL Injection
  -> Criminals may use it to gain unauthorized access to your sensitive data: customer information, personal data, trade secrets, intellectual property, and more.
  
  25> Explain hibernate mapping file ?
  ========================================================================================
- -> The mapping file. Hibernate uses the mapping metadata to determine how to load and store objects of the persistent class.
+ -> Hibernate mapping file is an XML file used to map Java classes and their fields to database tables and columns, acting as a bridge between Java objects and relational databases.
+     
+    When Mapping File is Used Today?
+
+       - Legacy projects
+       - When DB changes frequently
+       - When annotations are not allowed
+
+        Modern projects mostly use Annotations, 
+ 
  
  26> What are the most commonly used annotation available to support hibernate mapping.
  ==========================================================================================
- 
+  -> Hibernate mapping is mainly supported using annotations like @Entity, @Table, @Id, @GeneratedValue, @Column, 
+     and relationship annotations such as @OneToMany, @ManyToOne, @OneToOne, and @ManyToMany.
+     
+  -> @Entity
+     Marks a Java class as a Hibernate entity (table).
+     
+  -> @Table
+     Maps the entity to a specific table name.
+     
+  -> @Id
+     Marks the primary key.
+     
+  -> @GeneratedValue
+     Specifies how the primary key is generated.
+     
+  -> @SequenceGenerator
+     Used with sequences (mainly Oracle, PostgreSQL).
+     
+  -> @Column
+     Maps a field to a table column.
+     
+  -> @Transient
+     Field not stored in DB.
+     
+  -> fetch
+     Defines loading strategy.
+     @OneToMany(fetch = FetchType.LAZY)
+     
+     Types:
+           LAZY (default)
+           EAGER
  
  27> Explain update Vs merge in JPA
  ==============================================================================
-  -> 
-  
+  -> update() directly attaches a detached entity to the session and fails if the session already contains the same entity.
+  -> merge() copies the detached entity’s state into a managed entity and returns it, avoiding session conflicts.
+  -> update():
+              “Attach this exact object to the session.”
+  -> merge():
+              “Copy data from this object into a session-managed object.”
+  -> merge() is safer than update() because it handles detached entities without throwing exceptions and returns a managed instance.
   
   
   

@@ -1,7 +1,5 @@
 package com.example.coreJava;
 
-import java.io.FileNotFoundException;
-
 class Parent {
 	public void print() throws RuntimeException {
 		System.out.println("Parent print method called....");
@@ -21,7 +19,7 @@ public class ExceptionHirarchy {
 			int result = 10 / 0;
 			System.out.println("Result....");
 		} catch (ArithmeticException e) {
-			System.out.println("ArithmeticException exception block...");
+			System.out.println("ArithmeticException exception block...===");
 		} catch (Exception e) {
 			System.out.println("Exception class block...");
 		}

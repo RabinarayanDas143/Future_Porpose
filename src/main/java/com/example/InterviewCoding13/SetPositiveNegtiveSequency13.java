@@ -1,0 +1,21 @@
+package com.example.InterviewCoding13;
+
+import java.util.Arrays;
+
+public class SetPositiveNegtiveSequency13 {
+	public static void main(String[] args) {
+		int[] array = { 1, 2, 5, -3, -1, -4 };
+		int pos = 0, neg = 1;
+		int result[] = new int[array.length];
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] > 0 && pos < result.length) {
+				result[pos] = array[i];
+				pos = pos + 2;
+			}else if(array[i]<0 && neg<result.length) {
+				result[neg]=array[i];
+				neg=neg+2;
+			}
+		}
+		System.out.println(Arrays.toString(result));
+	}
+}

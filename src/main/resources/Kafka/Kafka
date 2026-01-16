@@ -1,0 +1,116 @@
+
+ 1. What is Kafka
+ =======================================================
+ -> Apache Kafka is a publish-subscribe based messaging system. It is fast, scalable and distributed by design.
+ -> It was initially thought of as a message queue and open-source by Linkedin in 2011.
+ -> Publish-subcribe to stream of records like message queue.
+ -> It provide storage system, so that message can be stored asynchronously.
+ -> Traditional messaging models are queue and publish-subscribe. In a queue each record goes to one consumer.
+    but in publish-subscribe one message goes to multiple consumer.
+    
+ Props of Kafka
+ =====================================================
+ -> Loose coupling : Each service does not know each other regarding data update matters.
+ -> Durability : Its guarantees that message will be delivered even if the consumer service is down.
+                 When the consumer get up again, all message will be delivered.
+ -> Scalability : Since the messages get stored in bucket, there is no need for response.
+                  We create async communication between all services.
+ -> Flexibility : Sender does not know who is consume the message, meaning you can add new consumer with less work.
+ 
+ Cons of Kafka
+ ====================================================
+  -> The developer need to have deep knowledge about message flow .
+  -> Its hard to debug.
+  
+ Difference between Active MQ Vs Rabbit MQ Vs Kafka Communication.
+ ==============================================================================================================
+          Active MQ(AM)/ Rabbit MQ(RM)                                                   Kafka
+  -----------------------------------------                            ------------------------------------------------
+  -> AM developed by LogicBlaze, as an open source message broker.  -> Initially developed by Linkedin, Later in 2011 Kafka was open source. developed via Apache Software.
+     Later donated to Apache Software foundation.
+     
+  -> Written in AM - Java                                           -> Written in java and Scala
+                RM - Erlang
+  -> PTP messaging system.                                          -> Publish-subscribe messaging system.
+  -> It deal with a small amount of data.                           -> It deal with huge amount of data
+  -> There is one sender and one consumer of data, if multiple      -> There is one publisher and multiple consumer at a time.
+     consumer come then it connect in queue.
+  -> Data is not stored in memory box.                              -> Data is stored in one Memory box.
+  -> Data consistency is low .                                      -> Data consistency is high.
+  -> Responsibilty of producer to ensure delivery of messages.      -> Responsibilty of consumer to consume message.
+  -> It handel 4k to 10k message per second.                        -> It handle 1 million message per second.
+  -> Support both Sync and Async communication.                                   -> Support only Async communication.
+  
+ Step to Configure Kafka
+ ==============================================
+ -> You need to install Zookeeper and Kafka. 
+ -> To configure Kafka, we install Java, download Kafka binaries, start Zookeeper, then start the Kafka broker.
+    After that, we create topics and test message production and consumption using Kafka CLI tools
+    
+ Topic 
+ ===========================================================
+ -> Topic is a bucket of message where services may place or read the messages.
+ -> Atopic is similar laike a folder and the messages are similar like files in that folder.
+ -> Topics are multiple producer and multiple subscriber.
+ -> Message can be read many time as needed. because it store messages in a memory box.
+ -> A topic can also have multiple partition. this allows multiple consumer read that message parallel.
+ -> Topics are partitioned for scalability and replicated for fault tolerance.
+ 
+ What is a Kafka Cluster?
+ =====================================================
+ -> A Kafka cluster is a group of Kafka brokers (servers) working together to store, manage, and distribute data (messages).
+ 
+ Producer
+ =======================================
+ -> A producer send/write messages to the topic within the cluster.
+ 
+ Consumer
+ =======================================
+ -> A consumer is read the messages from the Kafka cluster.
+ -> A consumer can read the data in same time from multiple broker.
+ 
+ Broker
+ ====================================
+ -> A kafka broker is a bridge between producer and consumer. if a producer produce one message to the cluster, it is sent to the 
+    kafka server. A kafka broker allows consumer to fetch that message by topic.
+ -> All broker are maintained inside Kafka cluster.
+ -> To maintain the load balance of the kafka cluster it have multiple kafka broker.
+ 
+ Partitions
+ =====================================
+ -> The messages is divided in to small subparts/ replicated known as partitions.
+ -> Each partitions carries data.
+ 
+ Zookeeper
+ ====================================
+ -> Kafka broker use Zookeepeer for managing and cordinating purpose.
+ -> There are multiple Zookeepeer inside cluster.
+ -> A user does not directly interact with zoopeeper, but via broker.
+ -> No kafka serveris run without zookeeper server. It is mandatory to run the zookeeper server.
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

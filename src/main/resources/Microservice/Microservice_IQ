@@ -1,0 +1,494 @@
+ 1. What are Microservices ?
+ ================================================
+  -> Microservice is an architecture where the application is exposed as loosely copuled services that can be independently 
+     developed, deployed and maintained. Each service called as microservice. Each service perform unique function.
+  
+  -> Speciality of the microservice is that can supported polyglot architecture. For Example if a team is working on one 
+     microservice using java, SpringBoot and Mysql , another team can work on other microservice using Python, React and NoSql.
+     
+  -> Different microservice can use different version of same programming language.
+  -> Different microservice can use different programming language.
+  -> Different microservice can use different architecture as well.
+  
+  
+ 2. Why Microservices ?
+ ===============================================
+  -> In the case of monolithic application there are several problem like 
+       . We have to use same code base in all the module, application is deployed as a single unit.
+       . Complex to maintain and find a issue.
+       
+  -> Each service is independent and give the flexibility to choose the programming language, database
+  -> All the service can be developed, deployed and maintained independently.
+  
+ 3. What are the props and cons of Microservice Architecture ?
+ =======================================================================
+        Props (Advantage)                                                  Cons (Disadvantage)
+ ================================================         ================================================================
+ 1. Freedom to use different language.                    1. Management of a large number of service is difficult.
+ 2. We microservice focuses on single capability.         2. Communication between microservice is complex.
+ 3. We can individually deployed different service.       3. Increase effort for configuration .
+ 4. Allow to frequent software release.                   4. Difficult to maintain transaction safety and data boundaries.
+ 5. Multiple services are parallelly developed and        5. Its hard to debug.
+     deployed. 
+                                                          6. Microservice will need large team size to main the application.
+                                                          
+ 4. When to use Microservices ?
+ =====================================================================
+  - Reduce time to market.
+  - Scalable better software.
+  - Lower cost.
+  - Faster development.
+  - Cloud native application.
+  - if the team size is big, bcz each service will require it team to develop, deploy and manage.
+  - If fast result are requied.
+  - Do not use this architecture for simple application.
+ 
+ 5. What are the main features of Microservices ?
+ ======================================================================
+  - Microservices architecture breaks an application in to small services, so that we can develop, deploy and maintained all the 
+    services independently.
+  - Decentralization : The data management is decentralized. We can use same data base for all services.
+  - Black box : Every microservice is defined as a black box. Means payment service does not know anything about order service.
+  - Security : We can easily apply security like authentication, authorization for every API call through API Gateway.
+  - Polyglot : This is one of the significant feature of microservices. we can develop one service using java then also we 
+               can develop other service using python.
+              - Different microservices can use different language.
+              
+ 6. How do Microservices communicate with wach other ?
+ ======================================================================
+  - In Microservice architecture, there are 2 different type of inter-service communication
+    - Synchronous communication.
+    - Asynchronus communication.
+    
+ - Synchronous Call
+   . In a synchronous call, the caller waits until the process is finished and returns a response.
+   . We can do Synchronous call using RestTemplate, Feign Client
+   . 👉 Request → Wait → Response
+   Ex:  
+        User Service → Hotel Service → Response
+        
+          @FeignClient("HOTELSERVICE")
+          public interface HotelClient {
+          @GetMapping("/hotels/{id}")
+          Hotel getHotel(@PathVariable String id);
+                   }
+                   
+       ⏳ UserService waits until HotelService responds.
+       
+ - Asynchronous Call
+   . In an asynchronous call, the caller does NOT wait. It continues execution, and the response is handled later.
+   . We can do Asynchronous call using Kafka, RebitMq, Active MQ.
+   . 👉 Request → Continue → Response later
+   
+   Ex:   
+        CompletableFuture.runAsync(() -> {
+              System.out.println("Task running");
+          });
+
+        System.out.println("Main thread continues");
+        
+        Main thread continues
+        Task running
+        
+        . Order Service → Kafka Topic → Email Service
+        . OrderService does not wait for EmailService.
+        
+        
+ 7. Monolithic vs Microservices Architecture
+ ===========================================================================
+  - A monolithic application is built as one single unit where all components are tightly coupled.
+  - Everything is deployed together as one application (one WAR/JAR).
+  - In Microservice architecture where an application is split into small, independent services.
+        
+ 8. Types of Async Communication.
+ ====================================================================================
+  - There are 2 type of comunication 
+     1. Point to Point
+     2. Publisher - Subscriber
+     
+  1. Point to Point : A queue is used for this type of comunication.
+        The service that produce the message, which is called as producer (sender), it will send the message
+        to a queue and other service that has interest in that message which is called consumer (receiver), it will
+        consume that message from the queue and it start the process.
+        - In point-to-point, one service sends a message/request to exactly one specific service.
+        Ex: popular choice for the queue system is RabiMQ and ActiveMQ.
+        
+        🔹 How it works
+
+            Sender knows the receiver
+            One request → one response (or one consumer)
+            Can be synchronous or asynchronous
+        
+  2. Publisher - Subscriber : In Publisher-Subscriber based communication the Topic is used by the message broker to
+           store the message.
+           In that case the publisher publish one topic and then the subscriber to subscribe that topic then process it.
+           - In pub-sub, a service publishes an event, and multiple services can subscribe to it.
+           - Ex: popular choice for the topic system is Kafka, AWS SNS
+           
+                      ┌──► Email Service
+         Order Service ──► Kafka Topic
+                      └──► Notification Service
+                      └──► Analytics Service
+                      
+            🔹 How it works
+
+                Publisher does not know subscribers
+                Event-driven
+                Asynchronous only
+                Uses topics
+                
+                
+ 9. When to use which communication (Sync & Async) .
+ ==================================================================================
+  - When we start the application from scratch go with Synchronous communication to optimize for speed evolution.
+  - When Microservice architecture grows and start becoming complex then focus on switch t Asyncghronous communication.
+  - If the response is not necessary to proceed with other functionality then convert the communication channel to Async communication.
+  
+ 10. What is Saga Pattern ?
+ ========================================================================
+  Why Saga ?
+  --------------------------------------------------
+  -> The problem started when we moved from Monolithilc application to Microservice acrchitecture.
+  -> Ex: Swiggy, Zomato.
+         . Choose your dishes
+         . Add them cart
+         . Make Payment
+         . Order get delivered.
+         . Our order is marked as completed after delivery successful.
+     -> In Monolithic its not a problem because we have 1 DB , multiple tables like Order, Payment, Delivery etc. 
+        Now 1 single Atomic transaction we can do all these steps and if payment fails, everything get rolled back.
+        
+  -> Now we moved to Microservice architecture and Split our application in to a Small Small services.
+         . Order Service
+         . Payment Service
+         . Delivery Service
+  -> Now your Order service accept your order, payment service validate the payment done and delivery service is responsible 
+     for delivery your order.
+  -> Now take a case if Delivery is failed as no delivery partner was available but your payment is done and money is also deducted
+     and now no food. Now we want get back the money and order must be mark as cancelled.
+  -> For that we have to Roll back the Transaction but the scope of transaction was in Delivery service. The boundary for this 
+     this transaction ended in delivery service.
+  -> Now the money is not returned also your order status is changed from waiting to failed or cancelled. Now this is Big problem.
+  -> To Overcome that type of issue we use Saga Design pattern.
+  
+  What is the Saga Design Pattern?
+  -----------------------------------------------------------------------------
+  -> The saga design pattern is architecture of Microservice. It is used to manage the distributed transaction in Microservice instead of single transaction.
+  -> A saga breaks the transaction in to a sequency of local transaction.
+  -> Each local transaction updates its own database and then triggers the next step.
+  -> Types of Saga Pattern
+  
+        1️. Choreography-based Saga(Event-Driven)
+        --------------------------------------------------------------------
+          - No central coordinator
+          - Each service listens to events and reacts
+          
+           Order Service → Payment Service → Inventory Service
+           
+           Order Created
+           Payment Service processes payment
+           Inventory Service reserves stock
+           If payment fails → Order is cancelled
+           
+           ┌──────────────┐
+           │ Order Service│
+           └──────┬───────┘
+                  │ OrderCreated Event
+                  ▼
+           ┌──────────────┐
+           │Payment Servic│
+           └──────┬───────┘
+                  │ PaymentSuccessful Event
+                  ▼
+           ┌──────────────┐
+           │Inventory Serv│
+           └──────┬───────┘
+                  │ StockReserved Event
+                  ▼
+           ┌──────────────┐
+           │ Shipping Serv│
+           └──────────────┘
+           
+          ❌ Failure Scenario (Compensation)
+          
+          Inventory Service ❌ fails
+                  │
+                  ▼
+         Payment Service → Refund Payment
+                  │
+                  ▼
+         Order Service → Cancel Order
+         
+         📌 Key Point:
+                      Each service listens to events and decides next action
+                      
+                      
+             Order Service finishes its work
+                       |
+                       | publishes event: OrderCreated
+                       v
+             Payment Service hears the event
+                       |
+                       | decides by itself: “I should do payment”
+                       v
+           Inventory Service hears PaymentSuccess
+                       |
+                       | decides by itself: “I should reserve stock”
+                       
+            Important point 🔑
+                 No service says “you do this next”
+                 Each service only:
+                           Listens to events
+             
+                      
+        2️. Orchestration-Based Saga (Central Controller)
+       --------------------------------------------------------------------
+       
+       ┌───────────────────┐
+       │ Saga Orchestrator │
+       └─────────┬─────────┘
+                 │ Create Order
+                 ▼
+       ┌───────────────────┐
+       │ Order Service     │
+       └─────────┬─────────┘
+                 │ Process Payment
+                 ▼
+       ┌───────────────────┐
+       │ Payment Service   │
+       └─────────┬─────────┘
+                 │ Reserve Stock
+                 ▼
+       ┌───────────────────┐
+       │ Inventory Service │
+       └───────────────────┘
+       
+       ❌ Failure Scenario (Compensation)
+       
+       Inventory Service ❌ fails
+              │
+              ▼
+       Saga Orchestrator
+              │
+              ├──> Payment Service → Refund Payment
+              │
+              └──> Order Service → Cancel Order
+              
+       📌 Key Point:
+             Orchestrator:
+                 Decides order of execution
+                 Triggers compensation on failure
+                 
+                 
+          Saga Orchestrator (Team Lead)
+                     |
+                     | tells Order Service: Create Order
+                     v
+          Order Service completes
+                     |
+                     | Lead tells Payment Service: Do Payment
+                     v
+          Payment Service completes
+                     |
+                     | Lead tells Inventory Service: Reserve Stock
+          
+          Important point 🔑
+              Services do not decide
+              They only follow commands
+              All logic is inside the orchestrator
+              
+ 11. How to Design and implement Microservice
+ =============================================================================
+ 1️-> Design a Microservice (Before Writing Code) 
+ ----------------------------------------------------------
+    Step 1: Identify Business Capability
+            A microservice should represent ONE business responsibility.   
+            
+            Example (E-commerce):
+                         Order Service
+                         Payment Service
+                         Inventory Service
+                         User Service
+                  📌 Rule:
+                      One microservice = one business capability
+                      
+    Step 2: Define Service Boundaries
+                     Each microservice must:
+                           Have its own database
+                           Be independently deployable
+                           Not share DB tables
+                           
+   Step 3: Define APIs (Contract First)
+   
+   Step 4: Decide Communication Style
+                      Choose one:
+                           REST (Sync)
+                           Messaging (Async)
+                           
+   Step 5: Decide Data Consistency Strategy
+                  Use Saga pattern for multi-service transactions
+                  
+   2️-> Implement a Microservice (Spring Boot Example)
+  --------------------------------------------------------------------------------
+     Step 6: Create Spring Boot Project
+     Step 7: Layered Architecture
+                      Controller → Service → Repository → Database
+     Step 8: Implement REST Controller
+     Step 9: Business Logic (Service Layer)
+     Step 10: Database Layer
+     
+  3️-> Make It Production-Ready (Very Important)
+ ---------------------------------------------------------------------------------
+     Step 11: Configuration Management                      
+     Step 12: Service Discovery
+     Step 13: API Gateway
+     Step 14: Fault Tolerance
+     Step 15: Logging & Monitoring
+     
+  To design a microservice, I first identify a single business capability, define its API and database, choose communication style, 
+  and ensure independent deployment. For implementation, I use Spring Boot with layered architecture, externalized config, 
+  service discovery, fault tolerance, and containerized deployment.  
+  
+  
+ 12. Can you please provide the example scenario where using microservice over monolithic system and vice versa.
+ ================================================================================================================================
+  -> Monolithic architecture is preffered
+    . When limited complexcity.
+    . Limited users (employees only)
+    . Simple workflows
+    . Rare feature changes
+    . Strong transactional consistency
+    
+  -> Microservice architecture is preffered
+    . Millions of users
+    . High traffic during sales (Big Billion Days)
+    . Multiple independent business domains
+    . Frequent feature releases
+    . Different scaling needs
+    
+ 13. How do you make sure a Microservice application can handel more users as it become popular.
+ =====================================================================================================================
+   1️-> Horizontal Scaling (MOST IMPORTANT)
+                 What it means :
+                         Run multiple instances of the same microservice
+                         Add more instances when traffic increases
+
+   2️-> Load Balancing
+            A Load Balancer distributes traffic evenly.
+            
+   3️-> Service Independence (Key Microservice Advantage)
+           Scale only Product Service
+           Don’t touch Payment Service
+           
+   4-> Asynchronous Communication
+            Synchronous calls block threads.
+            
+   5-> API Gateway
+            Single entry point
+            Authentication
+            Routing
+            
+ As a microservice application grows, we handle more users by horizontally scaling services, using load balancers, 
+ caching frequently accessed data, making communication asynchronous, auto-scaling with Kubernetes, and monitoring the system continuously.
+ This ensures high availability, performance, and fault isolation.
+ 
+ 14. How to handel data consistency in microservice
+ ========================================================================================
+  -> Saga Pattern (MOST IMPORTANT)
+         A Saga is a sequence of local transactions.
+         Each step updates its own database and publishes an event.
+         
+  -> Event-Driven Architecture
+         Services communicate via events
+         Loose coupling
+         
+  The most common approach is the Saga pattern, it handel the distributed transaction, it break the sequency of transaction 
+  in local transaction. if any step fail then it rollback the all process.	
+  We also use event-driven communication,
+  
+ 15. Difference between Saga and 2 phase commit
+ =========================================================================================
+           2 phase Commit                                  Saga Pattern
+  ---------------------------------------    -------------------------------------------------------
+  -> Strong consistency.                     -> Eventual consistency
+  -> Synchronous.                            -> Asynchronous.
+  -> Blocking in nature.                     -> Non blocking in nature.
+  -> Perfomance is low.                      -> Perfomance is high.
+  -> It is a tight copuling.                 -> It is a loose copuling.
+  -> Strong data consistency.                -> Temporarily inconsistency.
+  
+ 16. Details of 2 Phase Commit
+ =============================================================
+ -> Two-Phase Commit (2PC) is a distributed transaction protocol used to ensure atomicity (all-or-nothing) across multiple services or databases.
+ 
+  Transaction :
+  ------------------------------------------------
+  -> A transaction is sequency of action that must be executed step by step, if one step is fail the entire steps is must be roll back.
+  -> A transaction has following the ACID properties.
+     - Atomicity (All or Nothing) : 👉 A transaction is treated as one single unit.
+                 Either all operations succeed
+                 Or all operations fail and rollback
+                 
+                 Example
+                         Money transfer ₹1000:
+                         Debit from Account A ✅
+                         Credit to Account B ❌ (fails)
+                         ➡️ Rollback debit → no partial update
+                         ✔️ No half-completed transactions
+                         
+     - Consistency (Data Must Follow Rules) : 👉 A transaction must move the database from one valid state to another.
+                     All constraints, rules, triggers must be satisfied
+                     No corruption of data
+                     
+                     Example
+                             Account balance cannot be negative
+                             Primary key must be unique
+                             If a transaction violates rules → rollback
+                             ✔️ Database integrity maintained
+                             
+                             
+    - Isolation (Transactions Don’t Interfere) : 👉 Multiple transactions can run concurrently without affecting each other.
+                                                 Each transaction behaves as if it is the only one running.
+                                                 
+    - Durability (Once Committed, Always Saved) : 👉 After a transaction commits, data will not be lost, even if:
+                                                  System crashes
+                                                  Power failure
+                                                  Server restarts
+  Transaction in Monolithic Vs Microservice
+  ------------------------------------------------------------------------
+  -> In monolithic applications, transactions are easy because all operations happen in a single database using ACID transactions.
+     In microservices, transactions are distributed across services, so we use Saga pattern with compensating transactions instead 
+     of traditional database transactions.
+      
+      Monolith → @Transactional
+      Microservices → Saga
+      Strong consistency → Monolith
+      Scalability → Microservices
+        
+        
+        
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,10 +1,8 @@
 package com.example.coreJava;
 
- 
 class Bicycle {
 	public int gear;
 	public int speed;
-	
 
 	public Bicycle() {
 		super();
@@ -24,12 +22,14 @@ class Bicycle {
 	}
 }
 
-class BicyclePrice{
+class BicyclePrice {
 	int price = 150000;
 }
-class Vechile extends BicyclePrice{
+
+class Vechile extends BicyclePrice {
 	String comfort = "Smooth";
 }
+
 public class Inheritance extends Bicycle {
 
 	public Inheritance() {
@@ -44,6 +44,6 @@ public class Inheritance extends Bicycle {
 		Inheritance obj = new Inheritance();
 		obj.bicycle(5, 100, 10);
 		Vechile vechile = new Vechile();
-		System.out.println("In vechile price is :'"+vechile.price+"' and it give good :'"+vechile.comfort+"'");
+		System.out.println("In vechile price is :'" + vechile.price + "' and it give good :'" + vechile.comfort + "'");
 	}
 }

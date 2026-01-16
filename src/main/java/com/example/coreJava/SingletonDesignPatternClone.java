@@ -70,23 +70,23 @@ public class SingletonDesignPatternClone {
 		Student1 s = new Student1(1, "Rabi");
 		System.out.println(s.hashCode());
 		
-		//Student1 s1 = (Student1) s.clone();
-		//System.out.println(s1.hashCode());
+//		Student1 s1 = (Student1) s.clone();
+//		System.out.println(s1.hashCode());
 		
-		Student1 s2 = new Student1(1, "Rabi");
-		System.out.println(s2.hashCode());
+//		Student1 s2 = new Student1(1, "Rabi");
+//		System.out.println(s2.hashCode());
 		
-		Map<Student1, String> map = new HashMap<>();
-		map.put(s, "A");
-		map.put(s2, "B");
-		s=new Student1(1, "C");
-		map.put(s, "c");
-		System.out.println(map.get(s)); //1
-		
-		Map<String, Student1> map1 = new HashMap<>();
-		map1.put("jhasvgy", s);
-		map1.put("ahsjcvj", s2);
-		
-		System.out.println(map1.size()); //2
+//		Map<Student1, String> map = new HashMap<>();
+//		map.put(s, "A");
+//		map.put(s2, "B");
+//		s=new Student1(1, "C");
+//		map.put(s, "c");
+//		System.out.println(map.get(s)); //1
+//		
+//		Map<String, Student1> map1 = new HashMap<>();
+//		map1.put("jhasvgy", s);
+//		map1.put("ahsjcvj", s2);
+//		
+//		System.out.println(map1.size()); //2
 	}
 }

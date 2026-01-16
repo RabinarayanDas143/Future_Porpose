@@ -1,4 +1,4 @@
-package com.example.java8CodingQuestion7;
+package com.example.java8CodingQuestion8;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,6 +30,12 @@ class ModelClass {
 		this.deptName = deptName;
 		this.city = city;
 		this.yearOfJoining = yearOfJoining;
+	}
+
+	@Override
+	public String toString() {
+		return "ModelClass [id=" + id + ", name=" + name + ", age=" + age + ", salary=" + salary + ", gender=" + gender
+				+ ", deptName=" + deptName + ", city=" + city + ", yearOfJoining=" + yearOfJoining + "]";
 	}
 
 	public int getId() {
@@ -96,17 +102,11 @@ class ModelClass {
 		this.yearOfJoining = yearOfJoining;
 	}
 
-	@Override
-	public String toString() {
-		return "ModelClass [id=" + id + ", name=" + name + ", age=" + age + ", salary=" + salary + ", gender=" + gender
-				+ ", deptName=" + deptName + ", city=" + city + ", yearOfJoining=" + yearOfJoining + "]";
-	}
-
 }
 
-public class OperationUsingModelClass7 {
-
+public class OperationUsingModelClass8 {
 	public static void main(String[] args) {
+
 		List<ModelClass> empList = new ArrayList<>();
 		empList.add(new ModelClass(1, "abc", 28, 123, "F", "HR", "Blore", 2020));
 		empList.add(new ModelClass(2, "xyz", 29, 120, "F", "HR", "Hyderabad", 2015));
@@ -122,17 +122,17 @@ public class OperationUsingModelClass7 {
 		// Group employees by city
 		Map<String, Long> map1 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getCity(), Collectors.counting()));
-		// System.out.println(map1);
+		// map1.forEach((a, b) -> System.out.println(a + " " + b));
 
 		// Group Employees by age
-		Map<Integer, Long> map2 = empList.stream()
+		Map<Object, Long> map2 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getAge(), Collectors.counting()));
-		// System.out.println(map2);
+		// map2.forEach((a,b)->System.out.println(a+" "+b));
 
 		// Find the count of male and female employees present in the organization
 		Map<String, Long> map3 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getGender(), Collectors.counting()));
-		// System.out.println(map3);
+		// map3.forEach((a, b) -> System.out.println(a + " " + b));
 
 		// Print the names of all departments in the organization
 		List<String> map4 = empList.stream().map(e -> e.getDeptName()).distinct().collect(Collectors.toList());
@@ -147,7 +147,7 @@ public class OperationUsingModelClass7 {
 		// System.out.println(map6);
 
 		// Print Average age of Male and Female Employees
-		Map<String, Double> map7 = empList.stream()
+		Map<Object, Double> map7 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getGender(), Collectors.averagingLong(e -> e.getAge())));
 		// System.out.println(map7);
 
@@ -157,7 +157,7 @@ public class OperationUsingModelClass7 {
 		// System.out.println(map8);
 
 		// Find oldest employee
-		ModelClass map9 = empList.stream().sorted((a, b) -> a.getYearOfJoining() - b.getYearOfJoining()).findFirst()
+		ModelClass map9 = empList.stream().sorted((a, b) -> b.getYearOfJoining() - a.getYearOfJoining()).findFirst()
 				.get();
 		// System.out.println(map9);
 
@@ -169,13 +169,14 @@ public class OperationUsingModelClass7 {
 		// Find employees whose age is greater than 30 and less than 30
 		List<ModelClass> map11_Grater30 = empList.stream().filter(e -> e.getAge() > 30).collect(Collectors.toList());
 		// System.out.println(map11_Grater30);
+
 		List<ModelClass> map12_Less30 = empList.stream().filter(e -> e.getAge() < 30).collect(Collectors.toList());
-		// System.out.println(map12_Less30);
+		// System.out.println(map11_Less30);
 
 		// Find the department name which has the highest number of employees
 		Entry<String, Long> map13 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getDeptName(), Collectors.counting())).entrySet().stream()
-				.sorted((a, b) -> a.getValue().compareTo(b.getValue())).findFirst().get();
+				.sorted((a, b) -> b.getValue().compareTo(a.getValue())).findFirst().get();
 		// System.out.println(map13);
 
 		// Find if there any employees from HR Department
@@ -195,12 +196,12 @@ public class OperationUsingModelClass7 {
 
 		// Find all employees who lives in ‘Blore’ city, sort them by their name and
 		// print the names of employees.
-		List<String> map17 = empList.stream().filter(e -> e.getCity().equalsIgnoreCase("Blore")).map(e -> e.getName())
-				.collect(Collectors.toList());
+		List<ModelClass> map17 = empList.stream().filter(e -> e.getCity().equalsIgnoreCase("Blore"))
+				.sorted((a, b) -> a.getName().compareTo(b.getName())).collect(Collectors.toList());
 		// System.out.println(map17);
 
 		// No of employees in the organisation
-		long map18 = empList.stream().count();
+		Long map18 = empList.stream().count();
 		// System.out.println(map18);
 
 		// Find employee count in every department
@@ -215,8 +216,8 @@ public class OperationUsingModelClass7 {
 		// System.out.println(map20);
 
 		// Sorting a Stream by age and name fields
-		List<ModelClass> map21 = empList.stream().sorted((a, b) -> a.getAge() - b.getAge())
-				.sorted((a, b) -> a.getName().compareTo(b.getName())).collect(Collectors.toList());
+		List<ModelClass> map21 = empList.stream().sorted((a, b) -> a.getName().compareTo(b.getName()))
+				.sorted((a, b) -> a.getAge() - b.getAge()).collect(Collectors.toList());
 		// System.out.println(map21);
 
 		// Highest experienced employees in the organization
@@ -225,13 +226,14 @@ public class OperationUsingModelClass7 {
 		// System.out.println(map22);
 
 		// Print average and total salary of the organization.
-		Double map23_Average = empList.stream().collect(Collectors.averagingLong(e -> e.getSalary()));
-		// System.out.println(map23_Average);
-		Long nap24_sum = empList.stream().collect(Collectors.summingLong(e -> e.getSalary()));
-		// System.out.println(nap24_sum);
+		Double map23_averageSalary = empList.stream().collect(Collectors.averagingDouble(e -> e.getSalary()));
+		// System.out.println(map23_averageSalary);
+
+		Double map24_sumSalary = empList.stream().collect(Collectors.summingDouble(e -> e.getSalary()));
+		// System.out.println(map24_sumSalary);
 
 		// Print Average salary of each department
-		Map<String, Double> map25 = empList.stream()
+		Map<Object, Double> map25 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getDeptName(), Collectors.averagingDouble(e -> e.getSalary())));
 		// System.out.println(map25);
 
@@ -240,7 +242,7 @@ public class OperationUsingModelClass7 {
 				.findFirst().get();
 		// System.out.println(map26);
 
-		ModelClass map27 = empList.stream().max(Comparator.comparingLong(e -> e.getSalary())).orElse(null);
+		ModelClass map27 = empList.stream().max(Comparator.comparingLong(e -> e.getSalary())).get();
 		// System.out.println(map27);
 
 		int map28 = empList.stream().map(e -> e.getSalary()).mapToInt(e -> e.intValue()).reduce(0,
@@ -259,22 +261,22 @@ public class OperationUsingModelClass7 {
 		// System.out.println(map30);
 
 		// Find highest paid salary in the organisation based on gender
-		Map<String, ModelClass> map31 = empList.stream()
+		Map<Object, Object> map31 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getGender(),
 						Collectors.collectingAndThen(Collectors.toList(), e -> e.stream()
 								.sorted((a, b) -> ((Long) b.getSalary()).compareTo(a.getSalary())).findFirst().get())));
 		// System.out.println(map31);
-		// map31.forEach((k,v)->System.out.println(k+" "+v));
 
 		// Find lowest paid salary in the organisation based in the gender
-		Map<String, ModelClass> map32 = empList.stream()
+		Map<Object, Object> map32 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getGender(),
 						Collectors.collectingAndThen(Collectors.toList(), e -> e.stream()
 								.sorted((a, b) -> ((Long) a.getSalary()).compareTo(b.getSalary())).findFirst().get())));
-		// map32.forEach((k, v) -> System.out.println(k + " " + v));
+		// System.out.println(map32);
 
 		// sort the employees salary in the organisation in ascending order
-		List<Long> map33 = empList.stream().map(e -> e.getSalary()).sorted().collect(Collectors.toList());
+		List<Long> map33 = empList.stream().map(e -> e.getSalary()).sorted((a, b) -> ((Long) a).compareTo(b))
+				.collect(Collectors.toList());
 		// System.out.println(map33);
 
 		// sort the employees salary in the organisation in descending order
@@ -283,28 +285,26 @@ public class OperationUsingModelClass7 {
 		// System.out.println(map34);
 
 		// Highest salary based on department
-		Map<String, Long> map35 = empList.stream()
+		Map<Object, Object> map35 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getDeptName(),
-						Collectors.collectingAndThen(Collectors.toList(), e -> e.stream().map(a -> a.getSalary())
-								.sorted((a, b) -> ((Long) b).compareTo(a)).findFirst().get())));
+						Collectors.collectingAndThen(Collectors.toList(), e -> e.stream()
+								.sorted((a, b) -> ((Long) b.getSalary()).compareTo(a.getSalary())).findFirst().get())));
 		// System.out.println(map35);
-		// map35.forEach((k,v)->System.out.println(k+" "+v));
 
-		// Print list of employee's second highest record based on department
-		Map<String, Long> map36 = empList.stream()
+		// Print list of employee's second highest salary based on department
+		Map<Object, Object> map36 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getDeptName(),
-						Collectors.collectingAndThen(Collectors.toList(), e -> e.stream().map(a -> a.getSalary())
-								.sorted((a, b) -> ((Long) b).compareTo(a)).skip(1).findFirst().get())));
+						Collectors.collectingAndThen(Collectors.toList(),
+								e -> e.stream().sorted((a, b) -> ((Long) b.getSalary()).compareTo(a.getSalary()))
+										.skip(1).findFirst().get())));
 		// System.out.println(map36);
 
 		// sort the employees salary in each department in ascending order
-		Map<String, List<ModelClass>> map37 = empList.stream()
-				.collect(Collectors.groupingBy(e -> e.getDeptName(),
-						Collectors.collectingAndThen(Collectors.toList(),
-								e -> e.stream().sorted((a, b) -> ((Long) a.getSalary()).compareTo(b.getSalary()))
-										.collect(Collectors.toList()))));
-		//System.out.println(map37);
-        map37.forEach((k,v)->System.out.println(k+" "+v));
-	}
+		Map<String, List<ModelClass>> map37 = empList.stream().collect(
+				Collectors.groupingBy(e -> e.getDeptName(), Collectors.collectingAndThen(Collectors.toList(), e -> e
+						.stream().sorted(Comparator.comparingLong(a -> a.getSalary())).collect(Collectors.toList()))));
+		// System.out.println(map37);
+		map37.forEach((a, b) -> System.out.println(a + "  " + b));
 
+	}
 }

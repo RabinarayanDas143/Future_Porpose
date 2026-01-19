@@ -1,0 +1,169 @@
+
+  OOPS OVERVIEW
+ ======================================================
+ 1. OOPS means object oriented programming.
+ 2. Here object means real world entities like Car, Bike, ATM etc.
+ 3. Every object have  properties(State) and Behavior(Function).
+    Ex: Dog is an object bcz it has
+             - Properties like : Age, Breed, Color etc.
+             - Behavior like : Bark, Sleep, eat etc.
+ 4. Procedural programming Vs OOps
+ 
+                Procedural programming                                  OOps
+ -------------------------------------------------        --------------------------------------------
+ 1. Program is divided in to parts called function.       1. Program is divided in to objects.
+ 2. Do not provide proper way to hide the data, gives     2. Object provide data hiding, gives important to data.
+    important to function and data move freely. 
+ 3. Overloading is not possible.                          3. Overloading is possible.  
+ 4. Inheritance is not possible.                          4. Inheritance is possible.
+ 5. Code reusability does not present.                    5. Code reusability is present.
+ 6. Example: Pascal, C etc.                               6. Java, C++, Python.
+
+
+  CLASSES 
+ =======================================================
+ 1. Class  is an blueprint of Object.
+ 2. To Create a object Class is required.
+ 3. So class provide the template or blueprint from which object can be created.
+ 4. From one class we can create multiple object.
+ 5. To create a class use the keyword "class"
+
+ 1st PILLAR OF OOPS - DATA ABSTRACTION
+ =========================================================
+ 1. It hides the internal implementation and only show the essential functionality to the user.
+ 2. It can achieved through interface and abstract class.
+  
+  Ex: Car - We only show the break and if we press it , car speed will reduce. But how That is abstracted to us .
+  
+  Advantage :
+     Increase security and confidentiality.
+     
+  2nd PILLAR OF OOPS - DATA ENCAPSULATION
+  =======================================================
+  1. Encapsulation bundles the data and the code working on that data in a single unit.
+  2. Also known as DATA-HIDING.
+  3. Steps to achieve encapsulation :
+        . Declare variable of a class as private.
+        . Provide public getter and setter to modify and view the value of the variables.
+        
+  Advantage :
+      . Loosely coupled code.
+      . Better access control and security.
+      
+ 3rd PILLAR OF OOPS - INHERITANCE
+ =========================================================
+ 1. Capability of a class to inherit properties from their parent class.
+ 2. It can inherit both function and variables, so we do not have to write them again in child classes.   
+ 3. Can be achieved using extend keyword or through interface.   
+     Types of inheritance : 
+         . Single inheritance
+         . Mltilevel inheritance
+         . Hierarchical inheritance
+         . Multiple inheritance - through interface we can resolve the diamond problem.
+         
+   Advantages :
+         . Code reusability.
+         . We can achieve Polymorphism using interface.
+         
+  4th PILLAR OF OOPS - POLYMORPHISM
+ ========================================================
+ 1. Poly means many and Morphism means form.
+ 2. A same method behaves differently in different situation.
+  Ex: 
+     - A person can be father, husband, employee etc.
+     - Water can be liquid, solid and gas etc.
+ 3. Types of Polymorphism
+     - Compile Time / Static Polymorphism / Method overloading
+     - Run Time / Dynamic Polymorphism / Method overriding
+     
+ WHAT IS JAVA
+ ===================================================
+ -> Java is a object oriented programming lagnguage.
+ -> It provide Object oriented programming.
+ -> Also we called as WORA (Write Once Run Anywhere).
+ -> It have 3 main components. (Jvm, Jre, Jdk).
+ -> JVM : It is a abstract machine, physically it's not exist.
+ 
+    Java Program ---Compiler---> ByteCode ----JVM---> Machine Code -----CPU-----> Output
+ -> JVM is platform dependent.
+ -> JVM have JIT (Just in Time) Compiler. This is use to compile the java code.
+ 
+ -> JRE : JVM + Class libraries
+ -> JDK : JVM+JRE
+ -> JVM+JRE+JDK all are platform dependent.
+ -> Once our java code converted in to byte code, this byte code is platform independent.
+ 
++--------------------------------------------------+
+|                     JDK                          |
+|  (Java Development Kit)                          |
+|                                                  |
+|  +--------------------------------------------+  |
+|  |                    JRE                     |  |
+|  |   (Java Runtime Environment)               |  |
+|  |                                            |  |
+|  |   +------------------------------------+   |  |
+|  |   |                JVM                 |   |  |
+|  |   |      (Java Virtual Machine)         |   |  |
+|  |   |                                    |   |  |
+|  |   |  - Class Loader                    |   |  |
+|  |   |  - Memory Areas                    |   |  |
+|  |   |  - Execution Engine                |   |  |
+|  |   +------------------------------------+   |  |
+|  |                                            |  |
+|  |   + Java Libraries (rt.jar etc.)           |  |
+|  +--------------------------------------------+  |
+|                                                  |
+|  + Development Tools                            |
+|    - javac                                     |
+|    - java                                      |
+|    - javadoc                                   |
+|    - jar                                       |
+|    - debugger                                  |
++--------------------------------------------------+
+
+ -> JSE : Java Standard Edition
+    JEE : Java Enterprise Edition
+    JME : Java Micro Edition
+    
+-> main() is the entry point of program.
+-> Java code ---compiler----->byte Code ------>JVM call main().
+-> public static void main()
+-> main() : method name that is call by jvm.
+-> void : means this method is not return anything.
+-> static : means this method is call directly, with out using object.
+-> public : it can be call anywhere.
+
+ WHY ONLY 1 PUBLIC CLASS IN JAVA FILE
+ =================================================================================
+  -> Java program starts from main() and main() always inside public class. so JVM call this method outside directly.
+  -> public class name should be same as file name.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

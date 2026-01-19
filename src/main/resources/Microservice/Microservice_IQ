@@ -420,6 +420,71 @@
  16. Details of 2 Phase Commit
  =============================================================
  -> Two-Phase Commit (2PC) is a distributed transaction protocol used to ensure atomicity (all-or-nothing) across multiple services or databases.
+    . Prepare stage
+    . Commit stage
+    
+ ->  Why do we need 2PC?
+    . In a distributed system, a single transaction may span multiple services or databases.
+      
+     Example Problem (Without 2PC)
+     
+           Order Service saves order ✅
+           Payment Service deducts money ✅
+           Inventory Service fails ❌
+
+           ➡️ System becomes inconsistent
+           
+         2PC solves this problem
+         
+         👥 Main Components
+
+              Coordinator (Transaction Manager)
+                   Controls the transaction
+                   Decides commit or rollback
+              Participants (Resource Managers)
+                   Databases / microservices
+                   Follow coordinator’s instructions
+                   
+       ✅ Phase 1: Prepare Phase (Voting Phase)
+
+                 Coordinator asks all participants:
+                 "Can you commit?"
+                 
+       ✅ Phase 2: Commit Phase
+                   Case 1: All say YES
+                             Coordinator sends COMMIT
+                             Participants commit changes
+                             Release locks
+
+                   Case 2: Any says NO
+                            Coordinator sends ROLLBACK
+                            Participants undo changes
+                            Release locks
+                            
+        Transfer ₹1000 from Account A to Account B
+              Participants
+                          Bank A DB
+                          Bank B DB
+
+              Flow
+                  Prepare:
+                         Bank A: Can debit ₹1000? → YES
+                         Bank B: Can credit ₹1000? → YES
+                  Commit:
+                        Debit Account A
+                        Credit Account B
+                        
+        ✅ Advantages of 2PC
+               ✔️ Strong consistency
+               ✔️ ACID compliance
+               
+        ❌ Disadvantages of 2PC
+                ❌ Blocking protocol
+                   If coordinator crashes → participants wait
+                ❌ Poor scalability
+                   Locks held for long time
+      
+ 
  
   Transaction :
   ------------------------------------------------
@@ -454,6 +519,19 @@
                                                   System crashes
                                                   Power failure
                                                   Server restarts
+                                                  
+    Advantages of 2PC
+    ------------------------------
+    ✔️ Strong consistency
+    ✔️ ACID compliance
+    ✔️ Simple concept
+    
+    Disadvantages of 2PC
+    -------------------------------
+    ❌ Blocking protocol
+    ❌ Poor scalability
+                                                  
+                                                  
   Transaction in Monolithic Vs Microservice
   ------------------------------------------------------------------------
   -> In monolithic applications, transactions are easy because all operations happen in a single database using ACID transactions.
@@ -464,9 +542,215 @@
       Microservices → Saga
       Strong consistency → Monolith
       Scalability → Microservices
+      
         
+ 17. Details of 3 Phase Commit
+ ===============================================================================      
+  -> 3PC is a distributed transaction protocol that improves Two-Phase Commit (2PC) by reducing blocking.
+  -> 👉 It adds one extra phase so that participants don’t wait forever if the coordinator crashes.
+  
+  🤔 Why 3PC was introduced?
+     Problem in 2PC
+        . If Coordinator crashes after PREPARE
+        . Participants wait forever
+        . System gets blocked
         
+      ➡️ 3PC solves this by adding a middle phase
+      
+  1️- Can-Commit Phase (Voting Phase)
         
+     Coordinator asks:
+                  “Are you able to commit?”
+                  
+    Participants:
+                  Check resources
+                  Reply YES or NO
+                  
+  2️- Pre-Commit Phase (Ready Phase)
+  
+     If all say YES:
+                    Coordinator sends PRE-COMMIT
+                    
+     Participants:
+                   Write transaction to log
+                   Lock resources
+                   Get ready to commit
+                   
+  3️- Do-Commit Phase (Final Commit)
+  
+     Coordinator sends COMMIT
+     
+     Participants:
+                  Commit changes
+                  Release locks
+                  Send ACK
+                  
+                  
+ Example: 
+ 
+        Step-by-Step
+        
+                    Phase 1 – Can Commit?
+
+                            A: Enough balance? → YES
+                            B: Account valid? → YES
+
+                    Phase 2 – Pre-Commit
+
+                            Both lock accounts
+                            Both write logs
+                            Both ready to commit
+
+                Phase 3 – Commit
+
+                            Debit A
+                            Credit B
+                            Release locks
+                  
+                   ✔️ Transaction successful
+                   
+    💥 Failure Handling (Key Benefit)
+                Coordinator crashes after Pre-Commit
+                Participants know commit will happen
+                They can commit on their own
+                No indefinite waiting
+                
+   Three-Phase Commit is an extension of Two-Phase Commit that adds a pre-commit phase to avoid blocking when the coordinator fails.
+   
+   2PC → Prepare → Commit
+   3PC → Can-Commit → Pre-Commit → Commit
+   
+   
+18. What is Circuit Breaker Pattern?
+ ====================================================================
+ -> The Circuit Breaker pattern is used in microservices to prevent cascading failures.
+    Cascading Failure - One failure causes multiple services to fail one after another
+    👉 If one service is failing, we stop calling it for some time instead of retrying again and again.
+    
+    💻 Microservice Example (Simple)
+
+              Services:
+                       Order Service
+                       Payment Service
+                       
+       Problem (Without Circuit Breaker)
+                     Payment service is down ❌
+                     Order service keeps calling it ❌
+                     Threads get blocked
+                     Whole system slows down ❌
+        
+       ✅ Solution: Circuit Breaker
+                    Detect failures
+                    Stop calling Payment Service
+                    Return fallback response
+                    Try again later
+                    
+       🔄 Circuit Breaker States
+               1️- Closed (Normal State)
+                       All requests go through
+                       Failures are counted
+                       
+                       Request → Payment Service
+                       
+               2️- Open (Service is Broken)
+                             Too many failures
+                             Circuit opens
+                             Requests fail immediately
+                             
+                       Request ✖ Payment Service
+                       Response → Fallback
+                       
+               3️⃣ Half-Open (Testing State)
+                                  After wait time
+                                  Send few test requests
+                                  If success → Close
+                                  If failure → Open again
+                                  
+   for Implement
+   -----------------------
+   we have to add dependency : resilience4j-spring-boot2
+   configure in our properties file : 
+                                     resilience4j:
+                                        circuitbreaker:
+                                               instances:
+                                                   paymentService:
+                                                   failure-rate-threshold: 50
+                                                   minimum-number-of-calls: 5
+                                                   wait-duration-in-open-state: 30s
+                                                   permitted-number-of-calls-in-half-open-state: 2
+                                                   sliding-window-size: 10
+                                                   
+     @CircuitBreaker(name = "paymentService", fallbackMethod = "paymentFallback")
+     @GetMapping("/order")
+     public String placeOrder() {
+        return restTemplate.getForObject(
+            "http://PAYMENT-SERVICE/pay",
+            String.class
+        );
+    }
+
+    public String paymentFallback(Exception e) {
+        return "Payment service is currently unavailable. Please try later.";
+    }
+                                     
+ 
+19. How are Microservices Flexible with Spring Cloud?
+=========================================================================================
+ -> Microservices are flexible with Spring Cloud because Spring Cloud provides ready-made tools that make microservices 
+    easy to build, scale, change, and manage independently.
+    
+    1️- Centralized Configuration (Spring Cloud Config)
+    2️- Service Discovery (Netflix Eureka Service)   
+    3️- Load Balancing (Spring Cloud LoadBalancer)    
+    4️- Fault Tolerance (Circuit Breaker – Resilience4j)     
+    5️- API Gateway (Spring Cloud Gateway)  
+    6️- Independent Deployment   
+    
+ -> Spring Cloud makes microservices flexible by providing tools for centralized configuration, service discovery,
+    load balancing, fault tolerance, and API gateway, allowing services to be developed, deployed, and scaled independently.  
+                       
+                       
+ 20. What is Service Registration & Discovery?
+ =========================================================================================
+-> Service Registration & Discovery allows microservices to dynamically register themselves and discover other
+   services without hard-coded it.
+   
+    . Register → “I exist”
+    . Discover → “Where are you?”
+-> How It Works (Step by Step)
+
+    1️⃣ Service Registration
+            When a service starts:
+               It registers itself in a Service Registry
+            Sends:
+                 Service name
+                 IP address
+                 Port
+                 
+            PAYMENT-SERVICE → Eureka Server
+            
+    2️⃣ Service Discovery
+               When another service wants to call it:
+                            It asks the Service Registry
+                            Gets the service location
+                            
+               ORDER-SERVICE → Eureka → PAYMENT-SERVICE
+               
+       Payment Service
+              |
+              |  register
+              ↓
+      Service Registry (Eureka)
+              ↑
+              |  discover
+         Order Service
+         
+   Tools Used (Spring Cloud)
+   --------------------------------
+   - Eureka, Consul, Zookeeper
+       
+               
+            
  
  
  

@@ -137,6 +137,87 @@
  =================================================================================
   -> Java program starts from main() and main() always inside public class. so JVM call this method outside directly.
   -> public class name should be same as file name.
+  
+ WHAT IS VARIABLE
+ ======================================================================
+ -> Variable is a container which hold a value.
+    EX: Datatype variableName = value;
+ -> Java is static type language . Means it declare which type of data it can store.
+ -> Strong typed language. Means when we store the value it has some restriction, some range for that.
+ -> Variable name is case sensitive.
+ -> Variable name can be any legal identifier, means can contain Unicode letters and digits.
+ -> Variable name can start is $,_ and letters.
+ -> Variable name can not be reserved keyword. like new, class, while, for, interface, int float etc.
+ -> Variable should be small if it contains only 1 word else camel case should be followed.
+ -> For constant, variable name should be define in capitalletters.
+ 
+ DATA TYPE
+ ================================================================
+ -> In Java there are 2 type of data type present.
+    . primitive type (8 type)
+    . Non primitive type.
+-> Primitive type :
+     . char - 2 byte (16 bits)
+     . byte - 1 byte (8 bits)
+     . short - 2 byte (16 bits)
+     . int - 4 byte (32 bits)
+     . long - 8 byte (64 bits)
+     . float - 4 byte (32 bits)
+     . double - 8 byte (64 bits)
+     . boolean - 1 bit. true/false;
+     
+ TYPE OF CONVERSION
+ ===================================================================
+ 1. Widening/ Automatic conversion. (Convert lower data type to higher data type)
+ 2. Narrowing / Downcasting/ Explicit conversion. (Convert higher data type to lower data type)
+ 
+ KIND OF VARIABLE
+ ================================================================
+ - local  : define inside method.
+ - Instance : define inside class outside method.
+ - static/instance variable : define inside class but outside method , use static keyword. It belongs to class so every object take a reference of that variable.
+ - method parameter : we pass some argument in method parameter this is method parameter.
+ - Constructor parameter : what are the argument pass in constructor this is called constructor parameter.
+ - member variable : define inside class but outside method
+ 
+ REFERENCE DATA TYPE
+ ===========================================================
+ -> Some of reference data types are : class, String, Array, interface.	
+ -> Reference data type means when we create a object of the class it occupy a space in Heap memory and 
+    this object is refer to that memory address, so it called Reference.
+ -> String are immutable, we can define String using new keyword and using String literals.
+ -> When we create string object using new keyword it in Heap memory.
+    when we create object using string literal, it store in string constant pool.
+    
+ WRAPPER CLASS
+ ============================================================
+ -> Wrapper classes convert primitive data types into objects so they can be used in collections, generics, and object-based APIs.
+ 
+| Primitive Type | Wrapper Class |
+| -------------- | ------------- |
+| `int`          | `Integer`     |
+| `long`         | `Long`        |
+| `double`       | `Double`      |
+| `float`        | `Float`       |
+| `char`         | `Character`   |
+| `byte`         | `Byte`        |
+| `short`        | `Short`       |
+| `boolean`      | `Boolean`     |
+
+ -> Auto-boxing (primitive → object)
+      int a = 5;
+      Integer b = a;  // auto-boxing
+      
+      int a = 20;
+      Integer obj = Integer.valueOf(a);  // boxing
+      
+-> Unboxing (object → primitive)
+     Integer x = 10;
+     int y = x;  // unboxing
+     
+     int b = obj.intValue();  // unboxing
+     
+      
 
 
 

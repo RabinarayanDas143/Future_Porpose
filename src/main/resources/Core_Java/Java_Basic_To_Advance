@@ -217,6 +217,102 @@
      
      int b = obj.intValue();  // unboxing
      
+     
+WHAT IS METHODS
+=====================================================================================
+-> Method is a block of codes that is used to perform certain task.
+-> It's a collection of instruction that perform some specific task.
+-> It can be used to bring the code readability and re-usability.
+
+ How to declare a method : 
+ ------------------------------
+         public int sum (int a, int b) throws Exception {
+            // Method body
+         }
+         
+ Access Specifier :
+ ------------------------------
+  public : can be access through any class in any package.
+  private : can be access by methods only in the same class.
+  protected : can be access by other classes in same package or other sub-classes in different package.
+  Default : if we do not mention anything, then default access specifier is used by java. It can be only access in same package.
+  
+Return Type :
+---------------------------------------
+- Use class name or primitive data type as return type of the method.
+
+Method Name :
+-----------------------------------------
+-> It should start with small and follow camel case in case of multiple words.
+
+ Parameter :
+ ----------------------------
+ -> It's a list of variable that will be used in the methods.
+ -> Parameter list can be blank too.
+ 
+ TYPES OF METHODS
+ ===================================================
+ -> System defined method.
+ -> User defined method.
+ -> Overloaded method.
+ -> Overridden method.
+ -> Static methods.
+ -> Final methods.
+ -> Abstract Methods.
+ 
+ System defined method
+ ---------------------------------
+ -> Methods which are already defined and ready to use in java like Math.sqrt();
+ 
+ User defined method
+ ----------------------------------
+ -> Methods which are programmer create based on the business logic.
+ 
+ Overloaded method
+ -------------------------------------
+ -> More that one method with same name is created in same class.
+ 
+ Overridden method
+ -----------------------------------------
+ -> Subclass has the same method as the parent class.
+ 
+ Static methods
+ ------------------------------------------
+ -> These methods are associated with the class.
+ -> Can be called with the class name.
+ -> static method can not access non static variable and methods.
+ -> static method can not be overridden.
+ 
+  When to declare methods statc:
+     - Methods which do not modify the state of the object can be declared static.
+     - Utility method which do not use any instance variable and compute only on argument.
+     Ex: Factory design pattern.
+ 
+ Final methods
+ ---------------------------------------------
+ -> Final methods can not be overridden.
+ -> Final method means its implementation can not be changed. if child class can not be change its implementation then no use of overridden.
+ 
+ Abstract Methods
+ -------------------------------------
+ -> It is defined only in Abstract class.
+ -> Only method declaration is done.
+ -> Its implementation is done in child class.
+ 
+ Variable Argument
+ ----------------------------------------
+ -> Variable number of inputs in the parameter.
+ -> Only one variable argument can be present in the method.
+ -> It should be the last argument in the list.
+ -> It is used when we don't know how much argument is come in method at that time it is used.
+    Ex:
+        public int sum(int ...var){
+           int output = 0;
+           for(int i : var){
+               output = output+i;
+           }
+        }
+     
       
 
 

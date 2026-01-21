@@ -748,6 +748,96 @@
    Tools Used (Spring Cloud)
    --------------------------------
    - Eureka, Consul, Zookeeper
+   
+ 21. Netflix Eureka
+ ========================================================================
+ -> Netflix Eureka is a Service Registry & Discovery tool used in Microservices architecture.
+ -> It helps to services are register themselves and find each other automatically
+    Why Do We Need Eureka?
+    ----------------------------
+       In microservices:
+                  Services run on different ports
+                  Instances scale up/down dynamically
+                  IPs change frequently
+               ❌ Hardcoding URLs is impossible
+               ✅ Eureka solves this 
+               
+    🔹 Key Components
+            1️- Eureka Server
+                     Central service registry
+                     Keeps track of all running services
+            2️- Eureka Client
+                    Microservices that:
+                          Register themselves
+                          Discover other services
+  Implementation
+  ----------------------------
+     Client implementation
+  --------------------------------------
+       <dependency>
+          <groupId>org.springframework.cloud</groupId>
+             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+       </dependency>
+  
+    applocation.properties file
+    
+      spring.application.name=USER-SERVICE
+      eureka.client.register-with-eureka=true
+      eureka.client.fetch-registry=true
+      eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+      
+    @SpringBootApplication
+    @EnableDiscoveryClient   // optional in Boot 3
+    public class UserServiceApplication {
+       public static void main(String[] args) {
+           SpringApplication.run(UserServiceApplication.class, args);
+       }
+     }
+    
+   server implementation
+   --------------------------------------
+   Dependency:
+                   <dependency>
+                       <groupId>org.springframework.cloud</groupId>
+                            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+                   </dependency>
+                   
+   Main class:
+                   @EnableEurekaServer
+                   @SpringBootApplication
+                   public class EurekaServerApplication { }
+                   
+ 22. Microservices Intra-communication
+ =====================================================================================
+   -> Microservices intra-communication means
+     👉 how one microservice communicates with another microservice inside the same system.
+     Ex: When Order Service needs payment status → it must talk to Payment Service.
+        That communication is called intra-communication.
+        
+   🔹 Common Ways of Intra-communication
+   -----------------------------------------------------
+     1️- REST API
+         Order Service → REST call → Payment Service
+     2️- Feign Client (Spring Cloud – Recommended) 
+          Feign makes REST calls easy and clean.
+          
+          @FeignClient(name = "PAYMENT-SERVICE")
+          public interface PaymentClient {
+            @GetMapping("/payment/status/{id}")
+               String getStatus(@PathVariable Long id);
+          }
+          
+         ✔ Clean code
+         ✔ Uses Eureka for service discovery
+         ✔ Supports load balancing
+         
+    3️- Asynchronous Messaging (Kafka / RabbitMQ)
+         Services communicate using events, not direct calls.
+         Order Service → Event → Kafka → Payment Service
+         
+          
+                   
+                     
        
                
             

@@ -313,9 +313,39 @@ Method Name :
            }
         }
      
-      
+     
+ JAVA CONSTRUCTOR
+ =============================================================
+ -> It is used to create an object.
+ -> Its similar to method expect: 
+        Name : Constructor name is same as class name.
+        Return type : Constructor do not have any return type.
+        Constructor can not be static or final or abstract, synchronized.
+ -> Why constructor do not have return type ?
+    -: Constructors don't have a return type because Java implicitly adds return type as class to differentiate them from methods.
+ -> Why constructor name is same as of class name?
+    -: To identify the constructor among all the methods and constructor defined under the class.
+ -> Why constructor cannot be final?
+    -:  Constructors can not be inherited. Since it can not be inherited, then what's the use of using Final keyword.
+ ->  Why constructor cannot be static?
+    -: Constructor initializes the state of an object and needs to access instance variables, so it can't be static,
+       as static methods don't have access to instance-specific information. 
+ -> Can we define constructor in interface?
+    -: An interface, doesn't have instances with state that needs initialization, 
+       and it doesn't make sense for an interface to have a constructor.     
+ -> Why constructor cannot be abstract?
+   -: Constructors can not be inherited. Since it can not be inherited in the child class, then it can not be abstract.   
 
-
+ Types of Constructor
+ -------------------------------------
+ - Default
+ - No arg
+ - Parameterized.
+ - Constructor overloaded.
+ - private constructor.
+ - Constructor chaining.
+    . this
+    . super
 
 
 

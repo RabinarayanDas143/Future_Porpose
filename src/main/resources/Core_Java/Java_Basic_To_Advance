@@ -590,10 +590,79 @@ public class Test {
     }
 }
 
+ Generic Class in Java
+----------------------------------------------------------------------
+-> A Generic Class allows you to create a class that can work with any data type — without rewriting code.
+       👉 Type-safe
+       👉 No casting needed
+       👉 Reusable code
+Ex:
+ 
+class Box<T> {
+    private T value;
 
+    void set(T value) {
+        this.value = value;
+    }
 
+    T get() {
+        return value;
+    }
+}
 
+public class Test {
+    public static void main(String[] args) {
 
+        Box<Integer> intBox = new Box<Integer>();
+        intBox.set(10);
+
+        Box<String> strBox = new Box<String>();
+        strBox.set("Java");
+
+        System.out.println(intBox.get());
+        System.out.println(strBox.get());
+    }
+}
+ 
+  Bound Generic :
+     It can be used at generic class and methods.
+     - Upper Bound (<T extends Number>) means T can be type of Number or its subclass only. 
+     - Multi Bound
+     
+  ✅ Upper Bound (extends)
+  --------------------------------------
+class Calculator<T extends Number> {
+
+    double square(T num) {
+        return num.doubleValue() * num.doubleValue();
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+
+        Calculator<Integer> c1 = new Calculator<Integer>();
+        Calculator<Double> c2 = new Calculator<Double>();
+
+        System.out.println(c1.square(5));
+        System.out.println(c2.square(2.5));
+    }
+}
+
+ ❌ Calculator<String> → Not allowed
+
+✅ Multiple Bounds
+-------------------------------------------------
+class Test<T extends Number & Comparable<T>> {
+}
+ 👉 First must be a class, others interfaces
+ 
+ Wildcards:
+ ---------------------------------------------------------------------
+  Wildcards are used when you don’t know the exact generic type.
+ - Upper bound wild card : <? extends UpperBoundClassName> i.e class name and below
+ - Lower bound wild card : <? Super LowerBoundClassName> i.e class name and above
+ - Unbounded wildcard <?> only you can read
 
 
 

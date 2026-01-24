@@ -347,14 +347,248 @@ Method Name :
     . this
     . super
 
+ JAVA MEMORY MANAGEMENT AND GARBAGE COLLECTOR
+ ========================================================================================
+ -> There are two type of memory
+    1. Stack memory
+    2. Heap memory
+    
+ Both Stack and Heap are created in JVM and store in RAM.	
+ 
+ Stack Memory
+ -----------------------------------
+ -> Store temporary variable and separate memory block for methods.
+ -> Store primitive data type.
+ -> Store reference of the heap object.
+     . Strong reference.
+     . Weak reference.
+     . Soft reference.
+ -> Each threads has its own stack memory.
+ -> Variable with in a scope is only visible and as soon as any variable goes out of the scope, it get deleted
+    from the stack (in LIFO order)
+ -> When stack memory goes full, its throws "java.lang.StackOverflowError"
+ 
+          STACK MEMORY
+     (One stack per thread)
+     ──────────────────────
+     |  main() frame       |
+     |---------------------|
+     |  int a = 10         |
+     |  int b = 20         |
+     |  ref → obj1         |
+     ──────────────────────
+     |  methodA() frame    |
+     |---------------------|
+     |  int x = 5          |
+     |  ref → obj2         |
+     ──────────────────────
+     |  methodB() frame    |
+     |---------------------|
+     |  int y = 15         |
+     |  ref → obj3         |
+     ──────────────────────
+          ↑ TOP (LIFO)
 
+STACK                     HEAP
+-----                     -----
+ref → obj1  ───────────▶  Object 1
+ref → obj2  ───────────▶  Object 2
 
+ 
+ Heap Memory
+ -----------------------------------
+ -> It store object.
+ -> There is no order of allocating memory.
+ -> Garbage collector is used to delete the unreferenced object from the heap.
+     . Mark and sweep algorithm.
+     . Types of GC 
+        - Single GC
+        - Parallel GC
+        - CMS (concurrent Mark Sweep)
+        - G1
+ -> Heap memory is shared with all the thread.
+ -> Heap also contain the String Pool.
+ -> When Heap memory goes full , its throws "java.lang.OutOfMemoryError"
+ -> Heap memory is further divided into : 
+       . Young Generation (Minor GC happens here)
+           - Eden
+           - Survivor
+       . Old Generation (Major GC happens here)
+       
+                 HEAP MEMORY
+        (Shared across all threads)
+        ───────────────────────────
 
+        ┌────────────────────────┐
+        │     Young Generation   │
+        │────────────────────────│
+        │  Eden Space            │
+        │  - New objects created │
+        │                        │
+        │  Survivor Space S0     │
+        │  Survivor Space S1     │
+        │  - Objects that survive│
+        │    minor GC            │
+        └────────────────────────┘
 
+        ┌────────────────────────┐
+        │     Old Generation     │
+        │  - Long-lived objects  │
+        │  - Promoted from young │
+        └────────────────────────┘
 
+        ┌────────────────────────┐
+        │   Metaspace (Java 8+)  │
+        │  - Class metadata      │
+        │  - Methods info        │
+        └────────────────────────┘
+       
+ JAVA CLASSES
+ ===========================================================================
+ Concrete class
+ ------------------------------------------
+ -> Which class we can create object using new keyword is called as Concrete class.
+ -> All the method in this class have implementation. 
+ -> It can be also your child class from interface or extend abstract class.
+ -> A class access modifier can be public or private (no explicit modifier defined).
+ 
+ Abstract Class
+ ------------------------------------------
+ -> It only showing the essential details to the user and hide the internal implementation.
+ -> 2 ways to achieve abstraction
+     . Abstract class
+     . interface
+ -> Class is declared as abstracted through keyword "abstract".
+ -> It can have both abstract and non abstract method.
+ -> We can not create an instance of the Abstract class.
+ -> What ever the features is defined in parent class, all are inherit in child class.
+ -> Constructor can be created inside them, and with super keyword from child classed we can access them.
+ 
+ Super and Sub class
+ ---------------------------------------------
+ -> A class that is derived from super class is called sub class.
+ -> And from class through which sub class is derived its called Super class.
+ -> If class has no any super class then its super class is Object class.
+ -> Object class is the super class of all the class.
+ -> It has some common methods like clone(), toString(), equals(), notify(), wait() etc.
+ -> Child class object can store in parent class object.
+ 
+ Nested Class
+ --------------------------------------------------
+ -> Class with in anther class is called Nested class.
+ -> When to use ?
+    . If a class A is used by only one class B, then instead of creating a separate file A.java, we can
+      define A as a nested (inner) class inside class B.
+      
+class B {
 
+    // Nested class
+    class A {
+        void show() {
+            System.out.println("I am class A");
+        }
+    }
 
+    void useA() {
+        A obj = new A();
+        obj.show();
+    }
+}
+ -> It is 2 type 
+    . Static Nested Class
+    . Non Static Nested Class.
+         . Member inner clas
+         . Local inner class
+         . Anonymous inner class
+         
+-> Scope : Its scope is same as of its outer class.
+ 
+ Static Nested Class
+ -----------------------------------------
+ -> It do not have access to the non static instance variable and methods of outer class.
+ ->. Its object can be initiated without initiating the object of outer class.
+ -> It can be private, public, protected .
+ 
+ class Outer {
 
+    static class Inner {
+        void show() {
+            System.out.println("Inside static nested class");
+        }
+    }
+
+    public static void main(String[] args) {
+        Outer.Inner obj = new Outer.Inner(); // no Outer object needed
+        obj.show();
+    }
+}
+ 
+ -> Class with private access modifier:
+    nested class object can be created with in the same class itself.
+    
+ Inner class or Non Static Nested class
+ ---------------------------------------------------
+ -> It have access to all the instance variable and method of outer class.
+ -> Its object can be initiated on after initiating the object of outer class.
+ -> Member of inner class 
+ ---------------------------------------
+    -: Its can be private, public, protected, default.
+    
+Ex:   
+class Bank {
+
+    // private nested class
+    private class Account {
+        void showAccountDetails() {
+            System.out.println("Account details shown");
+        }
+    }
+
+    // method of outer class
+    public void display() {
+        Account acc = new Account();   // ✔ allowed
+        acc.showAccountDetails();
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Bank bank = new Bank();
+        bank.display();
+
+        // ❌ Not allowed:
+        // Bank.Account acc = bank.new Account();
+    }
+}
+      
+  Local inner class
+  ------------------------------
+  -> Its can be present inside any block like: if block, for loop block those are called Local inner class.
+  -> It can not be declared as private, protected, public. Only default access modifier.
+  -> It can not be initiated outside of the block.
+  
+ Anonymous Inner Class :
+ -------------------------------------------
+ -> An inner class without a name called Anonymous Class.
+ -> Why its use:
+      - When we want to override the behaviour of the methods without even creating any sub class.
+Ex:
+abstract class Greeting {
+    abstract void sayHello();
+}
+
+public class Test {
+    public static void main(String[] args) {
+
+        Greeting g = new Greeting() {
+            void sayHello() {
+                System.out.println("Hello World");
+            }
+        };
+
+        g.sayHello();
+    }
+}
 
 
 

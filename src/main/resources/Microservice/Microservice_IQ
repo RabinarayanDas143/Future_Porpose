@@ -1200,33 +1200,302 @@ Inventory Service
        Requests distributed automatically    
           
           
-                   
+ 32. Top 7 different microservices deployment strategies
+========================================================================================================
+-> Rolling and Blue-Green focus on availability, Canary and A/B focus on risk reduction,
+   Feature Toggles focus on control, and Shadow focuses on validation.
+   
+ 1️- Rolling Deployment
+-------------------------------------------
+   What it is:
+       Update instances one by one without downtime.
+
+   How it works
+       Old version is replaced gradually
+
+   Traffic keeps flowing
+
+     Pros
+       ✅ Zero downtime
+       ✅ Simple
+       ✅ Default in Kubernetes
+
+     Cons
+       ❌ Old & new versions run together (API compatibility needed)
+
+     Best for
+       Small, backward-compatible changes                 
                      
-       
+ 2️- Blue–Green Deployment
+--------------------------------------------------------
+      What it is:
+         Two environments:
+
+             Blue → current live
+             Green → new version
+
+      Switch traffic instantly.
+
+      Pros
+        ✅ Zero downtime
+        ✅ Easy rollback (just switch back)
+
+      Cons
+        ❌ Double infrastructure cost
+
+      Best for
+        Banking, payments, critical systems    
+        
+ 3️- Canary Deployment 🐤
+------------------------------------------------------
+     What it is:
+         Release to a small % of users first.
+
+      Example
+
+       5% users → new version
+       95% → old version
+
+      Pros
+         ✅ Very low risk
+         ✅ Real user testing
+
+      Cons
+        ❌ Traffic routing is complex
+
+      Best for
+         Large-scale, user-facing apps (Netflix, Amazon)
                
+ 4️- Shadow Deployment
+------------------------------------------------------------
+     What it is:
+         New version receives real traffic, but responses are ignored.
+
+     Pros
+        ✅ No user impact
+        ✅ Excellent for testing performance
+
+     Cons
+        ❌ Extra infra
+        ❌ Hard to validate business logic
+
+      Best for
+         Performance testing
+         Validating new algorithms          
+ 
+ 5️- Recreate Deployment
+--------------------------------------------------------------------
+      What it is:
+         Stop old version → start new version.
+
+      Pros
+        ✅ Very simple
+        ✅ No compatibility issues
+
+      Cons
+        ❌ Downtime ❌
+
+      Best for
+        Non-critical internal services
+        Dev / test environments
+ 
+ 6️- A/B Testing Deployment
+----------------------------------------------------------
+   What it is:
+      Different users get different versions to compare behavior.
+
+   Example
+      Version A → old UI
+      Version B → new UI
+
+   Pros
+      ✅ Data-driven decisions
+      ✅ Product experimentation
+
+   Cons
+      ❌ Complex monitoring
+      ❌ Needs analytics setup
+
+   Best for
+      UX changes
+      Feature optimization
+ 
+ 7️- Feature Toggle (Feature Flags)
+-------------------------------------------------------------------------
+     What it is:
+        Deploy code but control features via config.
+
+     Pros
+       ✅ Instant enable/disable
+       ✅ No redeployment
+       ✅ Safer releases
+
+     Cons
+       ❌ Code complexity if flags not cleaned
+
+     Best for
+        Gradual feature rollout
+        Emergency kill-switch
+ 
+ 
+ 33. what are some anti pattern in microservice and how do you avoid them ?
+ =====================================================================================================
+ -> Most microservice anti-patterns come from tight coupling, shared data, and ignoring failure handling
+ 
+  1️- Distributed Monolith ❌ (MOST IMPORTANT)
+  -------------------------------------------------------------------
+    What it is
+        Services are split physically, but:
+                Tightly coupled
+                Must be deployed together
+                Share database or schema
+        Symptoms
+               One service down → whole system breaks
+               Changes require updating multiple services
+        How to avoid
+              ✅ Proper service boundaries (DDD)
+              ✅ Independent deployment pipelines
+              ✅ No shared database
+ 
+ 2️- Shared Database Anti-Pattern ❌
+----------------------------------------------------------------------------
+       What it is
+           Multiple microservices use the same database.
+       Why it’s bad
+           Schema change breaks multiple services
+           Tight coupling
+           No autonomy
+       How to avoid
+           ✅ Database per service
+           ✅ Communicate via APIs or events
+           ✅ Use CDC or event streaming (Kafka)
+ 
+ 3️- Chatty Services ❌
+-------------------------------------------------------------------------------
+        What it is
+            Too many synchronous calls between services.
+        Example
+            Service A → B → C → D
+        Problems
+            High latency
+            Cascading failures
+        How to avoid
+           ✅ Asynchronous messaging (Kafka/RabbitMQ)
+ 
+ 4- No Fault Tolerance ❌
+--------------------------------------------------------------------------------
+    What it is
+           Assuming all services are always up.
+    Problems
+           Cascading failures
+    How to avoid
+          ✅ Circuit Breaker (Resilience4j)
+ 
+ 34. How do you handle data consistency across services in distributed system.
+ ==================================================================================================
+ -> In distributed systems, for handling data consistency we using patterns like Saga, event-driven communication
+    instead of distributed transactions.
+    
+  Why data consistency is hard in microservices ❓
+          Each service has its own database
+          Network failures happen
+          Services can go down independently
+ 
+ 35. Most important challenges of implementing microservices and how we address them in practice
+ ===================================================================================================================
+ 1️- Service Communication Complexity
+     Challenge
+           Network latency
+           Partial failures
+           Version compatibility
+     How to address
+         ✅ API contracts (OpenAPI)
+         ✅ Async communication (Kafka/RabbitMQ)
+         ✅ Timeouts & retries
+         
+ 2️- Data Consistency Across Services
+         Challenge
+            Each service has its own database
+            No global transactions
+         How to address
+            ✅ Saga pattern
+ 
+ 3️- Service Discovery & Load Balancing
+         Challenge
+             Dynamic service instances
+             IPs change frequently
+         How to address
+             ✅ Service discovery (Eureka / Consul)
+             ✅ Load balancers (Kubernetes, Spring Cloud)
+ 
+ 4️- Fault Tolerance & Resilience
+        Challenge
+            One service failure can cascade
+        How to address
+            ✅ Circuit Breaker (Resilience4j)
+ 
+ 5- Deployment & Version Management
+        Challenge
+            Frequent deployments
+            Backward compatibility
+        How to address
+            ✅ Blue-Green / Canary deployments
+            ✅ API versioning
+            ✅ CI/CD pipelines
             
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+ 6- Configuration Management
+         Challenge
+            Environment-specific configs
+            Hard-coded values
+        How to address
+             ✅ Externalized config
+             ✅ Spring Cloud Config
+             ✅ Environment variables         
+  
+ 36. How to maintain session between two microservices 
+=========================================================================================
+ -> We do NOT maintain server-side sessions between microservices.
+    Instead, we use stateless services with token-based authentication (JWT) or shared identity via an API Gateway.         
+ Why HTTP Session is a Bad Idea ❌
+       Microservices are stateless
+       Instances scale up/down          
+       
+   1️- JWT Token (MOST COMMON) 
+   
+     How it works
+          User logs in → Auth Service issues JWT
+          Client sends JWT in every request
+          Each microservice validates token
+          
+   2️- API Gateway (Recommended)
+         How it works
+             Gateway validates JWT once
+             
+   3- Token Propagation (Service-to-Service)
+               When service A calls service B
+                 Pass JWT in Authorization header
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
  

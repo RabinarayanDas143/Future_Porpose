@@ -665,15 +665,218 @@ class Test<T extends Number & Comparable<T>> {
  - Unbounded wildcard <?> only you can read
 
 
+ POJO CLASS
+==========================================================================
+ -> Stands for Plain old java object.
+ -> contains variables and its getter and setter methods.
+ -> class should be public.
+ -> public default constructor.
+ -> No annotation should be used like @Table, @Entity, @Id etc.
+ -> It should be not extend any class or implement any interface.
+ 
+ ENUM CLASS
+ ===================================================================
+ -> It is a collection of CONSTANTS (variables which value can not be changed).
+ -> Its CONTSANTS are static and final implicitly (we do not have to write it).
+ -> It can not extend any class, as it internally extends java.lang.Enum class.
+ -> It can implement interface.
+ -> It can have variable, constructor, methods.
+ -> It can not be initiated.
+ -> No other class can extend Enum class.
+ -> It can have abstract method, and all the contant should implement that abstract method.
 
+ SINGLETON CLASS
+ ==========================================================
+ -> This class objective is to create only 1 and 1 object.
+ -> Different way to create  Singleton class
+    . Eager initialization.
+      -----------------------------------------  
+        public class Singleton {
 
+                // Instance created at class loading time
+                private static final Singleton INSTANCE = new Singleton();
 
+               // Private constructor prevents external instantiation
+               private Singleton() { }
 
+                // Global access point
+               public static Singleton getInstance() {
+                     return INSTANCE;
+              }
+           }
+        
+        
+    . Lazy initialization.
+    -------------------------------------------
+       public class Singleton {
 
+               private static Singleton instance;
 
+               private Singleton() { }
 
+               public static Singleton getInstance() {
+               if (instance == null) {
+                     instance = new Singleton();
+                   }
+                 return instance;
+                }
+           }
+       
+    . Synchronization block.
+    ------------------------------------------
+       public class Singleton {
 
+              private static Singleton instance;
 
+              private Singleton() { }
 
+              public static synchronized Singleton getInstance() {
+               if (instance == null) {
+                     instance = new Singleton();
+                }
+             return instance;
+           }
+        }
+       
+    . Double check lock.
+    ---------------------------------------------------
+         public class Singleton {
+
+                 private static volatile Singleton instance;
+
+                private Singleton() { }
+
+                public static Singleton getInstance() {
+                    if (instance == null) {              // 1st check
+                      synchronized (Singleton.class) {
+                           if (instance == null) {      // 2nd check
+                             instance = new Singleton();
+                         }
+                    }
+                 }
+           return instance;
+           }
+        }
+         
+    Why volatile?
+       .Prevents instruction reordering
+       .Guarantees visibility across threads
+    
+    . Bill pugh solution.
+    -----------------------------------------------------
+        public class Singleton {
+
+             private Singleton() { }
+
+             private static class SingletonHelper {
+                     private static final Singleton INSTANCE = new Singleton();
+              }
+
+             public static Singleton getInstance() {
+                 return SingletonHelper.INSTANCE;
+              }
+          }
+          
+          Why this is best?
+              ✔ Lazy loaded
+              ✔ Thread-safe
+              ✔ No synchronization overhead
+              ✔ Uses JVM class loading guarantee
+     
+    . Enum Singleton.
+    ---------------------------------------------------------
+       enum Singleton {
+             INSTANCE;
+       }
+       
+ IMMUTABLE CLASS
+ =======================================================================
+ -> We can not change the value of an object once it is created.
+ -> Declare class as 'final' so that it can not be extended.
+ -> All class member should be final and private. so that direct access can be avoided.
+ -> And class members are initialized only once using constructor.
+ -> There is no setter method only getter method are available.
+ -> Ex: String, Wrapper classes etc.
+ 
+     public final class Employee {
+
+            private final int id;
+            private final String name;
+            private final List<String> employees;
+
+            private final List<String> employees;
+
+            public Employee(int id, String name) {
+               this.id = id;
+               this.name = name;
+               this.employees = new ArrayList<>(employees);
+            }
+
+            public int getId() {
+                 return id;
+            }
+
+            public String getName() {
+                  return name;
+             }
+             
+            public List<String> getEmployees() {
+                  return new ArrayList<>(employees); 
+            }
+        }
+      
+
+ WHAT IS INTERFACE
+ ===========================================================================
+ -> Interface is something which helps 2 system to interact with each other, without one system has to know the details of other.
+ -> or in simple term i can say, it helps to achieve ABSTRACTION.
+ 
+ hOW to define the abstraction
+ ---------------------------------------
+  interface declaration consist of
+     - Modifiers
+     - "interface" keyword
+     - interface name
+     - Comma separated list of parent interface.
+     - Body
+     
+     only public and default modifiers are allowed (protected and private are not allowed)
+     
+ why we need Interface ?
+ --------------------------------------
+ 1. ABSTRACTION :
+  -> Using interface, we can achieve full abstraction means, we can define what class must do but not how it will do.
+
+ 2. Polymorphism :
+   -> Interface can be used as a data type .
+   -> We can not create the object of an interface, but it can hold the reference of all the classes which implements it.
+      And at runtime, it decide which method need to be invoked.
+ 
+ 3. Multiple Inheritance :
+   -> In java we can achieve multiple inheritance through interface only.
+   
+   Methods in interface :
+    - All methods are implicit public only.
+    - Methods can not be declared as final.
+    
+   Fields in Interface
+   -------------------------------
+   -> Fields are public, static and final by default.
+   -> you can not make field private or protected.
+   
+  Interface Implementation :
+  --------------------------------------
+  -> Overriding method can not have more restrict access specifiers.
+  -> Concrete class must override all the methods declared in the interface.
+  -> Abstract classed are not force to override all the methods.
+  -> A class can implement from multiple interfaces.
+    
+  Nested Interface
+ ----------------------------------------
+ -> Nested interface declared within another interface.
+ -> Nested interface declared with in a class.
+ 
+ 
+    
 
 

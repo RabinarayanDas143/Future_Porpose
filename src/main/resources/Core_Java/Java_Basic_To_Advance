@@ -877,6 +877,389 @@ class Test<T extends Number & Comparable<T>> {
  -> Nested interface declared with in a class.
  
  
+ JAVA 8 AND 9 FEATURES 
+ =====================================================================================
+ 1. Default method(java 8)
+ -----------------------------------
+ -> Before java8 , interface can have only Abstract method and all child class has to provide the implementation of Abstract method.
+ -> Default methods solve this problem by providing a default implementation.
+ Ex:
+    interface MyInterface {
+        default void show() {
+        System.out.println("Default method");
+      }
+    }
+
+ -> Default methods were introduced to add new methods to interfaces without breaking existing implementations.
+ 
+ 2. Static Method(java8) :
+ ---------------------------------------
+ -> We can provide the implementation of the method in interface.
+ -> But it can not be overridden by class which implement the interface.
+ -> We can access it using interface name itself.
+ -> Its by default public.
+ Ex:
+    interface Utility {
+
+        static void show() {
+              System.out.println("Static method in interface");
+        }
+     }
+
+    public class Test {
+          public static void main(String[] args) {
+              Utility.show();
+        }
+     }
     
-
-
+ 3. Private Method and Private static method(java9)
+ ------------------------------------------------------
+ -> We can provide the implementation of method but as private access modifier in interface.
+ -> It bring more readability of the code. for ex: multiple default method share some code,
+ -> It can be defined as static and non static.
+ -> From static method we can call only private static interface method.
+ -> Private static method can be called from both static and non static method.
+ -> Private interface method can not be abstract. Means we have to define the definition.
+ -> it can be used inside interface only.
+ 
+ What is Functional Interface :
+ ==========================================================================
+ -> If an interface contains only one abstract method and multiple default and static method is called as functional interface.
+ -> Also known as SAM (Single Abstract Method)
+ -> @FunctionalInterface keyword can be used at top of the interface (But its optional)
+ -> We can implement functional interface through "implements" and through Anonymous Class and through Lambda expression.
+ 
+ 
+ WHAT IS Lambda Expression
+ =========================================================================
+ -> Lambda expression is a way to implement the functional interface.
+ 
+ Types of Functional interface
+ ====================================================================
+ -: Consumer :
+ -------------------------------------------------
+ -> Represent an operation, that accept a single input parameter and return no result.
+ -> present in java.util.function;
+ -> It have accept(T t);
+    Ex: forEach(); it internally use accept();
+ 
+ -: Supplier
+ -------------------------------------------------
+ -> Represent the supplier of the result, Accept no input parameter but produce a result.
+ -> present in java.util.function;
+ -> It have get();
+    Ex: generate(); it internally use get();
+    
+ -: Function
+ ---------------------------------------------------
+ -> Represent function, that accept one argument process it and produce a result.
+ -> present in java.util.function;
+ -> It have apply();
+    Ex: map(); it internally use apply();
+    
+-: Predicate
+---------------------------------------------------
+ -> Represent function, that accept one argument and return the boolean value.
+ -> present in java.util.function;
+ -> It have test();
+    Ex: filter(); it internally use test();
+ 
+ 
+ What is Reflection ?
+ =======================================================================
+ -> This is used to examine the classes, methods, fields, interface at runtime and also possible to change the behavior of the class too.
+ Ex: 
+  -> What all methods, fields present in the class.
+  -> What is the return type of the method.
+  -> What is the modifier of the class.
+  -> What all interfaces class has implemented.
+  -> Change the value of the public and private fields of the class etc.
+  
+  How to do Reflection of Classes ?
+  ------------------------------------------------------
+  -> To reflect the class, we first need to get an object of Class.
+  
+    What is class Class
+    ----------------------
+    - Instance of the class Class represent classes during runtime.
+    - JVM creates one Class object for each and every class which is loaded during run time.
+    - This Class object, has meta data information about the particular class like its methods, fields, constructor etc.
+    
+    How to get the particular class Class object ?
+   ---------------------------------------------------------
+   There are 3 way
+   1. Using Class.forName() (Dynamic / Reflection)
+       Class<?> cls = Class.forName("java.lang.String");
+       
+   2. Using .class (Compile-time)   
+       Class<String> cls = String.class;
+       
+   3. Using getClass() (Runtime object) 
+       String s = "Hello";
+       Class<?> cls = s.getClass();
+    
+   how to do reflection of classes
+   --------------------------------------------
+   Class<?> cls = Class.forName("Employee");
+   Object obj = cls.getDeclaredConstructor().newInstance();
+   Method[] method = cls.getMethod(); // it return all public methods.
+   Method[] method = cls.getDeclaredMethods(); // it return all public and private methods of Employee class.
+   Field[] field = cls.getFields(); // it return all public of Employee class.
+   Field[] field = cls.getDeclaredFields(); // it return all public and private fields of Employee class. 
+   
+   Reflection of Constructor :
+   --------------------------------------
+   Constructor<Employee> object = Employee.class.getDeclaredConstructor(); 
+   Employee ref_obj = object.newInstance();
+ 
+ 
+ What is Annotation
+ ============================================================
+ -> Annotation is a special tag/metadata in Java that gives extra information about code to the compiler, JVM, or frameworks.
+ -> It does NOT change program logic directly
+ -> It helps tools & frameworks understand your code
+ 
+         @Override
+         public String toString() {
+             return "Hello";
+         }
+   Here @Override tells the compiler:
+  “This method overrides a parent method”
+  
+  @Override	           Method override check
+  @Deprecated	       Marks old method
+  @SuppressWarnings    Suppress warnings
+  @FunctionalInterface	Only one abstract method
+ 
+ @Target :
+ - This annotation will restrict, where to use annotation.
+   Either at method or constructor or fields.
+   
+   @Target(ElementType.METHOD)
+   public @interface override(){}
+ 
+   @Target({ElementType.CONSTRUCTOR, ElementType.METHOD})
+   public @interface SafeVarargs(){}
+   
+   
+ What is Exception
+ ======================================================================
+ -> Exception is an unwanted or unexpected event that is occur during the execution of program.
+ -> It will disturb the normal flow of program.
+ -> It create the Exception Object, which contains the information about the Error like 
+      . Type of Exception or message
+      . Stack trace etc
+ -> Runtime system use this Exception Object and find the class which can handle it.
+ 
+ 
+  🔁 Exception Handling Flow (Detailed Diagram)
+ ------------------------------------------------------------
+         ┌───────────────────┐
+        │   Method Starts   │
+        └─────────┬─────────┘
+                  │
+                  ▼
+        ┌───────────────────┐
+        │   try block code  │
+        └─────────┬─────────┘
+                  │
+        ┌─────────┴─────────────┐
+        │                       │
+   No Exception            Exception Occurs
+        │                       │
+        ▼                       ▼
+┌────────────────┐     ┌────────────────────┐
+│ Skip all catch │     │ JVM creates object  │
+│ blocks         │     │ (Exception obj)     │
+└───────┬────────┘     └─────────┬──────────┘
+        │                          │
+        ▼                          ▼
+┌────────────────────┐   ┌──────────────────────┐
+│ finally executes   │   │ Search matching catch│
+│                    │   │ (top → bottom)       │
+└─────────┬──────────┘   └─────────┬────────────┘
+          │                          │
+          ▼               ┌──────────┴──────────┐
+   ┌───────────────┐      │ Match found?        │
+   │ Normal End    │      └───────┬─────────────┘
+   └───────────────┘              │
+                         ┌────────┴─────────┐
+                         │ Yes               │ No
+                         ▼                   ▼
+               ┌──────────────────┐   ┌───────────────────┐
+               │ Execute catch    │   │ Exception propaga- │
+               │ block            │   │ tes to caller      │
+               └─────────┬────────┘   └─────────┬─────────┘
+                         │                      │
+                         ▼                      ▼
+               ┌──────────────────┐   ┌───────────────────┐
+               │ finally executes │   │ Caller has try?   │
+               └─────────┬────────┘   └─────────┬─────────┘
+                         │                      │
+                         ▼              ┌───────┴────────┐
+                  ┌───────────────┐     │ Yes             │ No
+                  │ Method Ends   │     ▼                 ▼
+                  └───────────────┘ ┌──────────────┐ ┌────────────────┐
+                                     │ Handle there │ │ JVM terminates │
+                                     └──────────────┘ │ program        │
+                                                        └────────────────┘
+ 
+ 
+ 
+   🌳 Java Exception Hierarchy Diagram
+   -----------------------------------------------------------
+                                  java.lang.Object
+                                      │
+                               java.lang.Throwable
+                                      │
+              ┌───────────────────────┴────────────────────────┐
+              │                                                │
+        java.lang.Error                                java.lang.Exception
+              │                                                │
+   (JVM / System level issues)                     (Application level issues)
+              │                                                │
+   ┌──────────┼──────────────┐                 ┌──────────────┴──────────────┐
+   │          │              │                 │                               │
+OutOfMemoryError  StackOverflowError     RuntimeException               Checked Exceptions
+                                            (Unchecked)                        │
+                                                 │                              │
+         ┌───────────────┬──────────────┬────────┼──────────────┐        IOException
+         │               │              │        │              │        SQLException, ClassNotFoundException,InterruptedException,NoSuchMethodException
+ NullPointerException  ArithmeticException  ClassCastException  IllegalArgumentException
+                                                                      │
+                                                          ┌───────────┴───────────┐
+                                                   NumberFormatException   IllegalStateException
+         │
+         └── IndexOutOfBoundsException
+                    │
+         ┌──────────┴──────────┐
+ ArrayIndexOutOfBoundsException
+ StringIndexOutOfBoundsException
+                                                                         
+ 
+ -> If it extends RuntimeException → Unchecked
+    If it extends Exception but NOT RuntimeException → Checked                                                                         
+    
+   
+  Different way to handle the exception 
+  ---------------------------------------------------------------
+  ✅ 1. try – catch
+  
+         try {
+           int a = 10 / 0;
+        } catch (ArithmeticException e) {
+           System.out.println("Cannot divide by zero");
+       }
+        
+  ✅ 2. try – catch – finally
+  
+       try {
+         int a = 10 / 2;
+       } catch (Exception e) {
+              e.printStackTrace();
+       } finally {
+            System.out.println("Always executed");
+       }
+  
+  ✅ 3. try – finally (No catch)
+  
+       try {
+           int a = 10 / 0;
+       } finally {
+             System.out.println("Cleanup code");
+       }
+            
+  ✅ 4. Multiple catch blocks
+  
+       try {
+           String s = null;
+           s.length();
+        } catch (NullPointerException e) {
+              System.out.println("Null value");
+        } catch (Exception e) {
+               System.out.println("General exception");
+        }
+      ✔ Order: child → parent 
+      
+  ✅ 5. Multi-catch (Java 7+) 
+   
+        try {
+            int a = Integer.parseInt("abc");
+        } catch (NumberFormatException | NullPointerException e) {
+             System.out.println("Invalid input");
+        }
+        
+  ✅ 6. throws keyword
+  
+        void readFile() throws IOException {
+              FileReader fr = new FileReader("a.txt");
+        }
+      ✔ Common for checked exceptions   
+  
+  ✅ 7. throw keyword
+  
+        if (age < 18) {
+            throw new IllegalArgumentException("Not eligible");
+        }
+  
+  ✅ 8. Custom Exception
+           Create your own exception
+           
+           class InvalidAgeException extends Exception {
+               InvalidAgeException(String msg) {
+                    super(msg);
+               }
+           }
+           
+  ✅ 9. Try-with-resources   
+         Best way to handle resource exceptions
+         
+         try (FileReader fr = new FileReader("a.txt")) {
+                   // use resource
+         } catch (IOException e) {
+                  e.printStackTrace();
+         }
+        ✔ Auto-closes resources
+        
+  🧠 One-shot Memory Trick
+      Handle → try-catch
+      Cleanup → finally / try-with-resources
+      Pass → throws
+      Create → throw / custom exception
+                   
+ -> JVM throws exceptions automatically during runtime errors, whereas the throw keyword is used by the programmer
+    to explicitly throw an exception based on application logic. 
+   
+  Example: 
+     JVM throws exception
+        int a = 10 / 0;   // JVM throws ArithmeticException 
+     throw keyword used by Developer
+         if (balance < amount) {
+             throw new IllegalArgumentException("Insufficient balance");
+         }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+ 

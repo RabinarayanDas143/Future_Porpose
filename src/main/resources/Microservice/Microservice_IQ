@@ -1477,19 +1477,156 @@ Inventory Service
             
             
             
+ 37. CQRS Design Pattern
+ ================================================================================
+ -> CQRS stands for Command Query Responsibility Segregation.
+ 
+ 🧠 What is CQRS?
+   -: CQRS is a design pattern where you separate read operations (Queries) from write operations (Commands).
+   -: CQRS separates read and write responsibilities into different models to improve scalability, performance, 
+      and maintainability in complex systems.
+     ( Scalability means: The ability of a system to handle more users, more data, or more load without breaking or slowing down.
+                         “System grows smoothly when demand increases.”)
+   Commands → change data
+   Queries → read data          
             
+    🔄 Traditional Approach (Without CQRS)
+            Same model → Read + Write    
+            Ex:  
+                OrderService {
+                      createOrder()
+                      updateOrder()
+                      getOrder()
+                }
+                
+    ✅ CQRS Approach
+           Command Model  → Create / Update / Delete
+           Query Model    → Read / Fetch 
+           
+           Command side
+               CreateOrderCommand
+               UpdateOrderCommand
+           Query side
+               GetOrderQuery
+               GetAllOrdersQuery
+               
+    🧪 Real-World Example 🛒 (E-commerce)
+
+           Command side
+                 Place Order
+                 Cancel Order
+
+           Query side
+                View Orders
+                Order History                     
             
+  🔥 Why use CQRS?
+     ✔ Better performance
+     ✔ Independent scaling (read-heavy systems)
+     ✔ Improves maintainability in complex systems
+  
+  ⚠️ When NOT to use CQRS?
+     ❌ Simple CRUD applications
+     ❌ Small systems
+     ❌ When consistency complexity is not needed
+           
+ 🧱 Step-by-Step CQRS Implementation
+    We implemented CQRS by separating write APIs and read APIs, storing data in different models,
+     and using events to keep the read model in sync.  
+             
+    🔹 Step 1: Split APIs (Command vs Query)
+          Command APIs → change data
+          Query APIs → read data      
+           /api/commands/*
+           /api/queries/*
+             
+    ✍️ Step 2: Command Side (WRITE)
+         Command Object
+         -----------------
+            public class CreateOrderCommand {
+                         private String orderId;
+                         private BigDecimal amount;
+            }
             
+         Command Controller
+         ---------------------
+            @RestController
+            @RequestMapping("/api/commands/orders")
+            public class OrderCommandController {
+
+              @PostMapping
+              public ResponseEntity<String> createOrder(
+                       @RequestBody CreateOrderCommand command) {
+
+                 commandService.handle(command);
+                 return ResponseEntity.ok("Order Created");
+             }
+          }
             
+         Command Handler / Service          
+        ------------------------------
+        
+          @Service
+          public class OrderCommandService {
+
+                 public void handle(CreateOrderCommand command) {
+                 // validations
+                 // business rules
+                 // save to write DB
+                     orderRepository.save(
+                         new Order(command.getOrderId(), command.getAmount())
+                     );
+
+                 // publish event (important)
+                     eventPublisher.publish(
+                         new OrderCreatedEvent(command.getOrderId())
+                    );
+               }
+            }
             
-            
-            
-            
-            
-            
-            
-            
-            
+      📣 Step 3: Event (Bridge Between Write & Read)
+      -----------------------------------------------------
+         public class OrderCreatedEvent {
+                       private String orderId;
+         }
+         
+      Event can be sent using:
+              Kafka
+              RabbitMQ
+              Spring Application Events (simple setup)
+               
+    Query Side (READ)
+    ------------------------
+      public class OrderView {
+             private String orderId;
+             private BigDecimal amount;
+      }
+              
+    Event Listener (Updates Read DB)
+    -------------------------------------
+    
+         @Service
+         public class OrderEventHandler {
+
+               @EventListener
+               public void handle(OrderCreatedEvent event) {
+                   orderViewRepository.save(
+                         new OrderView(event.getOrderId(), BigDecimal.ZERO)
+               );
+            }
+       }
+                
+    Query Controller
+    ------------------------------
+      @RestController
+      @RequestMapping("/api/queries/orders")
+      public class OrderQueryController {
+
+             @GetMapping("/{id}")
+             public OrderView getOrder(@PathVariable String id) {
+                  return orderViewRepository.findById(id);
+                 }
+             }
             
             
             

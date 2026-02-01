@@ -26,5 +26,6 @@ public class SingletonDesignPattern1 {
 //		
 //		System.out.println(obj.hashCode());
 //		System.out.println(ref_obj.hashCode());
+		
 	}
 }

@@ -69,9 +69,10 @@
         
           @FeignClient("HOTELSERVICE")
           public interface HotelClient {
-          @GetMapping("/hotels/{id}")
-          Hotel getHotel(@PathVariable String id);
-                   }
+          
+               @GetMapping("/hotels/{id}")
+               Hotel getHotel(@PathVariable String id);
+          }
                    
        ⏳ UserService waits until HotelService responds.
        
@@ -141,7 +142,7 @@
  9. When to use which communication (Sync & Async) .
  ==================================================================================
   - When we start the application from scratch go with Synchronous communication to optimize for speed evolution.
-  - When Microservice architecture grows and start becoming complex then focus on switch t Asyncghronous communication.
+  - When Microservice architecture grows and start becoming complex then focus on switch to Asyncghronous communication.
   - If the response is not necessary to proceed with other functionality then convert the communication channel to Async communication.
   
  10. What is Saga Pattern ?
@@ -660,7 +661,7 @@
                        Request ✖ Payment Service
                        Response → Fallback
                        
-               3️⃣ Half-Open (Testing State)
+               3️- Half-Open (Testing State)
                                   After wait time
                                   Send few test requests
                                   If success → Close

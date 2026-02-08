@@ -72,6 +72,7 @@ class CompareByName implements Comparator<Employee1> {
 	}
 
 }
+ 
 
 public class ComparatorOPerator1 {
 	public static void main(String[] args) {
@@ -84,6 +85,15 @@ public class ComparatorOPerator1 {
 		//emp.forEach(e -> System.out.println(e));
 		
 		Collections.sort(emp,new CompareByName());
+		//emp.forEach(e->System.out.println(e));
+		
+		Collections.sort(emp, new Comparator<Employee1>() {
+
+			@Override
+			public int compare(Employee1 o1, Employee1 o2) {
+				return o2.getAge()-o1.getAge();
+			}
+		});
 		emp.forEach(e->System.out.println(e));
 	}
 }

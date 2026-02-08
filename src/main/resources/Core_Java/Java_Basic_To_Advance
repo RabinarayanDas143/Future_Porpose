@@ -1237,29 +1237,349 @@ OutOfMemoryError  StackOverflowError     RuntimeException               Checked 
          if (balance < amount) {
              throw new IllegalArgumentException("Insufficient balance");
          }
+  
+ What is an Operator
+ ========================================================================================= 
+ -> An operator is a symbol that performs an operation on one or more operands (values or variables).
+       int c = a + b;
+           + → operator
+           a, b → operands 
+            
+ 🧩 Types of Operators in Java  
+ -----------------------------------------------
+ 1️- Arithmetic Operators
+      Used for mathematical operations
+       -> +,-,*,/,%  
+   
+ 2️- Relational (Comparison) Operators  
+     Compare values → result is true or false
+      -> ==, !=, >, <, >=, <=
+   
+ 3️- Logical Operators 
+     Used with boolean values
+     -> &&, ||
+   
+ 4️- Assignment Operators  
+      Assign values to variables
+      -> =, +=, -=, *=
+   
+ 5️- Unary Operators  
+     Operate on one operand
+      -> +, -, ++, --, !
+   
+ 6️- Bitwise Operators  
+     Work at bit level
+      ->  &	     AND
+          |      OR
+          ^	     XOR
+          ~	     NOT
+          <<	Left shift
+          >>	Right shift
+   
+ 7️- Ternary Operator 
+     Only operator with 3 operands
+      int max = (a > b) ? a : b;
+      
+ 8️- instanceof Operator  
+      Checks object type
+         if (obj instanceof String) {
+              System.out.println("String object");
+         }
+         
+   
+ Control Flow Statement
+ ======================================================
+ Decision Making Statement
+ ---------------------------------
+ - if 
+ - if-else
+ - if-else if ladder
+ - Nested if
+ - Switch Statement
+ - Switch Expression (In Switch expression data type and case value data type should be same)
+                     (case value should be either literal or Constant)
+ 
+ Iterative Statement
+ ------------------------------------
+ - for loop 
+ - while loop 
+ - do-while loop
+ - for each loop 
+ 
+ Branching Statement
+ ------------------------------------
+ - break statement
+ - continue statement
    
    
+ What is Java Collection Framework ?
+ ================================================================
+ -> Added in java version 1.2
+ -> Collection is nothing but a group of object.
+ -> Pesent in java.util package.
+ -> Framework provide us the architecture to manage these group of object. i.e : add, update, delete, get
+ 
+    Collection Hierarchy (◯  Interface, ⬛  Class)
+    -----------------------------------
+    
+   ◯ Iterable           (Java 1.5)
+    |
+    └── ◯ Collection        (Java 1.2)
+            |
+            ├── ◯ List      (Java 1.2)
+            |       |
+            |       ├── ⬛ ArrayList     (Java 1.2)
+            |       ├── ⬛ LinkedList    (Java 1.2)
+            |       ├── ⬛ Vector        (Java 1.0)
+            |       |       |
+            |       |       └── ⬛ Stack (Java 1.0)
+            |
+            ├── ◯ Set       (Java 1.2)
+            |       |
+            |       ├── ⬛ HashSet       (Java 1.2)
+            |       |        |
+            |       |        └── ⬛ LinkedHashSet (Java 1.4)
+            |       |
+            |       └── ◯ SortedSet     (Java 1.2)
+            |               |
+            |               └── ◯ NavigableSet   (Java 1.6)
+            |                       |
+            |                       └── ⬛ TreeSet (Java 1.2)
+            |
+            └── ◯ Queue     (Java 1.5)
+                    |
+                    ├── ◯ Deque         (Java 1.6)
+                    |       |
+                    |       ├── ⬛ ArrayDeque  (Java 1.6)
+                    |       └── ⬛ LinkedList  (Java 1.2)
+                    |
+                    └── ⬛ PriorityQueue (Java 1.5)
+
+    
+    Map Hierarchy (❌ Not a Collection)
+    
+   ◯ Map                 (Java 1.2)
+    |
+    ├── ◯ SortedMap   (Java 1.2)
+    |       |
+    |       └── ◯ NavigableMap (Java 1.6)
+    |               |
+    |               └── ⬛ TreeMap (Java 1.2)
+    |
+    ├── ⬛ HashMap     (Java 1.2)
+    |       |
+    |       └── ⬛ LinkedHashMap (Java 1.4)
+    |
+    └── ⬛ Hashtable   (Java 1.0)
+
+ -> Iterator is used to traverse the collection.
+     1. iterator 
+           methods are : hasNext(), next(), remove()  
+                     Iterator<Integer> it = list.iterator();
+                           while (it.hasNext()) {
+                                  Integer i = it.next();
+                                  System.out.println(i);
+                            }
    
+     2. forEach() 
+     
+ Collection : It represents the group of objects. Its interface which provides methods to work on group of objects.
+ Collections : It is a utility class and provides static methods, which are used to operate on collection like : swapping, searching, reverse, copy.
+ 
+ Comparator and Comparable 
+ =========================================
+ -> Both are provides a way to sort the collection.
+ -> Comparable provides natural ordering by implementing compareTo(), while Comparator provides custom ordering
+     using compare() without modifying the class.
+ 
+ | Feature          | Comparable       | Comparator       |
+ | ---------------- | ---------------- | ---------------- |
+ | Package          | java.lang        | java.util        |
+ | Method           | compareTo()      | compare()        |
+ | Sorting logic    | Inside class     | Outside class    |
+ | Sorting order    | Natural          | Custom           |
+ | Multiple sorting | ❌ No             | ✅ Yes            |
+ | Affects class    | ✅ Yes            | ❌ No             |
+ | Used by          | TreeSet, TreeMap | Collections.sort |
+ 
+  🧠 Easy Memory Trick
+      Comparable → “I compare myself”
+      Comparator → “I compare others”
+ 
+ 
+ Internal Working of HashMap
+ ==================================================================================
+ -> Its an interface and its implementation are : 
+     - HashMap : do not maintain the order.
+     - HashTable : Synchronized version of HashMap.
+     - LinkedHashMap : Maintain the insertion order.
+     - TreeMap : sorts the data internally.
+ -> Object that maps key to value.
+ -> Can not contain duplicate key.
+ -> A HashMap stores data in key–value pairs.
+    
+     HashMap<Key, Value>
+                map.put("A", 10);
+                map.put("B", 20);
+                map.put("C", 30);
+     It Internally create Array of Bucket. (Default size is 16)
+               Array of Nodes (Buckets)
+     map.put("A", 10);
+        Step 1: Calculate HashCode
+                hash = key.hashCode()  -- "A".hashCode() = 65         
+        Step 2: Find Bucket Index
+                index = hash % array_size  -- 65 % 16 = 1
+        Step 3: Store Node      -- Bucket[1] → (A,10)
+                Node {
+                  int hash; -- 65
+                  Key key;  -- A
+                  Value value; -- 10
+                  Node next; -- null
+               }
+               
+   What if Collision Happens?
+   Collision = two keys map to the same bucket. 
+       "A".hashCode() % 16 = 1
+       "Q".hashCode() % 16 = 1
+     Both go to bucket 1.
+     
+   Before Java 8
+   Collision handled using Linked List.
+          Bucket[1]
+             ↓
+           (A,10) → (Q,40) → null
+   After Java 8
+      If bucket size > 8:
+      Linked list converts into Red-Black Tree
+      Improves performance
+      
+            Bucket[1]
+        (Tree structure)
+            (A,10)
+            /    \
+         (B,20)  (Q,40)
+            
+   Visual Diagram of HashMap
+   --------------------------------
+    HashMap (Array of Buckets)
+     Index
+       0   → null
+       1   → (A,10) → (Q,40)
+       2   → null
+       3   → (B,20)
+       4   → null
+       5   → (C,30)
+       ...
+       15  → null
+       
+   Important Internal Properties
+   --------------------------------------------
+   | Property         | Default Value          |
+   | ---------------- | ---------------------- |
+   | Initial capacity | 16                     |
+   | Load factor      | 0.75                   |
+   | Resize threshold | capacity × load factor |
    
+   Ex: 16 × 0.75 = 12
    
+   When size becomes 12 → HashMap resizes.
+     Old capacity: 16
+     New capacity: 32
+     
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+ What is Stream
+ ===================================================================
+ -> We can consider Stream as a pipeline through which our collection element passes through.
+ -> While element passes through pipeline, it perform various operation like sorting, filtering etc.
+ -> useful when we deal with bulk processing.
+ 
+ Java Stream Flow Diagram
+ ---------------------------------------
+         Collection (List, Set, etc.)
+                    |
+                    |  stream()
+                    v
+              +-------------+
+              |   Stream    |
+              +-------------+
+                    |
+        -----------------------------
+        |      Intermediate Ops     |
+        | (0 or more, lazy ops)     |
+        -----------------------------
+        |   filter()                |
+        |   map()                   |
+        |   flatMap()               |
+        |   sorted()                |
+        |   distinct()              |
+        |   limit()                 |
+        |   skip()                  |
+        |   peek()                  |
+        -----------------------------
+                    |
+                    v
+        -----------------------------
+        |      Terminal Operation   |
+        |   (Triggers execution)    |
+        -----------------------------
+        |   forEach()               |
+        |   collect()               |
+        |   reduce()                |
+        |   count()                 |
+        |   anyMatch()              |
+        |   allMatch()              |
+        |   noneMatch()             |
+        |   findFirst()             |
+        |   findAny()               |
+        -----------------------------
+                    |
+                    v
+               Final Result
+               
+ Intermediate Operations (Lazy) :
+    Return a Stream
+    Do not execute until terminal operation is called
+    Can be chained   
+    
+ Terminal Operations (Eager)
+    Produce a result or side effect
+    Trigger the stream pipeline execution
+    End the stream    
+ 
+ Multithreading and Concurrency
+ =============================================================================
+ -> We can create thread 2 ways
+    - implementing Runnable interface
+    - extending Thread class.
+ Process :
+ ----------------------------------------
+ -> Process is an instance of a program that is getting executed.
+    It has its own resource like memory, thread etc.
+    
+    Compilation : Test.java : generates bytecode that can be executed by jvm.
+    Execution : at this point JVM start the new process.
+    
+ Thread 
+ ------------------------------------
+ -> Thread is known as lightweight process.
+                or
+    Smallest sequence of instruction that are executed by CPU independently.
+ -> 1 process can have multiple threads.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  

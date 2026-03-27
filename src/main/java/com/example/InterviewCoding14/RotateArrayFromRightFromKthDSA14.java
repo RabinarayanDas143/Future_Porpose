@@ -14,9 +14,9 @@ public class RotateArrayFromRightFromKthDSA14 {
         int n = array.length;
         k = k%n;
         
-        doReverse(array,0,n-1);
-        doReverse(array,0,k-1);
-        doReverse(array,k,n-1);
+        doReverse(array,0,n-1); //[5, 4, 3, 2, 1]
+        doReverse(array,0,k-1); // [5, 4] → [4, 5] --  [4, 5, 3, 2, 1]
+        doReverse(array,k,n-1); // [3, 2, 1] → [1, 2, 3] -- [4, 5, 1, 2, 3]
         
         System.out.println(Arrays.toString(array));
 	}

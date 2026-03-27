@@ -3,7 +3,10 @@ package com.example.java8CodingQuestion9;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
+
+import ch.qos.logback.core.model.Model;
 
 class ModelClass {
 	private int id;
@@ -127,9 +130,49 @@ public class OperationUsingModelClass9 {
 		// Find the count of male and female employees present in the organization
 		Map<String, Long> map3 = empList.stream()
 				.collect(Collectors.groupingBy(e -> e.getGender(), Collectors.counting()));
-       //System.out.println(map3);
-		
+		// System.out.println(map3);
+
 		// Print the names of all departments in the organization
-		List<String> map4 = empList.stream().map(e->e.getCity()).collect(null);
+		List<String> map4 = empList.stream().map(e -> e.getDeptName()).distinct().collect(Collectors.toList());
+		// System.out.println(map4);
+
+		// print employee details whose age is greater than 28
+		List<ModelClass> map5 = empList.stream().filter(e -> e.getAge() > 28).collect(Collectors.toList());
+		// System.out.println(map5);
+
+		// find maximum age of employee
+		ModelClass map6 = empList.stream().sorted((a, b) -> b.getAge() - a.getAge()).findFirst().get();
+		// System.out.println(map6);
+
+		// Print Average age of Male and Female Employees
+		Map<Object, Double> map7 = empList.stream()
+				.collect(Collectors.groupingBy(e -> e.getGender(), Collectors.averagingLong(e -> e.getAge())));
+		// System.out.println(map7);
+
+		// Print the number of employees in each department.
+		Map<String, Long> map8 = empList.stream()
+				.collect(Collectors.groupingBy(e -> e.getDeptName(), Collectors.counting()));
+		// System.out.println(map8);
+
+		// Find oldest employee
+		ModelClass map9 = empList.stream().sorted((a, b) -> b.getYearOfJoining() - a.getYearOfJoining()).findFirst()
+				.get();
+		// System.out.println(map9);
+
+		// Find youngest female employee
+		ModelClass map10 = empList.stream().sorted((a, b) -> a.getAge() - b.getAge()).findFirst().get();
+		// System.out.println(map10);
+
+		// Find employees whose age is greater than 30 and less than 30
+		List<ModelClass> map11G30 = empList.stream().filter(e -> e.getAge() > 30).collect(Collectors.toList());
+		// System.out.println(map11G30);
+		List<ModelClass> map12L30 = empList.stream().filter(e -> e.getAge() < 30).collect(Collectors.toList());
+		// System.out.println(map12L30);
+
+		// Find the department name which has the highest number of employees
+		Entry<String, Long> map13 = empList.stream()
+				.collect(Collectors.groupingBy(e -> e.getDeptName(), Collectors.counting())).entrySet().stream()
+				.sorted((a, b) -> b.getValue().compareTo(((Long) a.getValue()))).findFirst().get();
+		System.out.println(map13);
 	}
 }

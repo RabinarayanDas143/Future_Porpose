@@ -506,7 +506,7 @@ class B {
  Static Nested Class
  -----------------------------------------
  -> It do not have access to the non static instance variable and methods of outer class.
- ->. Its object can be initiated without initiating the object of outer class.
+ -> Its object can be initiated without initiating the object of outer class.
  -> It can be private, public, protected .
  
  class Outer {
@@ -683,7 +683,7 @@ class Test<T extends Number & Comparable<T>> {
  -> It can have variable, constructor, methods.
  -> It can not be initiated.
  -> No other class can extend Enum class.
- -> It can have abstract method, and all the contant should implement that abstract method.
+ -> It can have abstract method, and all the constant should implement that abstract method.
 
  SINGLETON CLASS
  ==========================================================
@@ -1054,7 +1054,7 @@ class Test<T extends Number & Comparable<T>> {
  
   🔁 Exception Handling Flow (Detailed Diagram)
  ------------------------------------------------------------
-         ┌───────────────────┐
+        ┌───────────────────┐
         │   Method Starts   │
         └─────────┬─────────┘
                   │
@@ -1566,8 +1566,276 @@ OutOfMemoryError  StackOverflowError     RuntimeException               Checked 
     Smallest sequence of instruction that are executed by CPU independently.
  -> 1 process can have multiple threads.
  
+ Code Segment
+ ----------------------------------------
+ -> Contains the compiled BYTECODE (i.e machine code) of the java program.
+ -> All threads within the same process, share the same code segment.
  
+ Heap
+ -------------------------------------
+ -> Object created at runtime using "new" keyword are allocated in the heap.
+ -> Heap is shared among all the thread of the same process.
+ -> Threads can read and modify the Heap data.
  
+ Stack
+ ---------------------------------
+ -> Each thread has its own STACK.
+ -> It manages, method call, local variable.
+ 
+ Multithreading
+ -------------------------------------
+ -> Allows a program to perform multiple task at the same time.
+ -> Multiple thread share the same resource such as memory space but still can perform task independently.
+ 
+ -> Runnable interface Methods are : run()
+ -> Thread class methods are : init(), run(), sleep(), start(), stop(), interrupt(), etc.
+ 
+ 1. By Extending the Thread Class
+ ---------------------------------------------
+     class MyThread extends Thread {
+               public void run() {
+                   System.out.println("Thread is running...");
+             }
+      }
+
+    public class TestThread {
+         public static void main(String[] args) {
+              MyThread t1 = new MyThread();
+              t1.start();   // starts the thread
+        }
+    }
+    
+ 2. By Implementing the Runnable Interface
+ ------------------------------------------------
+     class MyRunnable implements Runnable {
+               public void run() {
+                   System.out.println("Thread is running...");
+              }
+     }
+
+       public class TestRunnable {
+           public static void main(String[] args) {
+              MyRunnable r1 = new MyRunnable();
+              Thread t1 = new Thread(r1);
+              t1.start();
+        }
+     }
+     
+ Thread Life Cycle States
+ -------------------------------------------------
+ 1. New (Born State)
+ --------------------
+   Thread t = new Thread();
+   
+ 2. Runnable (Ready/Running State)
+ --------------------------------------
+ -> After calling start(), the thread becomes runnable.
+ -> It is ready to run and waiting for CPU time.
+ 
+    t.start();
+    
+ 3. Running
+ ----------------------------------
+ -> When the thread scheduler picks the thread, it starts executing the run() method.
+ -> Java does not have a separate “running” state in the enum; it is part of RUNNABLE.
+ 
+ 4. Blocked / Waiting / Timed Waiting
+ ------------------------------------------------
+    The thread is temporarily inactive.    
+  a) Blocked
+     - Waiting to acquire a lock.
+  b) Waiting
+     - Waiting indefinitely for another thread to perform an action.
+        t.join();
+  c) Timed Waiting
+     - Waiting for a specified time.
+         Thread.sleep(1000);
+         
+ 5. Terminated (Dead State)
+ -----------------------------------------------
+  - The thread has completed execution.
+  
+          NEW
+           |
+         start()
+           |
+           v
+        RUNNABLE
+           |
+           | sleep() / wait() / lock
+           v
+ --------------------------------
+ |   BLOCKED                    |
+ |   WAITING                    |
+ |   TIMED_WAITING              |
+ --------------------------------
+         |
+         | lock free / notify / time over
+         v
+      RUNNABLE
+         |
+         | run() ends
+         v
+     TERMINATED
+     
+| State         | Why it happens                         | Wait time          |
+| ------------- | -------------------------------------- | ------------------ |
+| BLOCKED       | Waiting for lock                       | Until lock is free |
+| WAITING       | Waiting for signal from another thread | Unlimited          |
+| TIMED_WAITING | Waiting for specific time              | Fixed time         |
+
+
+ Difference between notify() and notifyAll() in Java
+ ------------------------------------------------------------------
+ 1. notify()
+      Meaning
+        Wakes up only one waiting thread.
+        The thread chosen is random (decided by JVM).
+        
+        WAITING THREADS:
+                  T1  T2  T3
+
+                notify() called
+                     |
+                     v
+          Only one wakes up (e.g., T2)
+        
+  
+ 2. notifyAll()
+         Meaning
+            Wakes up all waiting threads.
+            All threads move from WAITING → RUNNABLE.
+            They then compete for the lock.
+            
+            WAITING THREADS:
+                      T1  T2  T3
+
+                 notifyAll() called
+                         |
+                         v
+               T1, T2, T3 all wake up
+            
+ 
+ What is ThreadPool
+ ===============================================================
+ -> It's a collection of threads, which are available to perform the submitted task.
+ -> Once task completed, thread get back to the thread pool and wait for new task.
+ -> Means thread can be reused.
+ 
+                 +-------------------+
+                |     Task Queue    |
+                |  (Waiting Tasks)  |
+                +---------+---------+
+                          |
+                          v
+        +-----------------------------------+
+        |           Thread Pool             |
+        |-----------------------------------|
+        |   Thread-1   Thread-2   Thread-3  |
+        |   (Worker)   (Worker)   (Worker)  |
+        +-----------------------------------+
+              |          |          |
+              v          v          v
+           Execute    Execute    Execute
+            Task A      Task B      Task C
+ 
+ What's the Advantages of Thread Pool
+ ==============================================================
+ -> Thread creation time can be saved:
+     . When each thread created, space is allocated to it and this takes time.
+     . With thread this can be avoided by reusing the thread.
+ -> Overhead of managing the Thread lifecycle can be removed:
+     . Thread has different state like Runnable, Running, Waiting, Blocking, terminate etc. And managing thread state include complexity.
+     . Thread pool manage all that things.
+ -> Increased the performance:
+     . More thread means more context switching time, using control over thread creation, excess context switching can be avoided.
+     
+     Executor (interface)
+         |
+         v
+    ExecutorService (interface)
+         |
+         v
+    ScheduledExecutorService (interface)
+         |
+         v
+   AbstractExecutorService (abstract class)
+         |
+         v
+   ThreadPoolExecutor (class)
+         |
+         |------------------------------|
+         v                              v
+     ScheduledThreadPoolExecutor    ForkJoinPool
+
+
+   Executors (utility class)
+       |
+       |-- newFixedThreadPool()
+       |-- newCachedThreadPool()
+       |-- newSingleThreadExecutor()
+       |-- newScheduledThreadPool()
+       |-- newWorkStealingPool()
+     
+ ThreadPoolExecutor(
+    int corePoolSize,
+    int maximumPoolSize,
+    long keepAliveTime,
+    TimeUnit unit,
+    BlockingQueue<Runnable> workQueue,
+    ThreadFactory threadFactory,
+    RejectedExecutionHandler handler
+)
+ 
+ 1. corePoolSize :  Minimum number of threads kept alive in the pool.
+ 2. maximumPoolSize : Maximum number of threads allowed.
+ 3. keepAliveTime : Time that extra threads (beyond core size) stay alive when idle.
+ 4. TimeUnit unit : Specifies the unit of keepAliveTime.
+ 5. workQueue : Queue that holds tasks before execution.
+ 6. ThreadFactory (optional) : Used to create new threads.
+ 7. RejectedExecutionHandler (optional) : Defines what happens when:
+                                                    Queue is full, Max threads reached
+                                                    
+     ThreadPoolExecutor executor =
+            new ThreadPoolExecutor(
+                2,                     // corePoolSize
+                5,                     // maxPoolSize
+                60,                    // keepAliveTime
+                TimeUnit.SECONDS,     // time unit
+                new LinkedBlockingQueue<Runnable>() // queue
+            );
+            
+ ThreadPoolExecutor Life Cycle States
+ ------------------------------------------------------
+    RUNNING → SHUTDOWN → STOP → TIDYING → TERMINATED
+    
+ 1. RUNNING
+     - Initial state when the thread pool is created.	
+     - Accepts new tasks
+     - Processes queued tasks
+         ThreadPoolExecutor executor = new ThreadPoolExecutor(...);
+         
+ 2. SHUTDOWN
+      - executor.shutdown();
+      - Stops accepting new tasks
+      - Continues processing tasks already in the queue
+      
+ 3. STOP
+      - executor.shutdownNow();
+      - Stops accepting new tasks
+      - Stops processing queued tasks
+      - Interrupts running threads
+      
+ 4. TIDYING
+      - All tasks are completed
+      - Worker threads are terminated
+      - Pool is cleaning up resources
+      - terminated() hook method is called
+      
+ 5. TERMINATED
+      - Thread pool is completely shut down
+      - No threads
+      - No tasks
  
  
  

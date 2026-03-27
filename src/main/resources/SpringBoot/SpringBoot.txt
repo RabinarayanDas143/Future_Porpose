@@ -222,6 +222,8 @@ method is execute just after constructor created .
                   application-dev.properties
                   application-test.properties
                   application-prod.properties
+                  
+          spring.profiles.active=dev;
   -> The application.properies will remain as a master properties file.
   
   

@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class RotateArrayFromLeftFromKthDSA14 {
 	public static void main(String[] args) {
 		int[] array = { 1, 2, 3, 4, 5 };
-		int k = 2;
+		int k = 7;
 		rotateLeft(array, k);
 		
 		System.out.println(Arrays.toString(array));
@@ -13,10 +13,12 @@ public class RotateArrayFromLeftFromKthDSA14 {
 
 	private static void rotateLeft(int[] array, int k) {
 		int n = array.length;
-		k = k % n;
-		doReverse(array, 0, k - 1);
-		doReverse(array, k, n - 1);
-		doReverse(array, 0, n - 1);
+		k = k % n; //This ensures k is within bounds.
+		doReverse(array, 0, k - 1); //[1,2] → [2,1]
+		doReverse(array, k, n - 1); // [3,4,5] → [5,4,3]
+		doReverse(array, 0, n - 1);  // [2, 1, 5, 4, 3]
+		                             //    ↓
+		                             // [3, 4, 5, 1, 2]
 	}
 
 	private static void doReverse(int[] array, int i, int j) {

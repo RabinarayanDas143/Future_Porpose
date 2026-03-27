@@ -1,0 +1,109 @@
+ RabbitMQ
+ =====================================================
+ -> RM is an open source message broker. It helps system to communicate asynchronously and 
+    decouple producer and consumers.
+ -> Ex: Think of it as a post office:
+        You (producer) put a letter (Message) in to the postbox (Queue)
+        RabbitMQ (Post office) ensure it's delivered
+        Some one else (Consumer) picks it up when ready.
+        
+ Main job: Receive messages, route them, store them temporarily, and deliver them to consumer.
+ 
+ Why do we need RabbitMQ ?
+ ========================================================
+ -> Let's take an example : You place an order on Amazon.
+    The app needs to : 
+       Confirm order via email 
+       update inventory
+       charge payment
+       Notify delivery service
+       
+    Doing all this Synchronously (in one request) would be slow and error-prone.
+    
+ -> Instead the order service publishes events ("Order Place") to RabbitMQ.
+    Other services (Email, Inventory, Payment, Delivery) consume the message Asynchronously.
+ -> If any service is down, RabbitMQ keeps the message safe.
+ 
+ Benifits
+ ======================================================
+ -> Decoupling (services dont't depend directly)
+ -> Scalability (add more consumers easily)
+ -> Reliability (messages persist even if service crash)
+ -> Async processing.
+ -> Load balancing.
+
+ Core Component
+ ===================================================
+ 1. Producer
+ -------------------------------
+ -> Sends (publishes) messages to an Exchange.
+ -> It never sends messages directly to a queue. Instead it always sends to an Exchange      
+    bcz the exchange decides where the messages should go.
+    
+ Technical Behavior
+ -----------------------------
+ -> Opens a connection and a channel with Rabbit MQ.
+ -> Publish a message with : 
+        Exchange name
+        Routing Key
+        Message Body (Payload)
+        Properties (header, persistence flga, priority etc.)
+        
+ -> Every message sent by producer reaches the exchange in binary form.
+ 
+ 2. Exchange (the message router)
+ ---------------------------------
+ -> The exchange is the brain of RabbitMQ's routing system.
+ -> It decide how messages flow from producers to one or more queues.
+ -> When a message arrives, the exchange looks at its type and binding to decide which queues
+    should receive the message.
+    
+  Responsibilities
+  -----------------------
+  -> Receive messages from producers.
+  -> Match routing keys against binding.
+  -> Route copies of messages into the correct queues.   
+  
+-> There are 4 main exchange types in RabbitMQ
+
+| Exchange Type | Routing Logic                 | Use Case          |
+| ------------- | ----------------------------- | ----------------- |
+| Direct        | Exact routing key match       | Task distribution |
+| Fanout        | Broadcast to all queues       | Notifications     |
+| Topic         | Pattern-based routing         | Event systems     |
+| Headers       | Routing using message headers | Complex filtering |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

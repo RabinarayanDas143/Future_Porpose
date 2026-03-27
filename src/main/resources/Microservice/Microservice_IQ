@@ -30,7 +30,7 @@
  4. Allow to frequent software release.                   4. Difficult to maintain transaction safety and data boundaries.
  5. Multiple services are parallelly developed and        5. Its hard to debug.
      deployed. 
-                                                          6. Microservice will need large team size to main the application.
+                                                          6. Microservice will need large team size to maintain the application.
                                                           
  4. When to use Microservices ?
  =====================================================================
@@ -47,7 +47,7 @@
  ======================================================================
   - Microservices architecture breaks an application in to small services, so that we can develop, deploy and maintained all the 
     services independently.
-  - Decentralization : The data management is decentralized. We can use same data base for all services.
+  - Decentralization : The data management is decentralized.
   - Black box : Every microservice is defined as a black box. Means payment service does not know anything about order service.
   - Security : We can easily apply security like authentication, authorization for every API call through API Gateway.
   - Polyglot : This is one of the significant feature of microservices. we can develop one service using java then also we 

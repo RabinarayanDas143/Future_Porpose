@@ -74,7 +74,125 @@
 | Headers       | Routing using message headers | Complex filtering |
 
 
+ Queue
+ ========================================
+ -> A queue is a storage unit that holds messages until they are consumed.
+ -> Think of it as a FIFO.
+ -> Messages stay in the queue until:
+     . A consumer retrieves and acknowledge them.
+     . The messages expires.(TTL)
+     . The queue is deleted.
+     
+  Key properties
+  -----------------------
+  property             Description
+--------------------------------------------------------
+-> Durable -- Survives broker restarts
+-> Exclusive -- Used only by one connection
+-> Auto-deleted -- Deleted when no consumer remain.
+-> TTL -- Message expiry time
+-> DLX -- For failed message
+-> Lazy mode -- stores on disk to save RAM.
 
+ Responsibilities
+ ----------------------------
+ -> Hold messages safely until processed.
+ -> Manage message order and delivery.
+ -> Support reliability 
+ -> Support scaling (Multiple consumer)
+ 
+ Queue Type (Special Behavior Queues)
+ ===================================================================
+ -> Rabbit MQ doesn't have "named types" like "direct queue" or "topic queue" the exchange define routing.
+    but queue type here mean specialized behavior queues based on their arguments.
+    
+    Let's explore important ones
+    
+ 1. Standard Queue (Default)
+ ---------------------------------------------
+ -> The most common queue type 
+ -> FIFO order is preserved .
+ -> Message store in memory or disk.
+ -> can have multiple consumer. (for load balancing)
+ 
+ use case : General background jobs, microservices messaging.
+ 
+ 2. Priority Queue
+ ----------------------------------------------
+ -> Messages can have a priority level(Integer).
+ -> High priority messages are delivered first, even if others arrived earlier.
+ 
+ use case : payment alert, urgent notification, critical update.
+ 
+ 3. Dead Letter Queue (DLQ)
+ --------------------------------------------------
+ -> Store failed messages that couldn't be processed successfully  .
+  
+ use case : Error handling , retries, message auditing.
+ 
+ 4. Lazy Queue
+ ---------------------------------------------------
+ -> Store messages on Disk immediately instead of memory.
+ -> Reduce RAM usage when message volume is high.
+ -> Slightly slower but very memory efficient.
+ 
+ use case : Large queue, background workloads, high backlog system.
+ 
+ 5. TTL Queue (Time-To-Live)
+ ---------------------------------------------------
+ -> Messages automatically expire after a certain time.
+ 
+ use case : Temporary notification, caching, expiring task.
+ 
+ 6. Single Active Consumer Queue
+ ----------------------------------------------------
+ -> Only one consumer is activate at a time.
+ -> If it disconnects, another takes over.
+ -> Ensures message order and sequential processing.
+ 
+ use case : Tasks that must be processed in static order.
+ 
+ 7. Stream Queue (Newer Feature)
+ ------------------------------------------------
+ -> Hybrid between queue and kafka topic.
+ -> Messages are retained for a configurable time.	
+ -> Consumer can replay messages by offset.
+ 
+ use case : Event streaming, audit logging, replayable systems.
+ 
+ Binding - the connection between exchange and queue
+ ====================================================================
+ -> A Binding is the rule that connect an exchange to a queue.
+ -> It defines which messages go into which queue, based on routing keys or headers.
+ -> Without bindings, exchange cant't route anything
+    they'd just drop messages.
+    
+ Ex: 
+     channel.bindQueue('emailQueue', 'order-exchange', 'order-email');
+     
+   Whenever a producer send a message to exchange order-exchange with routing key order-email
+   it will be routed to emailQueue.
+   
+   
+ Consumer
+ ==========================================================
+ -> A consumer is an application or service that read message from queue and process them.
+ -> It connect to RabbitMQ, subscribe to a queue and waits for a new message to arrive.
+ 
+ consumers can : 
+     Auto-acknowledge messages (less reliable)
+     Manually acknowledge after processing (recommended)
+     NACK messages to requeue or send to DLQ.
+     
+     channel.ack(msg) - Remove message from queue permanently.
+     channel.nack(msg,false,true) - Requeue message for retry.
+     channel.nack(msg,false,false) - Drop message (or send to DLQ)
+     (Consumer crash before ACK) - RabbitMQ requeues automatically.
+     
+  Responsibilities :- Retrieve and process messages 
+                      send ACK/NACK
+                      Handle retries or DLQ
+                      scale horizontally for parallel processing.
 
 
 

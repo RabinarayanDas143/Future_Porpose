@@ -206,6 +206,7 @@
   ======================================================================================
     -> Marker interface is the interface it doesn't have any method declaration .
     -> It provide some specific permission to the object for perform some specific task.
+    -> Ex: Serializable, Cloneable.
     
     
   18> When Finally block doesn't get executed
@@ -231,7 +232,12 @@
     -> It is Checked Exception.                                               -> It is a unchecked Exception. 
     -> ClassNotFoundException is an exception that occurs when                -> NoClassDefFoundError is an error and occurs when a class was present during  
        a class is dynamically loaded and not found.                               compilation but missing during runtime
-         
+   -> Happens when explicitly loading a class using methods like
+       Class.forName("com.example.MyClass");
+      
+      * ClassNotFoundException → “I tried to load it, but couldn’t find it”
+      * NoClassDefFoundError → “It was there before, but now it’s gone (or broken)” 
+        
   
   21> How to break Singleton
   ===========================================================================
@@ -255,14 +261,16 @@
   24> what is the difference for creating object of String using new keyword and using String literal
   ===========================================================================================================================
    -> When we are creating String object using new keyword, every time it create a new String object in heap memory and also
-      it create a String literal in String constant pool. 
+      it create a String literal in String constant pool if it does not already exist.. 
    -> When we create a String object using String literal it create a String object in String Constant Pool and 
       when we create anathor object and store same value, it refer to the same location, it doesn't create new object.
   
   25> What is the differenc between Executor.submit() and Executor.execute()
   ==========================================================================================================================
+    -> execute() present in Executor interface.
     -> Executor.execute() it execute the task which are assign to Runnable interface.
     -> Executor.execute() it doesn't return anything .
+    -> submit() present in ExecutorService interface.
     -> Executor.submit() it execute the task which are assign to callable interface.
     -> Executor.submit() it return some value to the user and its return type is Future.
     -> Future is a interface.
@@ -749,7 +757,7 @@
                                               Memory Area
                                            ---------------------
    ******         *************     ************        *************         *************
- Method Area      Head Memory       Stack Area           PC register          Native method area
+ Method Area      Heap Memory       Stack Area           PC register          Native method area
    
                                           EXECUTION ENGINE
                                       -----------------------------    

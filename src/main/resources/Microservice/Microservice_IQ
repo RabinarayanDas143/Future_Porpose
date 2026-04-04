@@ -521,17 +521,6 @@
                                                   Power failure
                                                   Server restarts
                                                   
-    Advantages of 2PC
-    ------------------------------
-    ✔️ Strong consistency
-    ✔️ ACID compliance
-    ✔️ Simple concept
-    
-    Disadvantages of 2PC
-    -------------------------------
-    ❌ Blocking protocol
-    ❌ Poor scalability
-                                                  
                                                   
   Transaction in Monolithic Vs Microservice
   ------------------------------------------------------------------------

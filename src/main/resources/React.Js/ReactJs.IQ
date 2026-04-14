@@ -452,6 +452,32 @@
  =============================================================================================
   -> Render() method return the react elements that will rendered the DOM.
   
+ Ex:
+     class Counter extends React.Component {
+            constructor(props) {
+                super(props);
+
+                    this.state = {
+                       count: 0
+                     };
+             }
+
+           increment = () => {
+                   this.setState({
+                   count: this.state.count + 1
+           });
+      };
+
+        render() {
+             return (
+                 <div>
+                 <h2>Count: {this.state.count}</h2>
+                 <button onClick={this.increment}>Increase</button>
+                 </div>
+             );
+         }
+     }
+  
  49> How the State can be maintained in a class component ? V.IMP
  =============================================================================================
   -> Two step process to maintain the state :

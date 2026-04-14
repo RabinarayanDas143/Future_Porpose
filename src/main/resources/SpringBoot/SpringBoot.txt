@@ -121,10 +121,10 @@ method is execute just after constructor created .
      it provides some extra features.
      
      
- 15> Difference between the Constructor and setter injection in Spring
+ 15> Difference between the Constructor and setter injection in Spring (This answer i have to modify)
  ========================================================================================
   -> In Constructor injection is important to remember the type and order of constructor and parameter.
-  -> Constructor injection is for mandatory Dependencies and setter is optional.
+  -> Constructor injection is used when dependency is required, and setter injection is used when dependency is optional.
   
   
  16> Difference between @Autowired and @inject annotation in Spring
@@ -275,9 +275,42 @@ method is execute just after constructor created .
   
  30> Tell me 5 Spring Exceptions that you came accross .
  ==================================================================================
-  -> BeanCreation Exception - NoSuchBeanDefination Exception.
-  -> NoUniqueBeanDefinationException
-  -> BeanCreationException - UnsatisfiedDependencyException : When two class dependent on each other, means two 
+  -> BeanCreationException - BeanCreationException is thrown when Spring fails to create a bean, 
+                             and the actual root cause is usually another exception inside it.
+  -> NoUniqueBeanDefinationException - Spring found more than one bean of the same type
+                                       and it got confused which one to use
+                         interface Service {}
+
+                         @Component
+                         class ServiceImpl1 implements Service {}
+
+                         @Component
+                         class ServiceImpl2 implements Service {}
+                         
+                         
+                         @Autowired
+                         private Service service;
+                         
+                         
+                         it confuse which class method i have to call
+                           ServiceImpl1
+                           ServiceImpl2
+                           
+               for fix this use :
+               1.@Qualifier
+               
+               @Autowired
+               @Qualifier("serviceImpl1")
+               private Service service;
+               
+               2.@Primary
+               
+               @Component
+               @Primary
+               class ServiceImpl1 implements Service {}
+               
+                         
+  -> UnsatisfiedDependencyException : When two class dependent on each other, means two 
                                         class autowired each other at that time this exception occour.
                                         solution : we have to annotated one class instanance with @Lazy, so 
                                                    one class bean is created on demand.
@@ -402,6 +435,12 @@ method is execute just after constructor created .
   
  38> What is BeanFactoryPostProcessor ?
  =================================================================================================
+ -> BeanFactoryPostProcessor is used to modify bean definitions before the beans are instantiated by the Spring container.
+ -> Internal Flow of bean creation :
+       👉 Spring loads all bean definitions first
+       👉 Then BeanFactoryPostProcessor runs
+       👉 It can change those definitions
+       👉 After that → beans are create
           
   
  39> What do you mean by TransctionPropagation 
@@ -594,6 +633,7 @@ method is execute just after constructor created .
    -> An embedded server is built into your application.
    -> So it run as a stand alone java application, without deploying war file in any server.
    -> Spring Boot supports embedded servers like Tomcat, Jetty, and Undertow.
+   -> spring-boot-starter-web -- Tomcat server
    
    
  54> What is Spring Boot DevTools?
@@ -642,6 +682,25 @@ method is execute just after constructor created .
  ==============================================================================
   -> @ConfigurationProperties is used to bind external configurations from properties or YAML files to a Java object.
   -> @ConfigurationProperties(prefix="app.datasource").
+  -> Instead of using multiple @value we can use @ConfigurationProperties
+  Ex: application.properties :
+                 app.name=MyApp
+      Java Class :
+            @Component
+            @ConfigurationProperties(prefix = "app")
+            public class AppConfig {
+
+                     private String name;
+ 
+                   // getters and setters
+                      public String getName() { return name; }
+                      public void setName(String name) { this.name = name; }
+                      
+      Usage :
+             @Autowired
+             private AppConfig config;
+
+             System.out.println(config.getName());
   
  62> What is a Spring Boot Profile?
  =================================================================================
@@ -664,7 +723,7 @@ method is execute just after constructor created .
    
   C (Consistency)
   -----------------------------
-   -> Ensure that DB state before and after the transaction should be consistent only.
+   -> Data in the database must always be correct and valid before and after a transaction.
    
   I (Isolation)
   --------------------------------

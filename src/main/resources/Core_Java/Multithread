@@ -1,0 +1,351 @@
+ 1. What is multithreading and why is it used?
+ ============================================================
+ -> A thread is a small part of program .Think of like multiple worker doing different task at the same time.
+ -> Multithreading is a concept that we can execute one or more parts of program simultaneously.
+ 
+    Why Multithreading is Used
+   -----------------------------------
+   1. Improves Performance
+   2. Better Resource Utilization
+   3. Handles Multiple Tasks Simultaneously
+   4. Improves User Experience
+   
+ 2. Difference between process and thread
+ ============================================================
+ -> Process is an independent program, while thread is a part of a process that runs tasks inside it.
+    Process: An independent program in execution.
+    Thread: A lightweight unit of execution inside a process.
+ -> Process has its own memory space.
+    Thread share the memory with other thread.
+ -> Process is independent.
+    Thread depend on process.
+ -> If one process crash then it doesn't affect other process.
+    But if one thread is crash then it affect to the entire process.
+ -> Inside one process there is multiple thread is present.
+ 
+	 Process 1        Process 2
+	   |                |
+	 ---------      ---------
+	 | T1 T2 |      | T1 T2 |
+	 ---------      ---------
+ 
+ 3. Difference between Thread and Runnable
+ ===============================================================
+ -> Thread 👉 A class used to create and run a thread
+ -> Runnable 👉 An interface used to define the task for a thread
+	| Feature     | Thread                                             | Runnable                                      |
+	| ----------- | -------------------------------------------------- | --------------------------------------------- |
+	| Type        | Class                                              | Interface                                     |
+	| Purpose     | Create & run thread                                | Define task only                              |
+	| Inheritance | Cannot extend another class (Java allows only one) | Can extend another class + implement Runnable |
+	| Recommended | ❌ Not preferred                                    | ✅ Preferred                                   |
+	 
+ EX:
+  Using Thread Class
+ ---------------------------------------------------
+		 class MyThread extends Thread {
+		    public void run() {
+		        System.out.println("Thread class running");
+		    }
+		
+		    public static void main(String[] args) {
+		        MyThread t1 = new MyThread();
+		        t1.start();   // start thread
+		    }
+		}
+
+ Using Runnable Interface (Recommended)
+ --------------------------------------------------
+		class MyTask implements Runnable {
+		    public void run() {
+		        System.out.println("Runnable running");
+		    }
+		
+		    public static void main(String[] args) {
+		        MyTask task = new MyTask();
+		        Thread t1 = new Thread(task);
+		        t1.start();   // start thread
+		    }
+		}
+
+ 4. What is the thread lifecycle in Java?
+ ========================================================================
+  ->  NEW → RUNNABLE → RUNNING → WAITING/BLOCKED → TERMINATED
+  
+   - NEW
+        Thread is created but not started
+        Thread t = new Thread();
+     
+   - RUNNABLE
+        Thread is ready to run (after calling start())
+        Waiting for CPU
+        
+   - RUNNING
+        Thread is currently executing run() method
+        
+   - WAITING / BLOCKED
+        Thread is paused temporarily
+        Waiting for another thread (wait(), join())
+        
+   - TERMINATED
+        Thread has finished execution
+        
+		NEW 
+		 ↓ (start)
+		RUNNABLE 
+		 ↓ (CPU assigned)
+		RUNNING 
+		 ↓ (wait/sleep)
+		WAITING/BLOCKED 
+		 ↓
+		RUNNING 
+		 ↓
+		TERMINATED	
+		
+ 5.  What is context switching?
+ ===============================================================
+ -> Context Switching is the process where the CPU switches from one thread (or process) to another.
+ -> CPU can run only one thread at a time
+ -> So it quickly switches between threads to give a feeling of parallel execution
+ Ex:
+    Imagine:
+        Thread 1 → doing calculation
+        Thread 2 → reading file
+    CPU does:
+        Thread 1 → Thread 2 → Thread 1 → Thread 2 ...
+        
+ 6. What is a daemon thread?
+ ================================================================
+ -> A Daemon Thread is a background thread that runs to support main tasks of an application.
+ -> It is a background thread that automatically terminates when all user threads finish execution.
+ Ex:
+    User Thread → important work (main task)
+    Daemon Thread → helper/background work
+       Ex:: Garbage collection (JVM)
+            Background logging
+            Auto-save
+            
+		class MyDaemon extends Thread {
+		    public void run() {
+		        while (true) {
+		            System.out.println("Daemon thread running...");
+		        }
+		    }
+		
+		    public static void main(String[] args) {
+		        MyDaemon t = new MyDaemon();
+		        t.setDaemon(true);   // make it daemon
+		        t.start();
+		
+		        System.out.println("Main thread finished");
+		    }
+		}
+		
+		O/p
+		   Main thread finished
+           Daemon thread running... (may stop anytime)
+           
+ 7. What is thread priority? Does it guarantee execution?
+ ======================================================================
+ -> Thread priority is a number that tells the CPU which thread should get preference for execution.
+ -> Thread priority is a hint to the scheduler about execution, but it does not guarantee that higher priority threads will execute first.
+ Ex:
+	Thread t1 = new Thread();
+	Thread t2 = new Thread();
+	
+	t1.setPriority(2);   // low priority
+	t2.setPriority(8);   // high priority
+	
+ 8.What is synchronization and why is it needed?
+ =========================================================================
+  -> Synchronization is a mechanism used to control access of multiple threads to shared resources so that only one thread can access it at a time.
+  -> When multiple threads work on the same data, synchronization makes sure they don’t interfere with each other.
+  -> Through Synchronization we can maintain the data consistency in multithread environment.
+  
+ 9. Difference between synchronized method and synchronized block
+ =========================================================================
+ -> Synchronized Method 👉 locks the entire method
+ -> Synchronized Block 👉 locks only a specific part of code
+ 
+	| Feature     | Synchronized Method       | Synchronized Block              |
+	| ----------- | ------------------------- | ------------------------------- |
+	| Lock Scope  | Whole method              | Only selected block             |
+	| Performance | Slower (locks everything) | Faster (locks only needed part) |
+	| Flexibility | Less flexible             | More flexible                   |
+	| Lock Object | Uses `this` (by default)  | Can use any object              |
+	| Usage       | Simple cases              | Complex / optimized cases       |
+	
+ 10.  What is an intrinsic lock (monitor)?
+ ============================================================================
+ -> An Intrinsic Lock (Monitor) is an internal lock mechanism that every object in Java has, used to control access in synchronization.
+ Ex:
+		Thread 1 → gets lock → executes
+		Thread 2 → waits
+		Thread 1 → releases lock
+		Thread 2 → gets lock → executes
+		
+ 11.  What is a deadlock? How can you prevent it?
+ ==============================================================================
+ -> A deadlock is a situation where two or more threads are stuck forever, waiting for each other to release resources.
+	Thread 1 → holds Lock A, waiting for Lock B  
+	Thread 2 → holds Lock B, waiting for Lock A
+ -> Prevent DeadLock
+    - Use Same Lock Order
+		Thread 1 → Lock A → Lock B  
+		Thread 2 → Lock A → Lock B
+    - Avoid Nested Locks
+    - Timeout Mechanism
+    
+ 12.  What is a race condition?
+ ============================================================================
+ -> A race condition occurs when multiple threads access and modify shared data at the same time, and the final result depends on which thread runs first.
+ -> In that case data inconsistency is happening.
+ 
+ 13. What is thread starvation?
+ =============================================================================
+ -> Thread starvation happens when a thread does not get CPU time or resources for a long time because other threads keep getting preference.
+ -> The thread is ready to run but keeps waiting indefinitely ❌
+ Ex:
+	Thread A → high priority
+	Thread B → low priority
+	
+	CPU keeps executing Thread A
+	Thread B waits continuously → Starvation
+	
+ 14. What is livelock?
+ ============================================================================
+ -> A livelock is a situation where threads are not blocked, but they keep changing their state continuously and still can’t complete their work.
+ Ex:
+    Threads keep “responding” to each other
+    But never finish the task
+    
+	Thread 1 → "You go first"
+	Thread 2 → "No, you go first"
+	Thread 1 → "Okay, you go"
+	Thread 2 → "No, you go"
+	
+ 15. comparison of Deadlock vs Livelock vs Starvation
+ ============================================================================
+ 
+	| Feature              | Deadlock                   | Livelock                     | Starvation                  |
+	| -------------------- | -------------------------- | ---------------------------- | --------------------------- |
+	| **State of Threads** | Blocked (stuck)            | Active (moving)              | Waiting                     |
+	| **Progress**         | ❌ No progress             | ❌ No progress               | ❌ Very slow / none          |
+	| **CPU Usage**        | Low (threads idle)         | High (continuous activity)   | Depends                     |
+	| **Cause**            | Circular waiting for locks | Overreaction between threads | Unfair scheduling           |
+	| **Example**          | Lock A ↔ Lock B            | “You go first” loop          | Low priority thread ignored |
+	
+ 16. What are wait(), notify(), and notifyAll()?
+ ===========================================================================
+ -> These methods are used for inter-thread communication.
+ -> They are defined in the Object class
+    1. wait()
+    -------------------------
+    -> Makes the current thread pause and release the lock
+    -> Thread goes into waiting state
+    
+    2. notify()
+    ------------------------
+    -> Wakes up one waiting thread
+    
+    3. notifyAll()
+    ------------------------
+    -> Wakes up all waiting threads
+    
+ 17. Difference between wait() and sleep()
+ ==========================================================================
+		| Feature | `wait()`                      | `sleep()`                |
+		| ------- | ----------------------------- | ------------------------ |
+		| Class   | `Object` class                | `Thread` class           |
+		| Lock    | ✅ Releases lock              | ❌ Does NOT release lock  |
+		| Purpose | Inter-thread communication    | Pause execution          |
+		| Wake-up | By `notify()` / `notifyAll()` | Automatically after time |
+		| Usage   | Inside synchronized block     | Anywhere                 |
+		
+ 18.  Why must wait() be called inside a synchronized block?
+ ============================================================================
+ -> wait() must be called inside a synchronized block because the thread needs to own the object’s lock before
+    it can release it and enter the waiting state.		
+    
+    Internal Logic
+    -------------------------
+    Thread enters synchronized block → gets lock
+    Calls wait() →
+          releases lock
+          goes to waiting state
+          
+          
+ 19. What happens if notify() is called before wait()?
+ ===========================================================================
+ -> If notify() is called before wait(), the notification is lost because no thread is waiting at that time,
+    which may cause the waiting thread to block indefinitely.
+  Ex:
+    📢 Teacher announces:
+      “Class is over, you can go!”   
+      
+      👉 But no students are in class
+      
+      Later students come and wait…
+      👉 They never get the message → stuck waiting
+ 
+		
+		
+		
+ 18. Difference between submit() and execute()
+ ============================================================================
+	| Aspect                 | `execute()`                                          | `submit()`                                      |
+	| ---------------------- | ---------------------------------------------------- | ----------------------------------------------- |
+	| **Defined In**         | `Executor` interface                                 | `ExecutorService` interface                     |
+	| **Return Type**        | `void`                                               | `Future<?>`                                     |
+	| **Result Handling**    | ❌ Cannot return result                              | ✅ Can return result (`Callable`)                |
+	| **Task Type**          | `Runnable` only                                      | `Runnable` and `Callable`                       |
+	| **Exception Handling** | Exception is thrown immediately (visible in console) | Exception is captured inside `Future`           |
+	| **Tracking Task**      | ❌ Not possible                                       | ✅ Possible using `Future` (`isDone()`, `get()`) |
+	| **Use Case**           | Fire-and-forget tasks                                | Tasks where result/status is needed             |
+
+	 execute()	
+			ExecutorService executor = Executors.newFixedThreadPool(2);
+			executor.execute(() -> {
+			    System.out.println("Task executed");
+			});
+		
+	 submit()
+			ExecutorService executor = Executors.newFixedThreadPool(2);
+			Future<Integer> future = executor.submit(() -> {
+			    return 10 + 20;
+			});
+			
+			System.out.println(future.get()); // 30
+
+ 19. 
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

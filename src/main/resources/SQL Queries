@@ -301,7 +301,7 @@ WHERE d.deptname = 'CS';
   Inner Join
   ---------------------
   -> Returns records that have matching values in both table.
-   syntax: SELECT columns from tableA INNER JOIN tableB ON tableA.col_name = tableB.col_name;
+   syntax: SELECT columns from tableA INNER JOIN tableB where tableA.col_name = tableB.col_name;
    
   Left Join
   ---------------------

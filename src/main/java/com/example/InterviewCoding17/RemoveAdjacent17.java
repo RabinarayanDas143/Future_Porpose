@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class RemoveAdjacent17 {
 	public static void main(String[] args) {
-       String str = "abbaca";
+       String str = "aabbaca";
        Stack<Character> st = new Stack<>();
        for(int i=0;i<str.length();i++) {
     	   if(!st.isEmpty() && st.peek()==str.charAt(i))

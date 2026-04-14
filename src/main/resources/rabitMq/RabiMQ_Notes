@@ -193,6 +193,123 @@
                       send ACK/NACK
                       Handle retries or DLQ
                       scale horizontally for parallel processing.
+                      
+ Channel
+ ===============================================================
+ -> It's a light weight virtual connection inside a TCP connection.
+ -> You can have multiple channel per connection.
+ -> Used for publishing, consuming and managing queue.
+ 
+ Why ?
+  -> Opening/closing TCP connection is expensive.
+  -> But channel is cheap.
+  
+ Ex: One App -> One TCP connection -> multiple channel for virtual connection.
+ 
+ Connection
+ ===========================================================
+ -> A real TCP connection between your app and Rabbit MQ broker.	
+ -> Established using AMQP protocol.
+ -> RabbitMQ allows multiple concurrent connection from different apps or services.
+ 
+ Virtual Host (vHost)
+ ===========================================================
+ -> Logical name space for isolation.
+ -> Think of it like "database" inside a DBMS.
+ -> Each vHost has its own exchange, queues and permission.
+ 
+ Default vHost:/
+     useful for multi-tenent system or environment separation.
+     
+     
+   PRODUCER -> Connection+Channel -> Exchange -> Binding -> Queue -> CONSUMER
+   
+   
+ Direct Exchange
+ ======================================
+ -> Route messages to queues whose binding key matches the routing key exactly.
+    Ex: Message with key "error" -> goes to queue bound with "error"
+        Message with key "info" -> goes to "info" queue.
+        
+ Fanout Exchange
+ ======================================
+ -> Broadcasts messages to all queues bound to the exchange (ignore routing key).
+    Ex: Perfect for notifications or real-time broadcasts.
+    
+ Topic Exchange
+ ========================================
+ -> Route messages based on pattern matching of the routing key.
+ -> Routing key are dot-separated words.
+ -> *.created -> matches order.created, user.created
+ -> user.# -> matches all event starting with user.
+ -> Diff. in between * and #
+      - In *.created , it matches one word after '.'
+      - In #.created , it matches multiple word after '#'
+      
+ Header Exchange
+ =======================================
+ -> Routes based on message headers, not routing key.
+ -> Support x-match; all x-match; any.
+ 
+ 
+ Priority Queue
+ =================================================
+ -> Normally, RabbitMQ delivers messages in the order they arrive (FIFO).
+ -> But some time you want certain messages to jump ahead in the queue.
+    Ex:
+       "VIP" customer orders. 
+       "High urgency" background jobs.
+       "Error" events over "Info" logs
+       
+   arguments: {"x-max-priority": 10}
+   priority value are integers from 0 (lowest) to max (highest).
+   channel.pusblish('exchange','key',Buffer.from(msg),{priority: 8});
+   RabbitMQ stores highest priority messages ahead of lower ones.
+   If two messages have same priority -> normal FIFO order applies.
+   
+ AMQP (Advanced Message Queuing Protocol)
+ =======================================================================
+ -> It is the standard communication protocol used by RabbitMQ. (And other broker like Qpid, ActiveMQ).
+ -> Just like HTTP defines how browsers talk to server, AMQP defines how message producer, brokers and consumers communicate.
+ -> RabbitMQ is a message broker implementation of this AMQP.
+   
+   AMQP defines:
+         Layer                          Purpose
+     Connection Layer           How clients connect/authenticate (TCP)
+     Session Layer (Channels)   How virtual channel are manages
+     Messaging Layer            How messages are routed, acknowledged etc
+     
+ So AMQp is not just about "Sending messages" - its define exactly how:
+ 
+    Messages are published (with routing key, exchange)
+    Broker Store and forward messages
+    Consumer ACK/NACk messages
+    Reliability, persistence and confirmation work.
+    
+ Why AMQP Exists
+ ===================================================================
+ -> Before AMQP, every message broker had its own proprietary protocol.
+   
+   AMQP provides:
+   
+   Interoperability - any AMQP compliant client (Java, Python, Js, Go) can talk to any AMQP broker.
+   Reliability - Standard support for acknowledgments, delivery guarantees, transactions etc.
+   Security - authentication, permissions, virtual host.
+   
+   Application code (Producer/Consumer)
+              |
+              |
+   Client Library (amqplib, pika, etc)
+              |
+              |
+   AMQP Protocol (frame, methods, ack)
+              |
+              |
+        TCP Connection
+              |
+              |
+        RabbitMQ Broker 
+ 
 
 
 

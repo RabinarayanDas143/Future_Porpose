@@ -287,11 +287,65 @@
       
       Later students come and wait…
       👉 They never get the message → stuck waiting
+      
+      
+ 20.  What is ExecutorService? Why is it preferred over Thread?
+ ===============================================================================
+ -> ExecutorService is a thread pool framework used to manage and execute tasks efficiently, and it is preferred over Thread
+    because it provides thread reuse, better performance, task management, and result handling.
+ -> Executor is an interface used to run tasks.
+ -> ExecutorService is an advanced version of Executor.
  
+  Types of ExecutorService
+  ----------------------------------------------
+  1. newFixedThreadPool()
+        - Fixed number of threads
+        - ExecutorService ex = Executors.newFixedThreadPool(5);
+        
+  2. newCachedThreadPool()
+        - It creates threads depends on the CPU.
+        - ExecutorService ex = Executors.newCachedThreadPool();
+  
+  3. newSingleThreadExecutor()
+        - It create only one thread.
+        - ExecutorService ex = Executors.newSingleThreadExecutor();
+        
+  4. newScheduledThreadPool()
+        - It run task in specific time.
+        - ScheduledExecutorService ex = Executors.newScheduledThreadPool(2);
+        
+  5. newWorkStealingPool()
+        - Uses multiple queues, balances load
+        - ExecutorService ex = Executors.newWorkStealingPool();
+        
+        
+ 21. What is a thread pool? Types of thread pools
+ ==================================================================================
+ -> A Thread Pool is a collection of pre-created threads used to execute multiple tasks.
+ -> ThreadPoolExecutor is the core implementation behind ExecutorService
+ -> It manages a pool of reusable worker threads to execute tasks efficiently.
+ 
+  Types of Thread Pools
+  -----------------------------------
+  1. FixedThreadPool
+  2. CachedThreadPool
+  3. SingleThreadExecutor	
+  4. ScheduledThreadPool
+  5. WorkStealingPool
+ 
+   Main Components
+   -------------------------
+	    ThreadPoolExecutor(
+	    int corePoolSize,
+	    int maximumPoolSize,
+	    long keepAliveTime,
+	    TimeUnit unit,
+	    BlockingQueue<Runnable> workQueue,
+	    ThreadFactory threadFactory,
+	    RejectedExecutionHandler handler
+	   )
 		
-		
-		
- 18. Difference between submit() and execute()
+ 22. Difference between submit() and execute()
  ============================================================================
 	| Aspect                 | `execute()`                                          | `submit()`                                      |
 	| ---------------------- | ---------------------------------------------------- | ----------------------------------------------- |
@@ -317,7 +371,89 @@
 			
 			System.out.println(future.get()); // 30
 
- 19. 
+ 23. What is Future?
+ =============================================================================
+ -> Future is an interface used to represent the result of an asynchronous task.
+ -> It acts like a promise that the result will be available later.
+  Ex:
+		ExecutorService ex = Executors.newFixedThreadPool(2);
+		
+		Future<Integer> future = ex.submit(() -> {
+		    return 10 + 20;
+		});
+		
+		System.out.println(future.get()); // 30
+		
+		ex.shutdown();
+
+ 24. What is CompletableFuture?
+ ==============================================================================
+ -> CompletableFuture is an enhanced ofFuture interface that supports asynchronous task execution, Chain multiple tasks,
+    combining dependent tasks, and exception handling.
+    
+ Ex:
+		CompletableFuture.supplyAsync(() -> "Java")
+		    .thenApply(s -> s + " Developer")
+		    .thenAccept(System.out::println); 
+		    
+	| Feature            | Future | CompletableFuture |
+	| ------------------ | ------ | ----------------- |
+	| Get Result         | ✅     | ✅                |
+	| Chain Tasks        | ❌     | ✅                |
+	| Combine Tasks      | ❌     | ✅                |
+	| Callback           | ❌     | ✅                |
+	| Exception Handling | Basic  | Powerful          |
+	
+ 25. Difference between synchronous and asynchronous execution
+ ================================================================================
+ -> Synchronous 👉 One task at a time, wait until current task finishes.
+ -> Asynchronous 👉 Start task and continue other work without waiting.
+ 
+	| Aspect      | Synchronous           | Asynchronous                   |
+	| ----------- | --------------------- | ------------------------------ |
+	| Execution   | Sequential            | Independent / parallel style   |
+	| Waiting     | Yes                   | No immediate wait              |
+	| Blocking    | Blocking              | Non-blocking                   |
+	| Performance | Slower for long tasks | Better for I/O or long tasks   |
+	| Complexity  | Simple                | More complex                   |
+	| Example     | Normal method call    | `CompletableFuture`, callbacks |
+	
+ 26. What is the volatile keyword?
+ ===================================================================================
+ -> volatile is a keyword used in multithreading to make a variable’s latest value visible to all threads immediately.
+ -> If one thread changes the variable, other threads can see the updated value directly.
+ 
+ 27.  Difference between volatile and synchronized
+ ==================================================================================
+ -> Both are used in multithreading, but they solve different problems.
+ -> volatile 👉 Ensures latest value is visible to all threads
+ -> synchronized 👉 Controls access so only one thread uses resource at a time
+ 
+    volatile = visible
+    synchronized = safe access
+    
+ 28. What is the happens-before relationship?
+ ==================================================================================
+ -> The happens-before relationship is a rule in the Java Memory Model (JMM) that guarantees:
+ -> If Action A happens-before Action B, then
+    all changes made in A are visible to B, and A executes before B in terms of memory consistency.
+    
+ 29. What are atomicity, visibility, and consistency?
+ =================================================================================
+  1. Atomicity
+     - All the operation treated as a single unit, means all the operation is done or fail.
+     
+  2. Visibility
+     - When one thread updates a variable, other threads must see the latest value.
+     
+  3. Consistency
+     - Data remains correct and predictable across threads.
+     
+ 30.  How do you handle concurrency in your application?
+ ================================================================================
+ -> In my application, I handle concurrency by using Java multithreading  to ensure performance, thread safety, and data consistency
+    when multiple requests or tasks run simultaneously.
+
 
 
  

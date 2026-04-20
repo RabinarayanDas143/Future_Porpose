@@ -1,0 +1,128 @@
+
+1. What is REST API? Why is it stateless?
+================================================================================
+ -> REST API stands for Representational State Transfer Application Programming Interface.
+ -> It is a way for client and server to communicate over HTTP using standard methods like:
+    GET, POST, PUT, DELETE.
+ -> It is stateless because the server does not store client session data, and each request
+    contains all necessary information.
+    
+ 2. Difference between REST and SOAP?
+ ============================================================================
+  -> Representational State Transfer
+  -> Simple Object Access Protocol
+  -> REST is a lightweight architectural style using HTTP and JSON.
+  -> while SOAP is a protocol using XML with strict standards and strong built-in security.
+  -> REST is faster and commonly used in modern applications, while SOAP is common in enterprise legacy systems.
+  
+ 3. Difference between @Controller and @RestController?
+ ===============================================================================
+  -> @Controller is used for Spring MVC applications to return view pages, while @RestController is used for
+     REST APIs and returns JSON/XML response directly. @RestController is a combination of @Controller and @ResponseBody
+     
+ 4. Difference between GET, POST, PUT, PATCH, DELETE?
+ ===============================================================================
+
+	| Method | Purpose                      | CRUD Operation | Idempotent |
+	| ------ | ---------------------------- | -------------- | ---------- |
+	| GET    | Fetch data                   | Read           | ✅ Yes      |
+	| POST   | Create new data              | Create         | ❌ No       |
+	| PUT    | Full update existing data    | Update         | ✅ Yes      |
+	| PATCH  | Partial update existing data | Update         | Usually ✅  |
+	| DELETE | Remove data                  | Delete         | ✅ Yes      |
+ 
+ 5. Difference between PUT and PATCH?
+ =================================================================================
+  -> PUT is used for full replacement/update of a resource, while PATCH is used for partial update of specific fields only.
+  
+ 6. What is idempotency? Which HTTP methods are idempotent?
+ =================================================================================
+ -> Idempotency means:
+       If the same request is sent multiple times, but server give the same result at once.
+       
+		| Method  | Idempotent?          | Reason                        |
+		| ------- | -------------------- | ----------------------------- |
+		| GET     | ✅ Yes                | Only fetches data             |
+		| PUT     | ✅ Yes                | Same update gives same result |
+		| DELETE  | ✅ Yes                | After delete, still deleted   |
+		| HEAD    | ✅ Yes                | Metadata only                 |
+		| OPTIONS | ✅ Yes                | Checks allowed methods        |
+		| PATCH   | ⚠️ Usually / depends | Based on implementation       |
+		| POST    | ❌ No                 | Can create duplicates         |
+		
+ 7. What is the difference between request body, path variable, and query parameter?
+ =================================================================================================
+ -> Path variable is used to identify a specific resource in URL
+ -> query parameter is used for optional inputs like filter/search/pagination
+ -> request body is used to send data in JSON format
+ 
+ 8. What is use of ResponseEntity?
+ ========================================================================
+ -> ResponseEntity is used in Spring Boot to return a complete HTTP response, including:
+    Response Body, HTTP Status Code, Headers
+    EX:
+       return ResponseEntity
+        .ok()
+        .header("token", "abc123")
+        .body(employee);
+        
+ 9. Why use @Valid?
+ ======================================================================
+ -> @Valid is used in Spring Boot to automatically validate incoming request data before they reach controller/service processes it.
+ -> @NotNull
+	@NotBlank
+	@Email
+	@Size
+	@Min
+	@Max
+
+ 10. Common Status Codes Used
+ ===================================================================================
+	| Operation        | Status          |
+	| ---------------- | --------------- |
+	| GET success      | 200 OK          |
+	| POST create      | 201 CREATED     |
+	| DELETE success   | 204 NO CONTENT  |
+	| Not found        | 404 NOT FOUND   |
+	| Validation error | 400 BAD REQUEST |
+
+11. How do you validate request payload?
+=======================================================================================
+ -> I validate request payload using DTO classes with bean validation annotations like @NotBlank, @Email, etc.,
+    combined with @Valid in controller methods. Invalid requests return 400 Bad Request.
+ -> Payload means:
+         The actual data/content sent inside a request or response.
+         
+ 12. How does Java object convert to JSON?
+ ========================================================================================
+  -> Java objects are converted to JSON using serialization libraries like Jackson. In Spring Boot, Jackson automatically
+     converts returned objects into JSON responses.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

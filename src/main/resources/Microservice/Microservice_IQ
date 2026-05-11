@@ -914,7 +914,6 @@
             Blocks unauthorized requests
        4️- Rate Limiting
        5️- Centralized Logging & Monitoring
-       6️- Circuit Breaker / Fallback
        
        Dependency
        

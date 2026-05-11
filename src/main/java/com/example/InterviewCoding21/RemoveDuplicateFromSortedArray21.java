@@ -1,0 +1,20 @@
+package com.example.InterviewCoding21;
+
+import java.util.Arrays;
+
+public class RemoveDuplicateFromSortedArray21 {
+	public static void main(String[] args) {
+		int[] array = { 1, 1, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 8, 9, 10, 10 };
+		int j = 0;
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] != array[j]) {
+				j++;
+				array[j] = array[i];
+			}
+		}
+		System.out.println(Arrays.toString(array));
+		for(int i=0;i<j+1;i++) {
+			System.out.println(array[i]);
+		}
+	}
+}

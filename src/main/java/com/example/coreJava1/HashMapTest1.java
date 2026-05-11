@@ -17,10 +17,8 @@ public class HashMapTest1 {
 	public String toString() {
 		return "HashMapTest1 [id=" + id + ", name=" + name + "]";
 	}
-	
-	
 
-@Override
+	@Override
 	public int hashCode() {
 		return Objects.hash(id, name);
 	}
@@ -37,14 +35,14 @@ public class HashMapTest1 {
 		return id == other.id && Objects.equals(name, other.name);
 	}
 
-public static void main(String[] args) {
-	HashMapTest1 hm = new HashMapTest1(1, "Rabi");
-	HashMapTest1 hm1 = new HashMapTest1(1, "Rabi");
-	
-	HashMap<Object, String> obj = new HashMap<>();
-	obj.put(hm, "ABC");
-	obj.put(hm1, "CDE");
-	
-	System.out.println(obj.size());
-}
+	public static void main(String[] args) {
+		HashMapTest1 hm = new HashMapTest1(1, "Rabi");
+		HashMapTest1 hm1 = new HashMapTest1(1, "Rabi");
+
+		HashMap<Object, String> obj = new HashMap<>();
+		obj.put(hm, "ABC");
+		obj.put(hm1, "CDE");
+
+		System.out.println(obj.size());
+	}
 }

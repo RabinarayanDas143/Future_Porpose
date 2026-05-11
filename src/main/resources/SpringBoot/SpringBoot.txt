@@ -123,9 +123,25 @@ method is execute just after constructor created .
      
  15> Difference between the Constructor and setter injection in Spring (This answer i have to modify)
  ========================================================================================
-  -> In Constructor injection is important to remember the type and order of constructor and parameter.
-  -> Constructor injection is used when dependency is required, and setter injection is used when dependency is optional.
+  -> In Constructor injection Dependencies are provided through the constructor	
+			class Service {
+			    private final Repo repo;
+			
+			    public Service(Repo repo) {
+			        this.repo = repo;
+			    }
+			}
   
+  -> In setter injection Dependencies are provided using setter methods
+			class Service {
+			    private Repo repo;
+			
+			    public void setRepo(Repo repo) {
+			        this.repo = repo;
+			    }
+			}
+			
+ -> Constructor injection is used for mandatory dependencies, while setter injection is used for optional dependencies
   
  16> Difference between @Autowired and @inject annotation in Spring
  ==========================================================================================
@@ -612,7 +628,7 @@ method is execute just after constructor created .
      
  51> What is the role of the application.properties file in Spring Boot?
  ======================================================================================
-  -> The application.properties (or application.yml) file is used to define application-level configurations in a Spring Boot project.
+  -> The application.properties (or application.yml) file is used to define application-level configurations of a Spring Boot project.
   -> You can configure settings like:
       - Server properties: server.port=8081
       - Database configurations: spring.datasource.url=jdbc:mysql://localhost:3306/mydb

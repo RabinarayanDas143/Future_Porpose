@@ -1,0 +1,146 @@
+
+ 1. What problem does Spring Security solve?
+ ===================================================================
+  -> Spring Security secures applications by providing authentication, authorization, password encryption, session management
+  
+ 2. How does Spring Security work internally? (High level flow)
+ =====================================================================
+  -> Spring Security internally works using a filter chain that intercepts requests,
+     authenticates the user, authorizes access based on roles, and stores authentication details in the SecurityContext.
+     
+ 3. What is Security FilterChain?
+ ====================================================================
+  -> SecurityFilterChain is a collection of security filters that intercept every incoming HTTP request
+     and apply security checks before the request reaches the controller.
+     
+ 4. What is AuthenticationManager?
+ ==================================================================
+  -> AuthenticationManager is a core component in Spring Security responsible for authenticating the user credentials.
+  
+ 5. Authentication Manager vs Authentication Provider
+ ====================================================================
+  -> AuthenticationManager manages the overall authentication process, while AuthenticationProvider performs the actual credential validation.
+  -> AuthenticationManager : Manager
+  -> AuthenticationProvider : Worker
+  
+ 6. How does password encoding work? Why BCrypt?
+ ======================================================================
+  -> Password encoding converts plain passwords into hashed values before storing them in the database.
+     BCrypt is preferred because it provides strong hashing, automatic salting, and protection against
+     brute-force and rainbow-table attacks
+     
+ 7. What is SecurityContext?
+ =======================================================================
+  -> SecurityContext is a Spring Security object that stores authentication details of the currently authenticated user.
+  
+ 8. What is SecurityContextHolder?
+ =========================================================================
+  -> SecurityContextHolder is a Spring Security class that stores and provides access to the SecurityContext
+     containing authentication details of the currently logged-in user.
+     
+	| SecurityContext                | SecurityContextHolder         |
+	| ------------------------------ | ----------------------------- |
+	| Stores authentication info     | Holds/manages SecurityContext |
+	| Contains Authentication object | Provides access globally      |
+
+ 9. Stateless vs Stateful authentication
+ ==========================================================================
+ -> In stateful authentication, the server stores user session information, while in stateless authentication,
+    authentication data is sent with every request using tokens like JWT, and no session is stored on the server.
+   
+ 10. How does session-based authentication work?
+ ==========================================================================
+  -> Session-based authentication is a stateful authentication mechanism where the server stores user
+     login/session information after successful authentication.  
+     
+ 11. What is JWT? Why is it stateless?
+ =========================================================================
+  -> JSON Web Token (JWT) is a compact, secure token format used for authentication and authorization in web applications and REST APIs.
+
+		JWT is commonly used in:
+		
+		Spring Boot APIs
+		React applications
+		Microservices
+		
+ 12. Where should JWT be stored?
+ =======================================================================
+ -> JWT can be stored in localStorage, sessionStorage, or HttpOnly cookies. HttpOnly cookies are considered
+    more secure because they prevent JavaScript access.
+    
+ 13. How to validate JWT in Spring Security?
+ ========================================================================
+ -> JWT validation is done using a custom JWT filter that checks the token for every incoming request
+    before the request reaches the controller.
+    
+ 14. What is Refresh Token?
+ =========================================================================
+  -> Refresh Token is a long-lived token used to generate a new Access Token without forcing the user to log in again.
+  
+ 15. JWT vs Refresh Token?
+ ===========================================================================
+ -> JWT Access Token is used for API authentication and is short-lived, while Refresh Token is used to
+    generate new access tokens after expiry and is usually long-lived.
+    
+	| JWT Access Token      | Refresh Token                     |
+	| --------------------- | --------------------------------- |
+	| Used to access APIs   | Used to generate new access token |
+	| Short-lived           | Long-lived                        |
+	| Sent in every request | Sent only when token expires      |
+	| Higher exposure       | More securely stored              |
+	
+ 16. What is CSRF? Why is it enabled by default?
+ ==========================================================================
+  -> CSRF is an attack where a hacker tricks a logged-in user into performing unwanted actions. 
+     Spring Security enables CSRF protection by default to secure session-based applications that use cookies.
+     
+ 17. When should CSRF be disabled?
+ =============================================================================
+  -> CSRF should be disabled in stateless REST APIs using JWT authentication because JWT tokens are
+     sent manually in headers and not automatically by the browser like session cookies.
+     
+ 18. CORS vs CSRF
+ ==========================================================================
+  -> CORS controls cross-origin API access between frontend and backend applications, while CSRF 
+     protects authenticated users from malicious requests made using their session or cookies.
+     
+ 19. What is OAuth2?
+ ===========================================================================
+  -> OAuth2 is an authorization framework that allows third-party applications to access user resources
+     securely using access tokens without sharing the user’s password.
+     
+ 20. OAuth2 vs JWT
+ =========================================================================
+  -> OAuth2 is an authorization framework used to grant secure access between applications, 
+     while JWT is a token format used to securely transmit user information. OAuth2 can use JWT as its access token.
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   

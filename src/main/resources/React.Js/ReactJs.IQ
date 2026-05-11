@@ -350,13 +350,27 @@
   -> The Routes component is used as the root container for declaring your collection of routes.
   -> The Router component is used to define a Route and specify the component that should render when the route matches.
   
- 36> What are Route Parameters in React Routing >
+ 36> What are Route Parameters in React Routing ?
  ===============================================================================================
   -> Route Parameter in React Router are a way to pass dynamic value to the component as part of the URL path.
   
  37> What is the Role of exact prop in React Routing ?
  ==================================================================================
   -> exact prop is used with the Route component to match exactly to the provided path.
+  
+	    <BrowserRouter>
+	       <Routes>
+	        <Route path="/employee/:id" element={<Employee />} />
+	      </Routes>
+	    </BrowserRouter>
+    
+    
+		function Employee() {
+		    const { id } = useParams();
+		    return (
+		        <h1>Employee ID is: {id}</h1>
+		    );
+		}
   
  38> What are React Hooks ? What are the top React Hooks? V.IMP
  =======================================================================================
@@ -396,6 +410,7 @@
  41> What is the meaning of the empty array [] in the useEffect() ?
  =====================================================================================
   -> An empty array [] indicates that the effect function should only run once.
+  -> If we don't provide any dependency array like blank then it should be render when component is rerender.
   
    Example: useEffect(() => {
                const getAllEmployee = () => {
@@ -417,6 +432,51 @@
   -> createContext() function return an object with provider and consumer properties.
   -> The provider properties is responsible for providing the context value to all its child component.
   -> useContetxt() method or consumer property can be used to consume the context value in child components.
+  
+  UserContext.js
+  --------------------------
+		import { createContext } from "react";
+		
+		const UserContext = createContext();
+		export default UserContext;
+  
+  
+  App.js
+  ---------------------------
+		import UserContext from "./UserContext";
+		import User from "./User";
+		
+		function App() {
+		
+		    return (
+		
+		        <UserContext.Provider value={"Rabinarayan"}>
+		
+		            <User />
+		
+		        </UserContext.Provider>
+		
+		    );
+		}
+		
+		export default App;
+  
+  User.js
+  -------------------------------
+  
+		import { useContext } from "react";
+		import UserContext from "./UserContext";
+		
+		function User() {
+		
+		    const name = useContext(UserContext);
+		
+		    return (
+		        <h1>{name}</h1>
+		    );
+		}
+		
+		export default User;
   
  44> When to use useContext() hook instead of prop in real application ?
  ==============================================================================================
@@ -568,8 +628,8 @@
      
  61> What is GraphhQL ?
  ====================================================================================
-  -> GraphQl is a query language for API and a runtime for executing those query with your existing data.
-  -> GraphQL and React are often used together. React components can use GraphQL queries to fetch the data required for rendering.
+  -> GraphQL is a query language for APIs that allows clients to request only the required data,
+     reducing over-fetching and improving performance.
   
  62> What are the 2 top ways to achieve state management ? When to use what in React ?
  ===============================================================================================
@@ -602,7 +662,11 @@
   
  64> What is the use of React Profiler ?
  ==========================================================================================
-  -> React profiler is a set of tool in React that allows developers to profile (analyze) the performance of a React application.
+  -> React profiler is a React developer tool that use to analyze the performance of the React application.
+       It helps identify:
+			Slow components
+			Unnecessary re-renders
+			Performance bottlenecks
   
  65> What is difference between fetch and axios for API calls in React ?
  ===========================================================================================

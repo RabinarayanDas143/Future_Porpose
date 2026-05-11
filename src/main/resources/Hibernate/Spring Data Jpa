@@ -1,0 +1,234 @@
+
+ 1. What is Spring Data JPA?
+ =====================================================================
+ -> Spring Data JPA is a framework built on top of JPA that simplifies data access by providing
+    repository interfaces, automatic query generation, pagination, sorting, and integration with
+    Hibernate or other JPA providers.
+    
+ 2. Difference between JPA and Hibernate
+ =====================================================================
+  -> JPA is a java persistence api for ORM, while Hibernate is a ORM framework that implenmets JPA.
+  
+ 3. What is an Entity in JPA?
+ ===================================================================
+  -> An Entity in JPA is a Java class that represents a database table.
+  
+ 4. What is Hibernate Session vs JPA EntityManager?
+ ====================================================================
+ -> Session and EntityManager are both used to manage persistence operations 
+    like save, update, delete, and fetch data — but they belong to different layers.
+      . EntityManager = Standard JPA API
+      . Session = Hibernate-specific API
+      
+ 5. What is the role of Persistence Context?
+ =====================================================================
+ -> Persistence Context is a first-level cache managed by JPA.
+ -> It store entity instance and manage its life cycle.
+ -> If any changes occur it detect the changes and update with the data base.
+ 
+ 6. Difference between save() and saveAndFlush()
+ ======================================================================
+ -> Both are Spring Data JPA repository methods used to store data in data base
+    but diff. is 
+     - save() persists the entity in the persistence context and it reflect in DB when we call commit.
+     - saveAndFlush() saves the entity and immediately in the database.
+     
+ 7. What are different ID generation strategies?
+ =========================================================================
+ -> JPA provides four main ID generation strategies: AUTO, IDENTITY, SEQUENCE, and TABLE.
+    They determine how primary keys are generated depending on the database and configuration.
+    
+ 8. What is @Transactional and how it works?
+ ========================================================================
+  -> @Transactional is a Spring annotation used to manage database transactions automatically.
+     If all transaction is success then it commit.
+     If any error occured then it rollback.
+     
+		@Transactional
+		public void transferMoney() {
+		    debitAccount();
+		    creditAccount();
+		}
+		
+		If creditAccount() fails:
+		   debit also rollback
+ 
+ 9. What is dirty checking in Hibernate?
+ ===========================================================================
+ -> Dirty checking is a Hibernate/JPA mechanism that automatically detects changes
+    updates the database during flush() or transaction commit.
+ -> Hibernate compares the current state with the original state and updates the database during flush/commit.
+ 
+ 10. What is first-level cache in JPA?
+ =============================================================================
+ -> The first-level cache is the default cache inside the Persistence Context, that store entities durring a session.
+ -> When same entity is requested by the same session, JPA return it from memory instead of hit the data base.
+ 
+ 11. Difference between LAZY and EAGER fetching
+ ===========================================================================
+ -> EAGER fetch data immediately with the parent entity.
+ -> While Lazy load data when it needed.
+ 
+ 12. What is N+1 problem? How to solve it?
+ ========================================================================
+ -> N+1 means first one query runs, then extra queries run for each record. It slows performance.
+    We solve it using join fetch or load related data in one query.
+ 
+ 13. What are Cascade types in JPA?
+ ==========================================================================
+ -> Cascade types tell JPA to propagate operations like save, update, delete, 
+    refresh from parent entity to related child entities.
+    
+ 14. Difference between mappedBy and @JoinColumn
+ ===========================================================================
+ -> Both are used in entity relationships, but purpose is different.
+    . @JoinColumn → tells which column stores foreign key
+    . mappedBy → tells this side is inverse / non-owner, relation managed by other side
+    
+ 15. What is orphanRemoval?
+ ===========================================================================
+  -> orphanRemoval deletes child records when they are removed from the parent relationship.
+     It is useful for one-to-many child collections like order items.
+     
+ 16. What is JPQL vs Native Query?
+ =======================================================================
+ -> JPQL is database-independent query language based on entities, while Native Query is raw SQL written directly for the database.
+ -> JPQL uses entity class names and field names
+		@Query("select e from Employee e where e.salary > :sal")
+		List<Employee> getEmployees(double sal);
+ -> Native Query uses actual database SQL tables and columns
+		@Query(value="select * from employee where salary > ?",
+		       nativeQuery=true)
+		List<Employee> getEmployees(double sal);
+		
+ 17. What is Criteria API?
+ =======================================================================
+  -> Criteria API is a programmatic way to create dynamic and type-safe database queries
+     in JPA using Java objects instead of writing JPQL strings.
+     
+ 18. What is pagination and sorting in JPA?
+ =======================================================================
+ -> Pagination and sorting are used to efficiently fetch data from the database in chunks and sorting is used to 
+    sort the data in desired order like ascending or descending order.
+    - Pagination = get limited records page by page
+    - Sorting = order records ascending / descending
+    
+ 19. What are projections (DTO-based queries)?
+ =========================================================================
+ -> Projection means fetch only required columns from database instead of loading full entity.
+ -> DTO-based queries improve performance by selecting only required fields.
+ 
+ 20. How to handle complex joins in JPA?
+ ==========================================================================
+ -> For complex joins in JPA, I usually use JPQL with JOIN, LEFT JOIN, and FETCH JOIN.
+    For highly complex reporting queries or DB-specific logic, I use native SQL with DTO mapping.
+    
+ 21. What is optimistic vs pessimistic locking?
+ ============================================================================
+ -> Both are used to handle multiple users updating same data at same time and prevent data conflicts.
+ 
+ 22. What is @Version annotation?
+ ========================================================================
+ -> @Version is used to maintain a version number (or timestamp) for an entity.
+ -> It helps prevent lost updates by enabling optimistic locking during concurrent modifications.
+ 
+ 23. How does JPA handle transactions internally?
+ ==========================================================================
+ -> JPA manages transactions in persistence context with a transaction.
+ -> When any changes is happening, it store in db when we call commit.
+ -> In failure case it rollback the transaction.
+ 
+ 24. What is flushing and when it happens?
+ ==========================================================================
+ -> JPA/Hibernate sends pending changes from memory to the database as SQL statements.
+ 
+ 25. Difference between get() and load() in Hibernate
+ ============================================================================
+ -> When you call get(), Hibernate directly checks database.
+ -> If no record found then it returns null.
+    EX:  Employee emp = session.get(Employee.class, 1);
+    
+ -> load() returns proxy object first, it hits the data base when you use the object data.
+Ex:
+	Employee emp = session.load(Employee.class, 1);
+	System.out.println(emp.getName()); // DB hit here
+-> If no record found the it throw the exception . (ObjectNotFoundException)
+
+ 26. How to improve JPA performance in production?
+ ================================================================================
+ -> JPA is easy to use, but in production with large data it can become slow if not optimized.
+    1. Use Pagination for Large Data
+    2. Use Lazy Loading
+    3. Avoid N+1 Query Problem
+    4. Select Only Needed Columns (DTO Projection)
+    5. Batch Insert / Update
+    6. Use Second Level Cache
+    
+ 27. How to debug slow queries in Hibernate?
+ ==================================================================================
+  -> When Hibernate query is slow, first find:
+			👉 Which SQL query is running
+			👉 How much time it takes
+			👉 Why it is slow
+  Step 1: Enable SQL Logging
+			spring.jpa.show-sql=true
+			spring.jpa.properties.hibernate.format_sql=true
+			logging.level.org.hibernate.SQL=DEBUG
+ Step 2: Enable Hibernate Statistics
+			spring.jpa.properties.hibernate.generate_statistics=true
+			logging.level.org.hibernate.stat=DEBUG
+			
+			It shows:
+			
+			total queries
+			execution time
+			session stats
+			
+ Step 3: Copy SQL and Run in Database
+ Step 4: Check Common Problems
+         1. N+1 Query Problem
+         2. Missing Index
+         3. Fetching Too Much Data
+         4. EAGER Loading
+         
+ 28. How to handle large data in JPA (batch processing)?
+ ===================================================================================
+ -> When you have lots of records, normal save() one by one is slow and uses high memory.
+    We have to use batch processing at that time.
+    1. Enable Batch Size
+    2. Insert in Chunks
+    
+ 29. What issues have you faced in JPA in real projects?
+ ====================================================================================
+ 1. N+1 Query Problem
+		Fix:
+		Used join fetch, DTO projection, lazy loading.
+ 2. Slow Performance with Large Data
+        Bulk insert/update of lakhs of records was slow.
+        Fix:
+			Hibernate batch processing
+			flush() and clear()
+			Pagination
+ 3. Memory Issue While Processing Large Record
+        While saving huge data, persistence context memory increased.
+        Fix:
+           Used batch size + periodic clear().
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  

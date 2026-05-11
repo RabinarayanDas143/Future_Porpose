@@ -98,15 +98,142 @@
   -> Java objects are converted to JSON using serialization libraries like Jackson. In Spring Boot, Jackson automatically
      converts returned objects into JSON responses.
   
+ 13. What is use of @JsonIgnore?
+ =================================================================================
+ -> @JsonIgnore is a Jackson annotation used to:
+          Exclude a field from JSON serialization and deserialization
+          
+ 14. How to hide password field in response?
+ =================================================================================
+  -> The best way is to use DTOs and exclude password field. If returning entity directly, use @JsonIgnore or @JsonProperty(access = WRITE_ONLY).
   
+ 15. How to format date in JSON?
+ =============================================================================
+ -> In Spring Boot / Jackson, dates are formatted in JSON using:
+    @JsonFormat
+      Used on date fields to control output format.
+    Ex:  
+       @JsonFormat(pattern = "dd-MM-yyyy")
+       private LocalDate joiningDate;
+       
+ 16. How do you secure APIs?
+==========================================================================
+ -> In my Spring Boot projects, I secure APIs using Spring Security with JWT-based authentication, role-based authorization,
+    BCrypt password hashing, HTTPS, and DTO validation.
+    
+ 17. Difference Between Authentication vs Authorization
+ ======================================================================== 
+ -> Authentication - it Verifies who you are means you are a valid user not .
+ -> Authorization - Verifies what you can access means what your role.
+ 
+18. How do you implement JWT Authentication?
+=========================================================================
+ -> JWT (JSON Web Token) is used for stateless authentication in Spring Boot APIs.
+ -> After login, server gives a token ,Client sends that token in every request.
+  Step 1: User Login
+          POST /api/auth/login
+  Step 2: Validate Credentials
+          If valid → generate JWT token.
+  Step 3: Return Token
+			{
+			  "token":"eyJhbGciOiJIUzI1NiJ9..."
+			}
+  Step 4: Client Sends Token in Every Request
+			GET /api/employees
+			Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+  Step 5: Filter Validates Token
   
-  dahuahoiuaho
+  ✅ JWT Structure
+       JWT has 3 parts: header.payload.signature
+           
+ 19. How to pass token in API?
+ =========================================================================
+ -> To pass a token in an API, most commonly you send it in the HTTP Header using the Authorization header.
+ 
+ 20. How do you prevent unauthorized access?
+ ===========================================================================
+ -> We prevent unauthorized access by verifying user identity using authentication (login/JWT/OAuth),
+    controlling permissions using authorization (roles), securing APIs with Spring Security, encrypting data, 
+    validating tokens, and using HTTPS. 
+    
+ 21. How to return large employee data efficiently?
+ ===============================================================================
+ -> For large employee data, I use pagination and sorting, fetch only required columns using DTO projections,
+   optimize database queries with indexing. This improves performance and reduces memory usage.
+   
+ 22. How to sort API results?
+ ==========================================================================
+ -> I sort API results by passing sort parameters like field name and direction, then use Spring Data JPA Sort or Pageable
+    so sorting happens at the database level for better performance.
+    
+    Ex: GET /employees?sort=name,asc
+    
+		@GetMapping("/employees")
+		public Page<Employee> getEmployees(Pageable pageable) {
+		    return employeeRepository.findAll(pageable);
+		}
+ 23. How to improve slow API performance?
+ ==========================================================================
+ -> I improve slow API performance by profiling the API, optimizing database queries, adding pagination/caching,
+    reducing unnecessary processing, using async operations where suitable, and monitoring response times.
   
+ 24. How to reduce DB calls?
+ ========================================================================
+ -> I reduce DB calls by using joins/fetch queries.
+ -> Batching inserts/updates .
+ -> caching frequently used data.
+ -> avoiding repeated queries inside loops.
+ -> selecting only required data in a single optimized query.
   
-  
-  
-  
-  
+ 25. What is caching in API?
+ ========================================================================
+ -> Caching is a mechanism it store frequently used data in temporarily, so that if those data required in 
+    future it can serve the data without hitting the data base.
+    
+ 26. Difference between save() and saveAndFlush() ?
+ ========================================================================
+ -> I use save() for normal inserts/updates because it is efficient and lets JPA manage flushing.
+    I use saveAndFlush() only when I need immediate synchronization with the database
+    
+	| Feature                             | save()               | saveAndFlush()           |
+	| ----------------------------------- | -------------------- | ------------------------ |
+	| Persist entity                      | Yes                  | Yes                      |
+	| Immediate DB write                  | No (usually delayed) | Yes                      |
+	| Calls flush()                       | No                   | Yes                      |
+	| Better performance for many records | Yes                  | No (more DB round trips) |
+	| Use case                            | Standard save        | Need immediate sync      |
+	
+ 27. What happens when invalid id passed?
+ =============================================================================
+ -> If an invalid ID is passed, I return 400 Bad Request. If the ID is valid but no record exists,
+    I return 404 Not Found using proper exception handling.
+    
+ 28. If same API hit by 1000 users, how handle?
+ ============================================================================
+  -> If 1000 users hit the same API, I ensure the application can scale horizontally, use efficient thread pools
+     and connection pools, optimize database queries, add caching, and use load balancing so requests are distributed across multiple instances.
+     
+ 29. If duplicate POST request comes, how prevent duplicate data?
+ =============================================================================
+  -> I prevent duplicate POST data using unique constraints at the database level,
+     request idempotency keys, duplicate checks before insert
+ -> Idempotency Key (Best for APIs)
+    Client sends header:
+                          Idempotency-Key: abc123
+    If same key sent again:
+        . Return previous response
+        . Do not insert again
+        
+ 30. If API gives 500 error in production, how debug?
+ =================================================================================
+  -> For a 500 error in production, I first check application logs, trace the request using correlation IDs,
+     identify whether the issue is code, database, dependency, or bad data,
+ 
+ 31. If frontend says API slow, what check first?
+ =================================================================================
+  -> First, I verify the actual API response time using logs, monitoring tools.
+  -> Then, I confirm whether the delay is in backend processing or frontend rendering.
+ 
   
   
   

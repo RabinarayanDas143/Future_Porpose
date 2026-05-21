@@ -422,6 +422,23 @@
                   }
            }, [])
            
+	useEffect(() => {
+	   // code
+	}, [])
+	Runs only once after the initial render.
+	
+	
+	useEffect(() => {
+	   // code
+	});
+	Runs on every render/re-render.
+	
+	
+	useEffect(() => {
+	   // code
+	}, [id]);
+	Re-runs whenever the id state/value changes.
+           
            
  42> What is the role of useContext() hook ? V.IMP
  =================================================================================

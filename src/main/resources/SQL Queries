@@ -205,7 +205,7 @@ WHERE d.deptname = 'CS';
   SELECT columns(s)
   FROM   table_name
   WHERE  condition
-  BROUP BY column(s)
+  GROUP BY column(s)
   HAVING  condition
   ORDER BY columns(s) ASC
   
@@ -346,8 +346,8 @@ WHERE d.deptname = 'CS';
   Gives all records.
   
   syntax: SELECT columns FROM tableA
-            UNION ALL
-            SELECT columns FROM tableB
+          UNION ALL
+          SELECT columns FROM tableB
             
  27> SQL Sub Queries
  ===================================================================
@@ -355,6 +355,142 @@ WHERE d.deptname = 'CS';
   it invokes 2 select statements.
   
   syntax: select columns from tb_name where col_name operator (subquery);
+  
+  
+-- Fetch only employee names and salaries
+select emp_name , salary from employee;
+-- Fetch employees from Mumbai
+select * from employee where city = 'Mumbai';
+-- fetch employees whose salary greater than 60000
+select * from employee where salary >60000;
+-- Fetch employees whose name starts with 'R'
+select * from employee where emp_name like 'R%';
+-- Sort employees by salary ascending
+select * from employee order by salary asc;
+-- Sort employees by salary descending
+select * from employee order by salary desc;
+
+-- Find maximum salary
+select * from employee where salary = (select max(salary) from employee);
+select max(salary) from employee;
+
+-- Find minimum salary
+select * from employee where salary = (select min(salary) from employee);
+
+-- Find average salary
+select avg(salary) from employee;
+
+-- Count total employees
+select count(*) from employee;
+
+-- Count employees department-wise
+select d.dept_name as Department, count(*) as employee_count from department d
+join
+employee e on e.dept_id=d.dept_id
+group by d.dept_name;
+
+-- Find maximum salary department-wise
+select d.dept_name as Department, max(e.salary) from department d
+join
+employee e on e.dept_id=d.dept_id
+group by d.dept_name;
+
+-- Find average salary department-wise
+select d.dept_name as department, avg(e.salary) as average_salary from department d
+join
+employee e on e.dept_id=d.dept_id
+group by d.dept_name;
+
+
+-- Departments having more than 2 employees
+select d.dept_name as department, count(*) as emp_count from department d
+join
+employee e on e.dept_id=d.dept_id
+group by d.dept_name
+having emp_count>2;
+
+-- Fetch employee name with department name
+select e.emp_name, d.dept_name from employee e
+join
+department d on d.dept_id=e.dept_id;
+
+-- Fetch all employees with department name including employees without department
+select e.emp_name, d.dept_name from employee e
+left join
+department d on d.dept_id=e.dept_id;
+
+-- Fetch employees who do not belong to any department
+select e.emp_name, d.dept_name from employee e
+left join
+department d on d.dept_id=e.dept_id
+where e.dept_id is null;
+
+-- Fetch departments without employees
+select d.dept_name as department  from department d
+left join
+employee e on d.dept_id=e.dept_id
+where e.emp_id is null;
+
+
+-- Find second highest salary
+select  salary from employee where salary = (select max(salary) from employee where salary<(select max(salary) from employee));
+select distinct salary from employee order by salary desc limit 1 offset 1; 
+
+-- Find employees earning more than average salary
+select * from employee where salary  > (select avg(salary) from employee));
+
+-- Find highest salary employee
+select * from employee where salary = (select max(salary) from employee);
+select * from employee order by salary desc limit 1;
+
+-- Find employees whose salary equals maximum salary
+select * from employee where salary = (select max(salary) from employee);
+
+
+-- Find duplicate salaries
+select salary, count(*) as count from employee
+group by salary having count > 1;
+
+-- Count employees city-wise
+select city, count(*) as count from employee 
+group by city;
+
+-- Fetch top 3 highest salary employees
+select * from employee order by salary desc limit 3;
+
+-- Find employees joined after 2021
+select * from employee where joining_date > '2021-12-31';
+
+-- Find employees from IT department
+select e.emp_name, d.dept_name as department from employee e
+join
+department d on e.dept_id=d.dept_id
+where d.dept_name='IT';
+
+-- Find department having highest average salary
+select d.dept_name, avg(e.salary) as avg_salary from department d
+join
+employee e on e.dept_id=d.dept_id
+group by d.dept_name
+order by avg_salary desc limit 1;
+
+-- Find employees whose salary between 50000 and 80000
+select * from employee where salary between 50000 and 80000;
+
+-- Fetch nth highest salary nth=3
+select distinct salary from employee order by salary desc limit 1 offset 2;
+
+-- Delete duplicate records
+select e1.emp_name from employee e1
+join 
+employee e2
+on e1.emp_name=e2.emp_name
+and e1.salary=e2.salary;
+
+-- Create index on emp_name
+create index idx_name on employee(emp_name);
+
+
    
     
     

@@ -213,7 +213,37 @@ Ex:
         While saving huge data, persistence context memory increased.
         Fix:
            Used batch size + periodic clear().
+           
+ 30. What is Optimistic Locking?
+ =====================================================================================
+ -> Optimistic locking is used to prevent data inconsistency when multiple users update the same record simultaneously.
+ -> Hibernate checks whether another transaction modified the row before update.
+ -> Usually implemented using @Version.
  
+ 31 . What is Pessimistic Locking?
+ =======================================================================================
+ -> Pessimistic locking locks the database row immediately so other transactions cannot modify it.
+ -> Used when conflicts are expected frequently.
+ 
+ 32. What is @Version Annotation?
+ ======================================================================================
+  -> What is @Version Annotation?
+  -> Hibernate automatically increments version whenever record updates.
+     
+     Ex: @Version
+         private int version;
+         
+ 33. Difference Between Session and StatelessSession
+ =======================================================================================
+	| Session                          | StatelessSession           |
+	| -------------------------------- | -------------------------- |
+	| Supports cache                   | No cache                   |
+	| Supports lazy loading            | No lazy loading            |
+	| Performs dirty checking          | No dirty checking          |
+	| Maintains persistence context    | No persistence context     |
+	| Slower for huge batch processing | Faster for bulk operations |
+	| Supports cascading               | No cascading               |
+
  
  
  

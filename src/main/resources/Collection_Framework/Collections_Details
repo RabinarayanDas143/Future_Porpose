@@ -239,6 +239,22 @@
  10. HashMap does not follow the sorting or insertion order.
  11. HashMap is not synchronized.
  
+ 
+====> LinkedHashMap class
+=============================================================================================
+	1. LinkedHashMap is an implemented class of Map interface.
+	2. LinkedHashMap extends HashMap class.
+	3. It stores data in key-value pair.
+	4. Key should be unique but value can be duplicate.
+	5. LinkedHashMap maintains insertion order.
+	6. It allows one null key and multiple null values.
+	7. LinkedHashMap is not synchronized.
+	8. Underlying data structure is Hashtable + Doubly Linked List.
+	9. It is introduced in JDK 1.4 version.
+	10. It is present in java.util package.
+	11. It is slightly slower than HashMap because it maintains insertion order.
+	12. Mostly used when insertion order is required.
+ 
 
 ====> TreeMap class
 ===========================================================================================
@@ -264,6 +280,30 @@
  9. HashTable does not follow the insertion order and sorting order.
  10. HashTable are synchronized data-structure.
  11. Initial size of HashTable is 11.
+ 
+ Queue
+ =========================================================================
+	1. Queue is an interface present in java.util package.
+	2. Queue follows FIFO (First In First Out) principle.
+	3. Elements are inserted from rear and removed from front.
+	4. Duplicate elements are allowed in Queue.
+	5. Null values are not allowed in most Queue implementations.
+	6. Important methods are:
+	   offer(), poll(), peek()
+	7. Queue is mainly used in scheduling and buffering operations.
+	8. LinkedList and PriorityQueue are common implemented classes of Queue.
+	
+ PriorityQueue
+=========================================================================
+	1. PriorityQueue is an implemented class of Queue interface.
+	2. It follows priority-based ordering.
+	3. By default, it follows Min Heap structure.
+	4. Elements are stored according to natural sorting order.
+	5. Insertion order is not maintained.
+	6. Duplicate values are allowed.
+	7. Null values are not allowed.
+	8. Heterogeneous data is not allowed.
+	9. PriorityQueue is not synchronized.
 
 
 

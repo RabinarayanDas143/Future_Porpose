@@ -388,7 +388,7 @@
 
  24. What is CompletableFuture?
  ==============================================================================
- -> CompletableFuture is an enhanced ofFuture interface that supports asynchronous task execution, Chain multiple tasks,
+ -> CompletableFuture is an enhanced of Future interface that supports asynchronous task execution, Chain multiple tasks,
     combining dependent tasks, and exception handling.
     
  Ex:

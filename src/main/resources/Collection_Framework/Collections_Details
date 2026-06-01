@@ -156,7 +156,7 @@
   
   
   
-==> What is Stack class
+==> What is Stack class - LIFO
 ==================================================================
 
  1. Stack is a legacy class which was introduced in JDK 1.0 version.

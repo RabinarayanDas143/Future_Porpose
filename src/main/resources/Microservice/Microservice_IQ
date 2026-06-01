@@ -1,4 +1,4 @@
- 1. What are Microservices ?
+ 1. What is Microservice ?
  ================================================
   -> Microservice is an architecture where the application is exposed as loosely copuled services that can be independently 
      developed, deployed and maintained. Each service called as microservice. Each service perform unique function.
@@ -972,7 +972,7 @@
         Feign                          Inter-service calls
         
 
- 27. What is Spring Cloud Config Server?
+ 27. What is Spring Cloud Config Server ?
  =====================================================================================
  -> Spring Cloud Config Server is a centralized configuration management service for microservices.
          👉 It stores all configuration (like DB URL, ports, feature flags) in one place

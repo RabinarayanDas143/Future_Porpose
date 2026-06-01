@@ -789,14 +789,386 @@
    -> profiler is used to finding the duplicate code in compilation time. 
    
    
+ Inheritance (IS-A Relationship)
+ =====================================================================================
+ -> In Java, Inheritance represents an IS-A relationship, where one class acquires the properties 
+    and behavior of another class using the extends keyword.  
+ -> Both are tightly coupled with each other.
+  👉 Example:
+      A Dog IS-A Animal
+      
+ HAS-A Relationship
+ ====================================================================
+  -> Association
+         - Aggregation (Week relationship)
+         - Composition (Strong relationship)
+      
+ HAS-A Relationship (Association)
+ =========================================================================
+    Car  --------->  Driver
+ -> Car HAS-A Driver
+ -> Both are loosely coupled with each other
+ 
+ Aggregation (Weak HAS-A)
+ =====================================================================
+  Department  ----->  Professor
+ ->  Professor can exist without Department
+     Weak relationship
+     
+ Composition (Strong HAS-A)
+ =================================================================
+   College --------> Department
+ -> College can not exist without department
+    Strong dependency
+    
+	            IS-A (Inheritance)
+	                 ▲
+	                 |
+	              Animal
+	                 |
+	                Dog
+	
+	
+	HAS-A Relationships
+	------------------------------------------------
+	Association   → Car -------- Driver
+	Aggregation   → Team -------- Player
+	Composition   → House ♦------ Room
+	
+ Shallow Copy
+ ===================================================================
+ -> When we clone through shallow copy, it create a new object but the nested object refers the same reference.
+ -> Shallow copy creates a new object, but nested objects are shared (same reference).
+ 
+	Original Object        Copied Object
+	      |                     |
+	   [Object] -------------> [Object]
+	        \                   /
+	         \---- shared ----/
+ Ex:
+ 
+		class Address {
+		    String city;
+		
+		    Address(String city) {
+		        this.city = city;
+		    }
+		}
+		
+		class Person implements Cloneable {
+		    String name;
+		    Address address;
+		
+		    Person(String name, Address address) {
+		        this.name = name;
+		        this.address = address;
+		    }
+		
+		    public Object clone() throws CloneNotSupportedException {
+		        return super.clone(); // shallow copy
+		    }
+		}
+		
+		Problem in Shallow Copy:
+		
+		Person p1 = new Person("John", new Address("Mumbai"));
+		Person p2 = (Person) p1.clone();
+		
+		p2.address.city = "Pune";
+		
+		System.out.println(p1.address.city); // Pune ❌  
+		
+ Deep Copy
+ ===========================================================
+ -> When we clone through Deep copy, it create new object also the nested object create new nested object.
+ -> Deep copy creates a completely new object + new nested objects.
+ 
+	Original Object        Copied Object
+	      |                     |
+	   [Object]             [Object]
+	      |                     |
+	   [Address]           [Address]
+   
+		class Person implements Cloneable {
+		    String name;
+		    Address address;
+		
+		    Person(String name, Address address) {
+		        this.name = name;
+		        this.address = address;
+		    }
+		
+		    public Object clone() throws CloneNotSupportedException {
+		        Person p = (Person) super.clone();
+		        p.address = new Address(this.address.city); // deep copy
+		        return p;
+		    }
+		}
+		
+		Now Behavior:
+		
+		Person p1 = new Person("John", new Address("Mumbai"));
+		Person p2 = (Person) p1.clone();
+		
+		p2.address.city = "Pune";
+		
+		System.out.println(p1.address.city); // Mumbai ✅
+		
+		
+ Difference between HashMap and CuncurrentHashMap
+ ================================================================================
+	| Feature     | HashMap              | ConcurrentHashMap        |
+	| ----------- | -------------------- | ------------------------ |
+	| Thread-safe | ❌ No                 | ✅ Yes                    |
+	| Performance | Fast (single thread) | Fast (multi-thread safe) |
+	| Null key    | ✅ Allowed            | ❌ Not allowed            |
+	| Null value  | ✅ Allowed            | ❌ Not allowed            |
+	| Locking     | None                 | Segment / bucket level   |
+
+ 
+ Difference between ArrayList and LinkedList
+===============================================================================
+	| Feature              | ArrayList       | LinkedList            |
+	| -------------------- | --------------- | --------------------- |
+	| Internal structure   | Dynamic Array   | Doubly Linked List    |
+	| Access (get)         | Fast O(1)       | Slow O(n)             |
+	| Insert/Delete middle | Slow (shifting) | Fast (pointer change) |
+	| Memory usage         | Less            | More (extra pointers) |
+	| Best use case        | Read-heavy      | Insert/Delete-heavy   |
+
+   
+ which methods are in object class is final
+ =======================================================================================
+	getClass() – Returns the runtime class of the object.
+	notify() – Wakes up a single thread waiting on the object's monitor.
+	notifyAll() – Wakes up all threads waiting on the object's monitor.
+	wait() – Pauses the current thread to wait until notified.
+	wait(long timeout) – Waits for the specified milliseconds.
+	wait(long timeout, int nanos) – Waits for the specified time (ms + ns).
+	
+ -: The non-final methods (which can be overridden) are:
+		toString()
+		equals(Object obj)
+		hashCode()
+		clone()
+		finalize()
+  
+   
+ SOLID principle
+ =============================================================================================
+  S = Single Responsibility principle (SRP)
+ ----------------------------------------------------------------------------
+  A class should have only one reason to change.
+  
+  Bad Example :
+				class Employee {
+				
+				    public void calculateSalary() {
+				        // Salary logic
+				    }
+				
+				    public void saveToDatabase() {
+				        // Database logic
+				    }
+				
+				    public void generateReport() {
+				        // Report logic
+				    }
+				} 
+     This class has 3 responsibilities.
+     
+ Good Example :
+				class Employee {
+				    // Employee data
+				}
+				
+				class SalaryService {
+				    public void calculateSalary() {}
+				}
+				
+				class EmployeeRepository {
+				    public void save() {}
+				}
+				
+				class ReportService {
+				    public void generateReport() {}
+				}
+				
+ IA : One class should have only one responsibility and one reason to change.
+ 
+ 
+ 
+ O - Open/Closed Principle (OCP)
+ -----------------------------------------------------------------------------------
+  Software entities should be:
+					Open for Extension
+					Closed for Modification
+
+  You should add new functionality without modifying existing code.
+  
+ Bad Example : 
+			class PaymentService {
+			
+			    public void pay(String type) {
+			
+			        if(type.equals("CARD")) {
+			            System.out.println("Card Payment");
+			        }
+			
+			        if(type.equals("UPI")) {
+			            System.out.println("UPI Payment");
+			        }
+			    }
+			}
+  If a new payment method is added, this class must be modified.
+  
+ Good Example : 
+				interface Payment {
+				    void pay();
+				}
+				
+				class CardPayment implements Payment {
+				    public void pay() {
+				        System.out.println("Card Payment");
+				    }
+				}
+				
+				class UpiPayment implements Payment {
+				    public void pay() {
+				        System.out.println("UPI Payment");
+				    }
+				}
+   Now adding NetBanking means creating a new class only.
    
    
+ L - Liskov Substitution Principle (LSP)
+ ----------------------------------------------------------------------------------
+  A child class should be able to replace its parent class without breaking functionality.
+  
+  Bad Example
+			class Bird {
+			    void fly() {}
+			}
+			
+			class Penguin extends Bird {
+			    void fly() {
+			        throw new UnsupportedOperationException();
+			    }
+			}
+   Penguin cannot fly, so inheritance is wrong.
    
+ Good Example
+			interface Bird {
+			    void eat();
+			}
+			
+			interface FlyingBird extends Bird {
+			    void fly(){}
+			}
+			
+			class Penguin implements Bird {
+			    void eat(){}
+			}
+ 
+  
+ I - Interface Segregation Principle (ISP)
+ ------------------------------------------------------------------------------------
+  A class should not be forced to implement methods it doesn't need.
+ 
+  Bad Example :
+			interface Worker {
+			    void work();
+			    void eat();
+			}
+			
+			//Robot doesn't eat.
+			class Robot implements Worker {
+			
+			    public void work() {}
+			
+			    public void eat() {
+			        throw new UnsupportedOperationException();
+			    }
+			}
+			
+  Good Example :
+			interface Workable {
+			    void work();
+			}
+			
+			interface Eatable {
+			    void eat();
+			}
+			
+			class Human implements Workable, Eatable {
+			    public void work() {}
+			    public void eat() {}
+			}
+			
+			class Robot implements Workable {
+			    public void work() {}
+			}
+			
+	
+  D - Dependency Inversion Principle (DIP)
+  --------------------------------------------------------------------------------
+   High-level modules should not depend on low-level modules.
+   Both should depend on abstractions.
    
-   
-   
-   
-   
+  Bad Example :
+				class MySQLDatabase {
+				
+				    public void save() {
+				        System.out.println("Saved");
+				    }
+				}
+				
+				class EmployeeService {
+				
+				    private MySQLDatabase db = new MySQLDatabase();
+				}
+	EmployeeService is tightly coupled to MySQL.
+	
+  Good Example : 
+  
+				public interface Database {
+				    void save();
+				}
+				
+				
+				@Repository("mysqlDB")
+				public class MySQLDatabase implements Database {
+				
+				    @Override
+				    public void save() {
+				        System.out.println("Saved in MySQL Database");
+				    }
+				}
+				
+				@Repository("oracleDB")
+				public class OracleDatabase implements Database {
+				
+				    @Override
+				    public void save() {
+				        System.out.println("Saved in Oracle Database");
+				    }
+				}
+				
+				
+				@Service
+				public class EmployeeService {
+				
+				    @Autowired
+				    @Qualifier("oracleDB")
+				    private Database database;
+				
+				    public void saveEmployee() {
+				        database.save();
+				    }
+				}
+				
+				// Saved in Oracle Database
+  
    
    
    

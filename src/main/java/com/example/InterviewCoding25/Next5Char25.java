@@ -1,0 +1,11 @@
+package com.example.InterviewCoding25;
+
+public class Next5Char25 {
+public static void main(String[] args) {
+	char c = 'e';
+	for(int i=1;i<=5;i++) {
+		char ch =(char)(c+i);
+		System.out.print(ch+",");
+	}
+}
+}

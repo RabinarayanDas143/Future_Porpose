@@ -1,0 +1,271 @@
+ 1. What is JWT?
+ =============================================================
+ -> JWT (JSON Web Token) is a compact and secure token used for authentication and authorization between client and server.
+ -> It contains:
+				Header
+				Payload
+				Signature
+				
+ 2. Why JWT is used?
+ ===========================================================
+	JWT is used because:
+		Stateless authentication
+		Suitable for REST APIs
+		Works well in microservices
+		Reduces server memory usage
+		
+ 3. What are the parts of JWT?
+ ===========================================================
+  Header : Contains algorithm and token type.
+			{
+			  "alg": "HS256",
+			  "typ": "JWT"
+			}
+ Payload: Contains user data.
+			{
+			  "sub": "Rabinarayan",
+			  "role": "ADMIN"
+			}
+ Signature : Used to validate token
+				Generated using:
+				Header
+				Payload
+				Secret key
+
+ 4. What are Claims in JWT?
+ ==========================================================
+  Claims are information stored in JWT payload.
+		Types:
+				Registered claims
+				Public claims
+				Private claims				
+ 
+ 5. What is exp in JWT?
+ ===========================================================
+ -> exp means expiration time.				
+ -> After expiration:
+                     token becomes invalid
+                     user must login again or use refresh token
+                     
+ 6. Difference between Authentication and Authorization?
+ ===============================================================
+	| Authentication    | Authorization        |
+	| ----------------- | -------------------- |
+	| Verifies identity | Verifies permissions |
+	| Login process     | Access control       |
+	| Who are you?      | What can you access? |
+ JWT is mainly used after authentication.
+ 
+ 7. How JWT Authentication Works?
+ ================================================================
+	User sends username/password
+	Server validates credentials
+	JWT token generated
+	Client stores token
+	Client sends token in every request
+	Server validates token
+	
+ 8. Why JWT is Stateless?
+ ================================================================
+ -> Because server does not store session information.
+ -> All user details are inside token itself.
+ 
+ 9. Difference between Session Authentication and JWT?
+ ===================================================================
+	| Session                  | JWT                 |
+	| ------------------------ | ------------------- |
+	| Stateful                 | Stateless           |
+	| Server stores session    | Client stores token |
+	| Requires session storage | No server storage   |
+	| Harder to scale          | Easy to scale       |
+	
+ 10. Is JWT Secure?
+ =================================================================
+  Yes, if implemented properly.
+	Use HTTPS
+	Strong secret key
+	Short expiry time
+	Avoid sensitive data in payload
+	
+ 11. Is JWT Encrypted?
+ ===================================================================
+  -> NO
+  -> JWT is:
+			Encoded
+			Signed
+	But not encrypted by default.
+	Payload can be decoded easily.
+	
+ 12. Can JWT be Tampered?
+ ===================================================================
+  -> Payload can be modified manually, but signature validation will fail.
+  -> Server detects tampering using signature verification.
+  
+ 13. What is Bearer Token?
+ =================================================================
+ -> Bearer token is JWT token sent in Authorization header.
+     EX: Authorization: Bearer eyJhbGciOiJIUzI1Ni...
+     
+ 14. Difference between HS256 and RS256?
+ ===================================================================
+	| HS256               | RS256                          |
+	| ------------------- | ------------------------------ |
+	| Symmetric algorithm | Asymmetric algorithm           |
+	| Same key used       | Public/private key             |
+	| Faster              | More secure                    |
+	| Simpler             | Better for distributed systems |
+	
+ 15. What is Refresh Token?
+ ===================================================================
+ -> Refresh token is used to generate new access token after expiry.
+	Access token → short expiry
+	Refresh token → long expiry
+	
+ 16. Where should JWT be stored?
+ ===================================================================
+		LocalStorage
+		SessionStorage
+		HttpOnly Cookie
+		
+ 17. What are disadvantages of JWT?
+ ======================================================================
+	Difficult logout handling
+	Payload visible after decoding
+	Larger token size
+	
+ 18. How do you invalidate JWT?
+ ======================================================================
+	Short expiration time
+	Blacklisting tokens
+	Refresh token rotation
+	
+ 19. Why JWT is preferred in Microservices?
+ =======================================================================
+	Stateless
+	No session sharing needed
+	Easy scaling
+	Each service can validate token independently
+	
+ 20. Explain JWT flow in Spring Boot
+ ======================================================================
+	User login API
+	AuthenticationManager validates credentials
+	JWT generated and send to the browser
+	when user send API 
+	JWT filter intercepts requests
+	Token validated
+	Authentication stored in SecurityContext
+	
+ 21. What is OncePerRequestFilter?
+ =====================================================================
+  It ensures JWT filter executes only once per request.
+		Extract token
+		Validate token
+		Set authentication context
+		
+ 22. What happens if secret key is exposed?
+ ======================================================================
+		Rotate secret keys
+		Use RS256
+		Short token expiry
+		
+ 23. How logout works in JWT?
+ =====================================================================
+ -> JWT is stateless, so logout is not straightforward.
+		Delete token from client
+		Blacklist token
+		Use short expiry
+		
+ 24. Difference between OAuth2 and JWT?
+ =======================================================================
+    | OAuth2                    | JWT                |
+	| ------------------------- | ------------------ |
+	| Authorization framework   | Token format       |
+	| Defines access delegation | Stores user claims |
+	
+ 25. What is the biggest security risk in JWT?
+ ========================================================================
+  Token theft.
+     If attacker gets valid token, they can access APIs until token expires.
+
+	Solution:
+	
+	HTTPS
+	Secure cookies
+	Short expiry
+	Refresh token rotation
+	
+ 26. Why should we avoid sensitive data in JWT payload?
+ ============================================================================
+  Because payload can be decoded easily using Base64 decoding.
+
+	Never store:
+	
+	Passwords
+	Bank details
+	OTP
+	Secret information
+	
+ 27. How does JWT improve performance?
+ =======================================================================
+	No database session lookup
+	No session storage
+	Faster request validation
+	
+ 28. Explain JWT Filter Logic
+ ===============================================================================
+	JWT filter:
+	
+	Reads Authorization header
+	Extracts token
+	Validates signature
+	Checks expiration
+	Loads user details
+	Sets Authentication object
+	
+ 29. What HTTP status code is returned for invalid JWT?
+ ===============================================================================
+  401 Unauthorized
+  
+ 30. What libraries are commonly used for JWT in Spring Boot?
+ ================================================================================
+	Common libraries:
+	
+	jjwt
+	java-jwt
+	Nimbus JOSE JWT
+ 
+
+
+ 
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				

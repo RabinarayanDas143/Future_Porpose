@@ -2,6 +2,7 @@ package com.example.coreJava;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 final class ImmutableEmployee {
@@ -13,11 +14,12 @@ final class ImmutableEmployee {
 		super();
 		this.id = id;
 		this.name = name;
-		List<String> listCont = new ArrayList<>();
-		for (String str : friendsList) {
-			listCont.add(str);
-		}
-		this.friendsList = listCont;
+//		List<String> listCont = new ArrayList<>();
+//		for (String str : friendsList) {
+//			listCont.add(str);
+//		}
+//		this.friendsList = listCont;
+		this.friendsList = Collections.unmodifiableList(friendsList);
 	}
 
 	public int getId() {
@@ -52,7 +54,7 @@ public class ImmutableExample {
 		System.out.println(obj);
 		obj = new ImmutableEmployee(2,"ankit",friends);
 		System.out.println(obj);
-		//friends.add("Amol");
-		//System.out.println(obj);
+		friends.add("Amol");
+		System.out.println(obj);
 	}
 }

@@ -116,9 +116,9 @@ method is execute just after constructor created .
    
  14> What is the difference between BeanFactory and ApplicationContext in Spring 
  =======================================================================================
-  -> BeanFactory represents spring container. It represents all the features of IOC container. 
-  -> ApplicationContext is the sub interface of BeanFactory, it represents all the features of BeanFactory also 
-     it provides some extra features.
+  -> BeanFactory is the basic IoC container with lazy loading and minimal features.
+  -> ApplicationContext is the advanced container built on top of BeanFactory, 
+     It supports features like annotation support, and eager initialization.
      
      
  15> Difference between the Constructor and setter injection in Spring (This answer i have to modify)
@@ -447,7 +447,11 @@ method is execute just after constructor created .
   -> Baiscally @Controller, @Service, @Repostiory are internally use @Component, when we create bean using through
      our bean is create unconditionally but we use create bean through @Bean we can use some condition using @Conditional annotation
      and we control our bean.
-  -> @ConditionalOnMissingBean(...) , if that class is present the create the bean, if that is missing the create the bean.
+  -> @ConditionalOnMissingBean(...) , if that class is present then create the bean, if that is missing the create the bean.
+  -> @Component is used for automatic bean detection through component scanning and is generally applied to classes
+     developed within our application.
+  -> @Bean is used inside a @Configuration class to explicitly define and customize bean creation,
+     especially for third-party classes or when additional initialization logic is required.
   
  38> What is BeanFactoryPostProcessor ?
  =================================================================================================
@@ -832,6 +836,11 @@ method is execute just after constructor created .
   ------------------------
    -> It is used when we want to intercept HTTP Request and Response and logic specific to a particular servlet.
    -> We can have many interceptors and have ordering between them too.
+   
+ Difference between @PathVariable and @RequestParam
+ ======================================================================================================================
+ -> @PathVariable is used to fetch values from the URL path and is generally used to identify a specific resource, such as /employees/101.
+ -> @RequestParam is used to fetch values from query parameters and is commonly used for filtering, sorting, or searching data, such as /employees?department=IT.
       
       
   

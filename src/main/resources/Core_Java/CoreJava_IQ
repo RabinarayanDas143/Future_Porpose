@@ -466,8 +466,25 @@
   
  51> Explain the difference between Stream and ParallelStream. When would you use each?
  =========================================================================================================
-  -> Stream processes elements sequentially, while ParallelStream divides the data into multiple parts and processes them in parallel.
-  -> Use ParallelStream when you need faster processing on large datasets.
+  1. Stream (Sequential Stream)
+			Processes elements one by one
+			Uses single thread
+			Maintains order of execution
+			
+			List<Integer> list = Arrays.asList(1,2,3,4,5);
+			
+			list.stream()
+			    .map(n -> n * 2)
+			    .forEach(System.out::println);
+			    
+ 2. ParallelStream
+			Splits data into multiple parts
+			Uses multiple threads (ForkJoinPool)
+			Executes in parallel
+			
+			list.parallelStream()
+			    .map(n -> n * 2)
+			    .forEach(System.out::println);
     
  52> What is the difference between intermediate and terminal operations in a stream?
  ===========================================================================================================

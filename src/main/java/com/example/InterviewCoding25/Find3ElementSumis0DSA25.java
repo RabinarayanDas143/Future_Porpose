@@ -13,8 +13,8 @@ public class Find3ElementSumis0DSA25 {
 			}
 		}
 
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] > 0 && array[i] != array[i - 1])
+		for (int i = 0; i < array.length-2; i++) {
+			if (i > 0 && array[i] == array[i - 1])
 				continue;
 
 			int left = i;

@@ -1,6 +1,8 @@
 
  1. What is Kafka
  =======================================================
+ -> Apache Kafka is a distributed event streaming platform used for data streaming.
+ -> It follows the publish-subscribe model.
  -> Apache Kafka is a publish-subscribe based messaging system. It is fast, scalable and distributed by design.
  -> It was initially thought of as a message queue and open-source by Linkedin in 2011.
  -> Publish-subcribe to stream of records like message queue.
@@ -88,31 +90,38 @@
  -> A user does not directly interact with zoopeeper, but via broker.
  -> No kafka serveris run without zookeeper server. It is mandatory to run the zookeeper server.
  
- 
-                    +----------------+
-                    |   Producer     |
-                    | (Spring Boot)  |
-                    +-------+--------+
-                            |
-                            | Publish Messages
-                            v
-         +-------------------------------------------+
-         |             Kafka Cluster                 |
-         |                                           |
-         |  +-----------+  +-----------+  +--------+ |
-         |  | Broker 1  |  | Broker 2  |  |Broker3 | |
-         |  | Topic-A   |  | Topic-A   |  |Topic-A | |
-         |  |Partition0 |  |Partition1 |  |Replica | |
-         |  +-----------+  +-----------+  +--------+ |
-         |                                           |
-         +-------------------------------------------+
-                            |
-                            | Consume Messages
-                            v
-                    +-------+--------+
-                    |    Consumer    |
-                    | (Spring Boot)  |
-                    +----------------+
+                           +----------------+
+                           |   Producer     |
+                           | (Spring Boot)  |
+                           +--------+-------+
+                                    |
+                                    | Publish Messages
+                                    v
+     +------------------------------------------------------------------+
+     |                       KAFKA CLUSTER                              |
+     |                                                                  |
+     |  +----------------+ +----------------+ +----------------+        |
+     |  |   Broker 1     | |   Broker 2     | |   Broker 3     |        |
+     |  |----------------| |----------------| |----------------|        |
+     |  | Topic-A P0 (L) | | Topic-A P1 (L) | | Topic-A P2 (L) |        |
+     |  | Topic-A P1 (F) | | Topic-A P2 (F) | | Topic-A P0 (F) |        |
+     |  |                | |                | |                |        |
+     |  | Topic-B P1 (L) | | Topic-B P2 (L) | | Topic-B P0 (L) |        |
+     |  | Topic-B P2 (F) | | Topic-B P0 (F) | | Topic-B P1 (F) |        |
+     |  |                | |                | |                |        |
+     |  | Topic-C P2 (L) | | Topic-C P0 (L) | | Topic-C P1 (L) |        |
+     |  | Topic-C P0 (F) | | Topic-C P1 (F) | | Topic-C P2 (F) |        |
+     |  +----------------+ +----------------+ +----------------+        |
+     |                                                                  |
+     |      L = Leader Partition    F = Follower Replica                |
+     +------------------------------------------------------------------+
+                                    |
+                                    | Consume Messages
+                                    v
+                           +--------+--------+
+                           |    Consumer     |
+                           |  (Spring Boot)  |
+                           +-----------------+
                     
                     
   Spring Boot Kafka example
@@ -159,12 +168,377 @@ Controller:
 		} 
   
   
+ 1. What is Apache Kafka?
+ =================================================================================
+ -> Apache Kafka is a distributed event streaming platform used for Real-time data streaming.
+ ->It follows the publish-subscribe model.
+ 
+ 2. Why do we use Kafka instead of traditional messaging systems?
+ ===================================================================================
+	High throughput
+	Fault tolerance
+	Horizontal scalability
+	Durable message storage
+	Supports millions of messages
+	Distributed architecture
+	
+ 3. Explain Kafka Architecture.
+ =====================================================================================
+	Producer
+	Publishes messages to Kafka topics.
+	
+	Consumer
+	Reads messages from Kafka topics.
+	
+	Topic
+	A category where messages are stored.
+	
+	Partition
+	Topics are divided into partitions for parallel processing.
+	
+	Broker
+	Kafka server responsible for storing data.
+	
+	Consumer Group
+	Multiple consumers working together.
+	
+	ZooKeeper
+	Used in older Kafka versions for cluster coordination.
+	
+	KRaft
+	Newer Kafka versions use KRaft instead of ZooKeeper.
+	
+ 4. What is a Topic?
+ ===================================================================================
+ -> Topic is used to partitioning the message, so that publisher can publish messages using Topic
+    and subscriber can subscribe that messages using Topic.
+    
+ 5. What is a Partition?
+====================================================================================
+  -> Partitions divide a topic into multiple segments.
+		PAYMENT_TOPIC
+		Partition-0
+		Partition-1
+		Partition-2
+		
+ 6. What is an Offset?
+ =====================================================================================
+ -> Offset is the unique sequence number of a message, it is used with a partition to maintain the message order.
+
+		Partition 0
+		
+		Offset 0
+		Offset 1
+		Offset 2
+		Offset 3
+		
+ 7. What is a Consumer Group?
+ ===========================================================================================
+ -> A group of consumers sharing the workload.
+ 
+		Topic: Transactions
+		
+		Consumer Group:
+		Consumer-1 → Partition 0
+		Consumer-2 → Partition 1
+		Consumer-3 → Partition 2
+		
+ 8. Can multiple consumers read the same message?
+ ===============================================================================================
+-> Yes.
+       Different consumer groups can consume the same message independently.
+       
+		PAYMENT_TOPIC
+		
+		Audit Group
+		Notification Group
+		Reporting Group
+		
+ 9. Explain Leader and Follower.
+ ===============================================================================================
+	Each partition has:
+	
+	Leader
+	Handles all reads and writes.
+	
+	Followers
+	Replicate leader data.
+	
+	If leader fails:
+	One follower becomes the new leader.
+
+ 10. What is Replication Factor?
+ ===========================================================================================
+ -> Number of copies of a partition.
+ 
+	Replication Factor = 3
+	
+	Leader
+	Follower
+	Follower
+	
+ 11. What happens if a broker fails?
+ ==========================================================================================
+ -> Kafka selects another replica as leader.
   
+ 12. What is ISR (In-Sync Replica)?
+ =========================================================================================
+ -> ISR contains replicas that are fully synchronized with the leader.
+ 
+	Leader → Broker1
+	
+	ISR:
+	Broker1
+	Broker2
+	Broker3
+	
+ 13. How does Kafka guarantee message delivery?
+ ======================================================================================
+	Three modes:
+	
+	At most once
+	Message may be lost.
+	
+	At least once
+	No loss but duplicates possible.
+	
+	Exactly once
+	No loss and no duplicates.
+	
+ 14. What is Exactly Once Semantics?
+ ===============================================================================
+	Kafka ensures messages are processed only once using:
+	
+	Idempotent Producer
+	   Configuration :
+	   enable.idempotence=true
+	   
+ 15. What is Idempotent Producer?
+ ===========================================================================
+  -> Prevents duplicate messages caused by retries.
+        enable.idempotence=true
+        
+ 16. What is the acknowledgment (acks) setting?
+ =============================================================================
+	acks=0
+		Producer doesn't wait.
+		Fastest but risky.
+	acks=1
+		Leader acknowledges.
+		Balanced approach.
+	acks=all
+		All ISR replicas acknowledge.
+		Safest.
+		
+ 17. What is Consumer Rebalancing?
+ ===========================================================================
+	Occurs when:
+	
+	New consumer joins.
+	Consumer leaves.
+	Partitions change.
+	
+	Kafka redistributes partitions among consumers.
+	
+ 18. What causes duplicate messages?
+ ==============================================================================
+	Producer retries
+	Consumer processing failure
+	Offset commit issues
+	
+	Solutions:
+	
+	Idempotent producer
+	Exactly-once semantics
+	
+ 19. Auto Commit vs Manual Commit?
+ =============================================================================
+   Auto Commit
+      enable.auto.commit=true
+      
+      Kafka commits offsets automatically.
+      Risk: Message loss.
+      
+   Manual Commit
+      consumer.commitSync();
+      
+      Commit after successful processing.
+      Preferred in banking applications.
+      
+ 20. commitSync() vs commitAsync()
+ =========================================================================
+	commitSync()
+	   Blocks execution
+	   Reliable
+	commitAsync()
+	   Non-blocking
+	   Faster
+	   
+ 21. How do you configure Kafka in Spring Boot?
+ ===========================================================================
+  In Spring Boot, we configure Kafka by adding the spring-kafka dependency and specifying broker details through application.properties.
+  We define producer properties such as bootstrap servers and serializers, and consumer properties like group-id, deserializers.
+  For publishing messages, we use KafkaTemplate, and for consuming messages, we use @KafkaListener.
   
+ 22. How do you create a Kafka Producer in Spring Boot?
+ =============================================================================
+	@Autowired
+	private KafkaTemplate<String, String> kafkaTemplate;
+	
+	kafkaTemplate.send("payment-topic", message);
+
+ 23. How do you create a Kafka Consumer in Spring Boot?
+ ==================================================================================
+	@KafkaListener(topics = "payment-topic",
+	               groupId = "payment-group")
+	public void consume(String message) {
+	    System.out.println(message);
+	}
+	
+ 24. What serializer and deserializer have you used?
+ =====================================================================================
+   Producer
+		StringSerializer
+		JsonSerializer
+   Consumer
+		StringDeserializer
+		JsonDeserializer
+		
+ 25. In a banking application, a payment message should never be lost. How would you configure Kafka?
+ ============================================================================================================
+	Replication Factor = 3
+	acks=all
+	enable.idempotence=true
+	Manual offset commit
+	Retry mechanism
+	Dead Letter Topic (DLT)
+	
+ 26. What is a Dead Letter Topic (DLT)?
+ ===============================================================================================
+   DLT Transfer Failed messages from one topic to another topic.
+		
+		payment-topic
+		      ↓
+		payment-dlt
+		
+   Used for later investigation and reprocessing
+   
+ 27. How do you handle retries in Spring Kafka?
+ ============================================================================================
+  For handle the retries we have to use retriable mechanism
+
+	@RetryableTopic(attempts = "3")
+	@KafkaListener(topics = "payment-topic")
+	public void consume(String message) {
+	    // processing
+	}
+	
+ 28. What happens when a consumer crashes?
+ ========================================================================================
+	Kafka removes that consumer from the consumer group.
+	Kafka reassign the partitions among consumer group.
+	
+ 29.How does Kafka maintain message order?
+ ======================================================================================
+	Kafka guarantees ordering only within a partition.
+	Messages written to the same partition are stored sequentially based on offsets.
+	
+	Partition 0
+	
+	Offset 0 → Txn1
+	Offset 1 → Txn2
+	Offset 2 → Txn3
+	
+ 30. Can Kafka lose messages?
+ =====================================================================================
+  Yes, if Kafka is not configured properly.
   
+    Message loss may happen when:
+		acks=0
+		Replication factor is 1
+		Producer does not retry
+	To avoid message loss:
+		acks=all
+		enable.idempotence=true
+		replication.factor=3
+		min.insync.replicas=2
+		use manual offset commits.
+		
+ 31. Explain ISR (In-Sync Replica).
+ ============================================================================================
+  ISR stands for In-Sync Replicas.
+  It maintain the replica inside the partition.
   
-  
-  
+	Partition P0
+	
+	Leader  : Broker1
+	Follower: Broker2
+	Follower: Broker3
+	
+ 32. Explain Offsets.
+ ==============================================================================
+  -> Offset is the unique sequence number of a message inside a partition.
+
+	Partition 0
+	
+	Offset 0 → Payment A
+	Offset 1 → Payment B
+	Offset 2 → Payment C
+	
+ 33. Why manual commit in banking systems?
+ ============================================================================
+ -> If we are using auto commit Kafka may commit the offset before processing completes. 
+ 
+    With manual commit:
+               consumer.commitSync();
+               Offset is committed only after successful processing.
+               
+ 34. Difference between RabbitMQ and Kafka.
+ ==============================================================================
+	| Feature           | Kafka               | RabbitMQ                     |
+	| ----------------- | ------------------- | ---------------------------- |
+	| Model             | Distributed log     | Traditional message queue    |
+	| Throughput        | Very high           | Moderate                     |
+	| Message Retention | Configurable        | Deleted after acknowledgment |
+	| Ordering          | Per partition       | Queue based                  |
+	| Replay Messages   | Yes                 | Limited                      |
+	| Scalability       | Excellent           | Moderate                     |
+	| Use Case          | Event streaming     | Task queues                  |
+	| Storage           | Disk-based          | Memory + Disk                |
+	| Consumer Offset   | Managed by consumer | Managed by broker            |
+	
+ 35. What is Exactly Once Processing?
+ ==============================================================================
+  -> Exactly Once Processing means:
+      A message is processed only once without duplicates and without loss
+      
+ 36. How do you avoid duplicate messages?
+=================================================================================
+ -> Duplicates can happen because of retries.
+     
+     Ways to avoid duplicates:
+                       Enable idempotence: 
+                                   enable.idempotence=true
+                                   
+ 37. Explain Kafka partitioning strategy.
+ ==============================================================================
+  Three strategies:
+				a) Round Robin
+					Msg1 → P0
+					Msg2 → P1
+					Msg3 → P2
+				
+				b) Key-Based Partitioning
+					Account123 → P1
+					Account123 → P1
+					Account123 → P1
+				
+				c) Custom Partitioner
+					VIP Customers → P0
+					Normal Customers → P1
+
+
+
   
   
   
